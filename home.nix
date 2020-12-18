@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }: {
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
-  nixpkgs.overlays = [ (import ./src/overlays/pdbpp.nix) ];
-  xdg.configFile."nixpkgs/overlays/pdbpp.nix".source = ./src/overlays/pdbpp.nix;
 
   home.packages = [ pkgs.cacert pkgs.any-nix-shell pkgs.neofetch pkgs.curl ];
 

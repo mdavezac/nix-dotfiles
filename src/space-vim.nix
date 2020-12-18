@@ -1,6 +1,6 @@
 pkgs: {
   home.file.".spacevim".source = ./spacevim.vim;
-  programs.neovim = let mypkgs = import ./packages pkgs;
+  programs.neovim = let mypkgs = import ../packages pkgs;
   in {
     enable = false;
     extraConfig = ''

@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  mypkgs = import ../packages { inherit pkgs; };
+  mypkgs = import ../../packages { inherit pkgs; };
   config = import ./config.nix pkgs;
-  github_token = (import  ../machine.nix).github_token;
+  github_token = (import  ../../machine.nix).github_token;
   toml = pkgs.runCommand "init.toml" {
     buildInputs = [ pkgs.remarshal ];
     preferLocalBuild = true;

@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  machine = import ./machine.nix;
-  email = (import projects/lib/emails.nix).github;
+  machine = import ../machine.nix;
+  email = (import ../projects/lib/emails.nix).github;
 in {
   home.packages = [
     pkgs.pre-commit
