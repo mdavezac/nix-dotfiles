@@ -1,0 +1,12 @@
+galaxy/
+.secrets
+*.retry
+.mypy_cache/
+.module
+.venv/
+.vimrc
+.vscode/
+.shada
+.direnv/
+.local/
+nix/machine.nix

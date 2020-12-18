@@ -1,0 +1,66 @@
+# add an on_enter command to the default mode
+:: default : yabai -m config active_window_border_width 0; yabai -m config window_border off
+
+# defines a new mode 'initial' with an on_enter command, that captures keypresses
+:: initial @ : yabai -m config window_border on; yabai -m config active_window_border_width 4; yabai -m config active_window_border_color 0xff24ccaa 
+
+# defines a new mode 'organise' which reorganizes windows
+:: organize @ : yabai -m config window_border on; yabai -m config active_window_border_width 4; yabai -m config active_window_border_color 0xffff2222
+
+# Step from mode to mode
+cmd - x ; initial
+initial < cmd - x ; default
+initial < x ; default
+initial < o ; organize
+organize < cmd - x ; default
+organize < x ; default
+
+initial < f : yabai -m window --toggle zoom-fullscreen ; skhd -k "x"
+initial < shift - f : yabai -m window --toggle native-fullscreen ; skhd -k "x"
+initial < z : yabai -m window --toggle zoom-parent ; skhd -k "x"
+initial < h : yabai -m window --focus west
+initial < j : yabai -m window --focus south
+initial < k : yabai -m window --focus north
+initial < l : yabai -m window --focus east
+initial < n : yabai -m window --focus prev ; skhd -k "x"
+initial < p : yabai -m window --focus next ; skhd -k "x"
+initial < a : yabai -m space --toggle padding; yabai -m space --toggle gap ; skhd -k "x"
+initial < 1 : yabai -m window --space 1 ; skhd -k "x"
+initial < 2 : yabai -m window --space 2 ; skhd -k "x"
+initial < 3 : yabai -m window --space 3 ; skhd -k "x"
+initial < 4 : yabai -m window --space 4 ; skhd -k "x"
+initial < 5 : yabai -m window --space 5 ; skhd -k "x"
+initial < 6 : yabai -m window --space 6 ; skhd -k "x"
+initial < r : yabai -m space --rotate 90 ; skhd -k "x"
+initial < v : yabai -m space --mirror y-axis ; skhd -k "x"
+initial < shift - v : yabai -m space --mirror x-axis ; skhd -k "x"
+initial < b : yabai -m space --layout bsp ; skhd -k "x"
+initial < s : /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend ; skhd -k "x"
+initial < t : yabai -m config status_bar on; skhd -k "x"
+initial < shift-t : yabai -m config status_bar off; skhd -k "x"
+
+organize < r : yabai -m space --rotate 90
+organize < v : yabai -m space --mirror y-axis
+organize < shift - v : yabai -m space --mirror x-axis
+organize < a : yabai -m space --toggle padding; yabai -m space --toggle gap
+organize < 1 : yabai -m window --space 1
+organize < 2 : yabai -m window --space 2
+organize < 3 : yabai -m window --space 3
+organize < 4 : yabai -m window --space 4
+organize < 5 : yabai -m window --space 5
+organize < 6 : yabai -m window --space 6
+
+organize < h : yabai -m window --resize left:-100:0
+organize < j : yabai -m window --resize bottom:100:0
+organize < k : yabai -m window --resize up:-100:0
+organize < l : yabai -m window --resize right:100:0
+
+organize < shift - h : yabai -m window --resize right:-100:0
+organize < shift - j : yabai -m window --resize bottom:-100:0
+organize < shift - k : yabai -m window --resize up:100:0
+organize < shift - l : yabai -m window --resize left:-100:0
+
+organize < 0 : yabai -m space balance
+organize < f : yabai -m window --toggle float
+
+default < cmd - return : open -na @kitty@/Applications/kitty.app

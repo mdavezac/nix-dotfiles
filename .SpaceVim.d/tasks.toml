@@ -1,0 +1,7 @@
+[home-manager-build]
+command = "make"
+args = ["build"]
+
+[home-manager-switch]
+command = "make"
+args = ["switch"]

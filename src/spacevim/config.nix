@@ -1,0 +1,66 @@
+pkgs:
+let
+  pyls = pkgs.python37.withPackages (ps: [ ps.python-language-server ]);
+in {
+  custom_plugins = [
+    { name = "dhruvasagar/vim-zoom"; }
+    { name = "direnv/direnv.vim"; }
+    { name = "jpalardy/vim-slime"; }
+    { name = "goerz/jupytext.vim"; }
+    { name = "mbbill/undotree"; }
+    {
+      name = "tmhedberg/SimpylFold";
+      filetype = [ "python" ];
+    }
+    { name = "puremourning/vimspector"; }
+    { name = "hashivim/vim-terraform"; }
+  ];
+  layers = [
+    { name = "tmux"; }
+    { name = "colorscheme"; }
+    { name = "cscope"; }
+    { name = "tools#dash"; }
+    { name = "ctrlspace"; }
+    { name = "test"; }
+    {
+      name = "shell";
+      default_position = "right";
+      default_width = 50;
+    }
+    { name = "lang#toml"; }
+    { name = "lang#markdown"; }
+    { name = "lang#python"; }
+    { name = "lang#nix"; }
+    { name = "lang#sh"; }
+    { name = "lang#docker"; }
+    { name = "lang#julia"; }
+    { name = "lang#rust"; }
+    {
+      name = "lsp";
+      filetypes = [ "python" ];
+      override_cmd = { python = [ "${pyls}/bin/pyls" ]; };
+    }
+    {
+      name = "git";
+      git-plugin = "fugitive";
+    }
+    { name = "leaderf"; }
+  ];
+  options = {
+    autocomplete_method = "coc";
+    buffer_index_type = 4;
+    colorscheme = "srcery";
+    colorscheme_bg = "dark";
+    default_indent = 4;
+    enable_cursor_column = 0;
+    enable_tabline_filetype_icon = true;
+    enable_guicolors = true;
+    max_column = 100;
+    plugin_bundle_dir = "$HOME/.local/share/spacevim/repos";
+    statusline_display_mode = true;
+    statusline_inactive_separator = "arrow";
+    statusline_separator = "curve";
+    bootstrap_after = "localcustomconfig#after";
+    bootstrap_before = "localcustomconfig#before";
+  };
+}
