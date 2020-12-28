@@ -1,6 +1,6 @@
 pkgs:
 let
-  pyls = pkgs.python37.withPackages (ps: [ ps.python-language-server ]);
+  pyls = pkgs.python37Packages.python-language-server;
 in {
   custom_plugins = [
     { name = "dhruvasagar/vim-zoom"; }
@@ -35,10 +35,12 @@ in {
     { name = "lang#docker"; }
     { name = "lang#julia"; }
     { name = "lang#rust"; }
+    { name = "autocomplete"; }
     {
       name = "lsp";
       filetypes = [ "python" ];
-      override_cmd = { python = [ "${pyls}/bin/pyls" ]; };
+      python_file_head = [];
+      enable_typeinfo = true;
     }
     {
       name = "git";
