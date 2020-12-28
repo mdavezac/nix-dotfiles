@@ -13,6 +13,7 @@
         format = ''via [$symbol$version]($style) '';
       };
       gcloud.disabled = true;
+      aws.disabled = true;
       character = {
         symbol = "➜";
         error_symbol = "✗";
