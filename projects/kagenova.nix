@@ -3,14 +3,11 @@ let
   mkProject = import ./lib/project.nix "kagenova";
   emails = import ./lib/emails.nix;
   pylance_dir = (import ../machine.nix).pylance_dir;
+  aws = (import ../machine.nix).aws;
+  pulumi = (import ../machine.nix).pulumi;
 in {
-  imports = builtins.map mkProject [
-    "tensossht"
-    "learn"
-    "website"
-    "move"
-    "packaging"
-  ];
+  imports =
+    builtins.map mkProject [ "tensossht" "learn" "website" "move" "packaging" ];
 
   # tensossht: {{{
   projects.kagenova.tensossht = {
@@ -124,24 +121,36 @@ in {
   # move: {{{
   projects.kagenova.move = {
     enable = true;
-    repos.learn = {
+    repos.move = {
       url =
         "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
-      dest = ".";
+      dest = "move";
       settings.user.email = emails.gitlab;
     };
+    repos.pipeline = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
+      dest = "pipeline";
+      settings.user.email = emails.gitlab;
+
+    };
     extraEnvrc = ''
-      layout poetry
-      extra_pip_packages pdbpp ipython jupyter
+      unset PYTHONPATH
+      layout python3 python3.7
+      extra_pip_packages poetry pdbpp ipython jupyter
       check_precommit
+      export AWS_ACCESS_KEY_ID=${aws.access_key};
+      export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
+      export PULUMI_CONFIG_PASSPHRASE=${pulumi.kagemove};
     '';
     nixshell.text = ''
       buildInputs = [
-        (python38.withPackages (p: [ p.poetry p.pip ]))
-        google-cloud-sdk
+        python37
+        awscli2
       ];
     '';
     coc = {
+      "pyls.enable" = false;
       "python.linting.enabled" = true;
       "python.linting.mypyEnabled" = false;
       "python.linting.flake8Enabled" = true;
@@ -151,7 +160,19 @@ in {
       "codeLens.enable" = true;
       "diagnostic.enable" = true;
       "diagnostic.virtualText" = true;
+      languageserver = {
+        terraform = {
+          command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
+          filetypes = [ "terraform" ];
+          initializationOptions = { };
+        };
+      };
     };
+    vim = ''
+      let g:terraform_fold_sections=1
+      let g:terraform_fmt_on_save=1
+    '';
+
   };
   # }}}
 
