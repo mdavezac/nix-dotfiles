@@ -104,6 +104,7 @@ in {
       settings.user.email = emails.gitlab;
     };
     extraEnvrc = ''
+      unset PYTHONPATH
       layout poetry
       extra_pip_packages pdbpp ipython jupyter rstcheck
       check_precommit
@@ -111,7 +112,8 @@ in {
     nixshell = {
       text = ''
         buildInputs = [
-          (python38.withPackages (p: [ p.poetry p.pip ]))
+          python38
+          poetry
         ];
       '';
     };
@@ -147,6 +149,7 @@ in {
       buildInputs = [
         python37
         awscli2
+        google-cloud-sdk
       ];
     '';
     coc = {
