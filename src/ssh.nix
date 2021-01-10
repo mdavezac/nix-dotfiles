@@ -11,19 +11,16 @@
       gitlab = {
         user = "git";
         hostname = "gitlab.com";
-        identityFile = "/Users/mdavezac/.ssh/gitlab_ed25519";
         identitiesOnly = true;
       };
       github = {
         user = "git";
         hostname = "github.com";
-        identityFile = "/Users/mdavezac/.ssh/github_ed25519";
         identitiesOnly = true;
       };
       bitbucket = {
         user = "git";
         hostname = "bitbucket.com";
-        identityFile = "/Users/mdavezac/.ssh/bitbucket_ed25519";
         identitiesOnly = true;
       };
       hpc = {
