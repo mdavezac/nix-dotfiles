@@ -3,15 +3,17 @@ let
   machine = import ../machine.nix;
   email = (import ../projects/lib/emails.nix).github;
 in {
-  home.packages = [
-    pkgs.pre-commit
-    pkgs.gitAndTools.gh
-    pkgs.gitAndTools.git-hub
-    pkgs.tig
-    pkgs.cacert
-    pkgs.pinentry_mac
-  ];
+  home.packages = [ pkgs.pre-commit pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
 
+  programs.gh = {
+    enable = true;
+    editor = "nvim";
+    gitProtocol = "https";
+    aliases = {
+      co = "pr checkout";
+      pv = "pr view -w";
+    };
+  };
   programs.fish.interactiveShellInit = ''
     ${pkgs.gitAndTools.gh}/bin/gh completion --shell fish | source
   '';
