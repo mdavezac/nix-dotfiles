@@ -2,7 +2,12 @@
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
-  home.packages = [ pkgs.cacert pkgs.any-nix-shell pkgs.neofetch pkgs.curl ];
+  home.packages = [
+    pkgs.cacert
+    pkgs.any-nix-shell
+    pkgs.neofetch
+    pkgs.curl
+  ];
 
   programs.home-manager.enable = true;
 
