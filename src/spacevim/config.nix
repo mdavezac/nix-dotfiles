@@ -1,6 +1,5 @@
 pkgs:
-let
-  pyls = pkgs.python37Packages.python-language-server;
+let pyls = pkgs.python37Packages.python-language-server;
 in {
   custom_plugins = [
     { name = "dhruvasagar/vim-zoom"; }
@@ -39,7 +38,8 @@ in {
     {
       name = "lsp";
       filetypes = [ "python" ];
-      python_file_head = [];
+      python_file_head = [ ];
+      override_cmd.python = [ "${pyls}/bin/pyls" ];
       enable_typeinfo = true;
     }
     {
