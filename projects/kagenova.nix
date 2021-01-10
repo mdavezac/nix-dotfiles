@@ -6,8 +6,14 @@ let
   aws = (import ../machine.nix).aws;
   pulumi = (import ../machine.nix).pulumi;
 in {
-  imports =
-    builtins.map mkProject [ "tensossht" "learn" "website" "move" "packaging" ];
+  imports = builtins.map mkProject [
+    "tensossht"
+    "learn"
+    "website"
+    "move"
+    "packaging"
+    "ai-pipeline"
+  ];
 
   # tensossht: {{{
   projects.kagenova.tensossht = {
@@ -122,7 +128,7 @@ in {
 
   # move: {{{
   projects.kagenova.move = {
-    enable = true;
+    enable = false;
     repos.move = {
       url =
         "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
@@ -138,12 +144,12 @@ in {
     };
     extraEnvrc = ''
       unset PYTHONPATH
-      layout python3 python3.7
+      layout python3
       extra_pip_packages poetry pdbpp ipython jupyter
       check_precommit
       export AWS_ACCESS_KEY_ID=${aws.access_key};
       export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
-      export PULUMI_CONFIG_PASSPHRASE=${pulumi.kagemove};
+      export PULUMI_CONFIG_PASSPHRASE=${pulumi.ai-pipeline};
     '';
     nixshell.text = ''
       buildInputs = [
@@ -179,6 +185,39 @@ in {
   };
   # }}}
 
+  # move: {{{
+  projects.kagenova.ai-pipeline = {
+    enable = true;
+    repos.pipeline = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+
+    };
+    extraEnvrc = ''
+      eval "$(lorri direnv)"
+      layout python3
+      # extra_pip_packages poetry pdbpp ipython jupyter
+      check_precommit
+      export AWS_ACCESS_KEY_ID=${aws.access_key};
+      export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
+      export PULUMI_CONFIG_PASSPHRASE=${pulumi.ai-pipeline};
+    '';
+    coc = {
+      "pyls.enable" = false;
+      "python.linting.enabled" = true;
+      "python.linting.mypyEnabled" = false;
+      "python.linting.flake8Enabled" = true;
+      "python.linting.pylintEnabled" = false;
+      "python.jediEnabled" = false;
+      "python.formatting.provider" = "black";
+      "codeLens.enable" = true;
+      "diagnostic.enable" = true;
+      "diagnostic.virtualText" = true;
+    };
+  };
+  # }}}
   # website: {{{
   projects.kagenova.website = {
     enable = true;
