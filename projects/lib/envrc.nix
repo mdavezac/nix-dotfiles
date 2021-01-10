@@ -13,9 +13,9 @@ let
         };
     in ''
       [ -d "${destination}/.git" ] || cloner ${url} ${destination} ${origin}
-    '' + lib.optionalString (emptyAttrs settings)
-    "git_settings ${createSettings settings} ${destination}\n"
-    + lib.optionalString (lib.stringLength ignore > 0) ''
+    '' + lib.optionalString (emptyAttrs settings) ''
+      git_settings ${createSettings settings} ${destination}
+    '' + lib.optionalString (lib.stringLength ignore > 0) ''
       mkdir -p ${destination}/.git/info
       cat > ${destination}/.git/info/exclude <<EOF
       ${ignore}
@@ -26,7 +26,10 @@ let
   isNixshellEnabled = (import ./nixshell.nix).isEnabled;
 
 in (cloners config.repos) + ''
-  export fish_history="${builtins.concatStringsSep "" project}"
+  export fish_history="${
+    builtins.replaceStrings [ "-" " " ] [ "_"  "_" ]
+    (builtins.concatStringsSep "" project)
+  }"
   export TMUX_SESSION_NAME=${builtins.concatStringsSep "-" project}
 '' + lib.optionalString (isNixshellEnabled config.nixshell) ''
   eval "$(lorri direnv)"

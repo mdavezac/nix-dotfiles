@@ -83,6 +83,12 @@ let
       default = "";
     };
 
+    file = lib.mkOption {
+      description = "Add files to project root";
+      type = lib.types.attrs;
+      default = { };
+    };
+
     vim-spell = lib.mkOption {
       description = "content of vim spell file";
       type = lib.types.str;
@@ -148,6 +154,10 @@ in {
     (lib.mkIf ((builtins.length (lib.attrValues cfg.coc)) > 0) {
       home.file."${path}/.vim/coc-settings.json".source =
         builtins.toString (formattedCoc (builtins.toJSON cfg.coc));
+    })
+    (lib.mkIf ((builtins.length (lib.attrValues cfg.file)) > 0) {
+      home.file = (lib.mapAttrs'
+        (name: value: lib.nameValuePair ("${path}/${name}") (value)) cfg.file);
     })
   ]);
 }
