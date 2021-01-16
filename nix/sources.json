@@ -1,0 +1,62 @@
+{
+    "fzf.kak": {
+        "branch": "master",
+        "description": "FZF  for Kakoune",
+        "homepage": "",
+        "owner": "andreyorst",
+        "repo": "fzf.kak",
+        "rev": "f23daa698ad95493fbd675ae153e3cac13ef34e9",
+        "sha256": "0q19ynjixy0wx9ygwj26bdm6ilkd820gy21kid73imgvkm6cgx85",
+        "type": "tarball",
+        "url": "https://github.com/andreyorst/fzf.kak/archive/f23daa698ad95493fbd675ae153e3cac13ef34e9.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "home-manager": {
+        "branch": "master",
+        "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
+        "homepage": "https://nix-community.github.io/home-manager/",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "4b772fd6988dd206f0ed4cb1b2d7c4c6d4f0f455",
+        "sha256": "1nlgnc00hjkmjdagj9kayxcymwxhqz9n28b84b6xblawpjbmdg4j",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/home-manager/archive/4b772fd6988dd206f0ed4cb1b2d7c4c6d4f0f455.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "niv": {
+        "branch": "master",
+        "description": "Easy dependency management for Nix projects",
+        "homepage": "https://github.com/nmattia/niv",
+        "owner": "nmattia",
+        "repo": "niv",
+        "rev": "3cd7914b2c4cff48927e11c216dadfab7d903fe5",
+        "sha256": "1agq4nvbhrylf2s77kb4xhh9k7xcwdwggq764k4jgsbs70py8cw3",
+        "type": "tarball",
+        "url": "https://github.com/nmattia/niv/archive/3cd7914b2c4cff48927e11c216dadfab7d903fe5.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixpkgs-unstable",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "929768261a3ede470eafb58d5b819e1a848aa8bf",
+        "sha256": "0zi54vbfi6i6i5hdd4v0l144y1c8rg6hq6818jjbbcnm182ygyfa",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/929768261a3ede470eafb58d5b819e1a848aa8bf.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "smarttab.kak": {
+        "branch": "master",
+        "description": "Automatic handling different styles of indentation and alignment.",
+        "homepage": "",
+        "owner": "andreyorst",
+        "repo": "smarttab.kak",
+        "rev": "6e3264df7a9a786961e634d5ae8fb117ca86ef0a",
+        "sha256": "00r9i4v6aiy6yabf22y27idl2cvjivdfwn21aypxr0d849rfg6q8",
+        "type": "tarball",
+        "url": "https://github.com/andreyorst/smarttab.kak/archive/6e3264df7a9a786961e634d5ae8fb117ca86ef0a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
