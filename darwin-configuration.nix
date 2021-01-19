@@ -6,7 +6,7 @@ let
 in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = [ ];
+  environment.systemPackages = [ nivpkgs.nix-index ];
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
@@ -31,7 +31,6 @@ in {
     fonts = [ pkgs.nerdfonts pkgs.victor-mono ];
   };
 
-  programs.nix-index.enable = true;
   home-manager.users.mdavezac = import ./home.nix;
 
   system.defaults.dock.autohide = true;
