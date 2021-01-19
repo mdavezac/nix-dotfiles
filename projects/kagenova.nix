@@ -185,7 +185,7 @@ in {
   };
   # }}}
 
-  # move: {{{
+  # ai-pipeline: {{{
   projects.kagenova.ai-pipeline = {
     enable = true;
     repos.pipeline = {
@@ -193,16 +193,21 @@ in {
         "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
       dest = ".";
       settings.user.email = emails.gitlab;
-
+      ignore = ''
+        old/
+        .vim/
+        .local/
+        .envrc
+      '';
     };
     extraEnvrc = ''
       eval "$(lorri direnv)"
-      layout python3
-      # extra_pip_packages poetry pdbpp ipython jupyter
+      layout poetry 3.6
       check_precommit
       export AWS_ACCESS_KEY_ID=${aws.access_key};
       export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
       export PULUMI_CONFIG_PASSPHRASE=${pulumi.ai-pipeline};
+      export PULUMI_HOME=$(pwd)/.local/pulumi;
     '';
     coc = {
       "pyls.enable" = false;
