@@ -1,5 +1,10 @@
 pkgs:
-let pyls = pkgs.python37Packages.python-language-server;
+let
+  pyls = pkgs.buildEnv {
+    name = "pyls";
+    paths = [ pkgs.python37Packages.python-language-server ];
+    pathsToLink = [ "/bin" ];
+  };
 in {
   custom_plugins = [
     { name = "dhruvasagar/vim-zoom"; }
@@ -51,7 +56,7 @@ in {
   options = {
     autocomplete_method = "coc";
     buffer_index_type = 4;
-    colorscheme = "srcery";
+    colorscheme = "gruvbox";
     colorscheme_bg = "dark";
     default_indent = 4;
     enable_cursor_column = 0;

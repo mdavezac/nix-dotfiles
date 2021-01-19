@@ -25,3 +25,8 @@ filetypes = ["python"]
 roots = ["requirements.txt", "setup.py", ".git", "pyproject.toml"]
 command = "@pyls@"
 offset_encoding = "utf-8"
+
+[language.nix]
+filetypes = ["nix"]
+command = "@nixlsp@"
+roots = [".git", "shell.nix"]

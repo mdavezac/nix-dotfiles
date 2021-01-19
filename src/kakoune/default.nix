@@ -1,27 +1,20 @@
 { config, pkgs, lib, ... }:
 let
+  pyls = pkgs.buildEnv {
+    name = "pyls";
+    paths = [ pkgs.python37Packages.python-language-server ];
+    pathsToLink = [ "/bin" ];
+  };
   lsp_toml = pkgs.substituteAll {
     src = ./lsp.toml;
-    pyls = "${pkgs.python38Packages.python-language-server}/bin/pyls";
+    pyls = "${pyls}/bin/pyls";
+    nixlsp = "${pkgs.rnix-lsp}/bin/rnix-lsp";
   };
-  fzf = pkgs.fetchFromGitHub {
-    owner = "andreyorst";
-    repo = "fzf.kak";
-    rev = "master";
-    sha256 = "1d3d5v3hlrbxan5qgq6hj7hr3v7fdqlrvccgf7d72x2009v17x2a";
-  };
-  smarttab = pkgs.fetchFromGitHub {
-    owner = "andreyorst";
-    repo = "smarttab.kak";
-    rev = "master";
-    sha256 = "048qq8aj405q3zm28jjh6ardxb8ixkq6gs1h3bwdv2qc4zi2nj4g";
-  };
-  repl-bridge = pkgs.fetchFromGitHub {
-    owner = "JJK96";
-    repo = "kakoune-repl-bridge";
-    rev = "master";
-    sha256 = "16w6qi0zmyb4wx95yx5m9id8kpf84bcvnw0y9k156d42wf4kqjp8";
-  };
+  sources = import ../../nix/sources.nix;
+  fzf = sources."fzf.kak";
+  smarttab = sources."smarttab.kak";
+  repl-bridge = sources.kakoune-repl-bridge;
+  nord = sources."nord-kakoune";
 in {
   programs.kakoune = {
     enable = true;
@@ -29,6 +22,7 @@ in {
       showMatching = true;
       indentWidth = 2;
       tabStop = 2;
+      colorScheme = "nord";
       numberLines = {
         enable = true;
         relative = true;
@@ -42,7 +36,7 @@ in {
         enableMouse = true;
         assistant = "cat";
         setTitle = true;
-        statusLine = "top";
+        statusLine = "bottom";
       };
       hooks = [
         {
@@ -77,14 +71,63 @@ in {
         }
         {
           commands = ''
-            set window formatcmd '${pkgs.python38Packages.black}/bin/black --fast -q -'
+            set window formatcmd '${pkgs.black}/bin/black --fast -q -'
             set-option window indentwidth 4
             lsp-enable-window
-            hook window BufWritePre .* lsp-formatting-sync
+            hook window BufWritePre .* %{format}
             map global normal = ': repl-bridge python send<ret>R'
           '';
           name = "WinSetOption";
           option = "filetype=(python)";
+        }
+        {
+          commands = ''
+            set window formatcmd '${pkgs.nixfmt}/bin/nixfmt'
+            set-option window indentwidth 4
+            lsp-enable-window
+            hook window BufWritePre .* %{format}
+            map global --docstring "send to repl" user > ': repl-bridge python send<ret>R'
+          '';
+          name = "WinSetOption";
+          option = "filetype=(nix)";
+        }
+      ];
+      keyMappings = [
+        {
+          key = "F";
+          mode = "user";
+          docstring = "fzf mode";
+          effect = ": fzf-mode<ret>";
+        }
+        {
+          key = "f";
+          mode = "user";
+          docstring = "fzf files";
+          effect = ": fzf-mode<ret>f";
+        }
+        {
+          key = "b";
+          mode = "user";
+          docstring = "fzf buffers";
+          effect = ": fzf-mode<ret>b";
+        }
+        {
+          key = "/";
+          mode = "user";
+          docstring = "fzf search";
+          effect = ": fzf-mode<ret>/";
+        }
+        {
+          key = "l";
+          mode = "user";
+          docstring = "language tools";
+          effect = ":<space>enter-user-mode<space>lsp<ret>";
+        }
+        {
+          key = "=";
+          mode = "global";
+          docstring = "wrap paragraph";
+          effect = "|fmt -w $kak_opt_autowrap_column<ret>";
         }
       ];
     };
@@ -93,20 +136,24 @@ in {
         ${pkgs.kak-lsp}/bin/kak-lsp --kakoune \
             -s \$kak_session --config ${lsp_toml}
       }
+      nop %sh{
+          (${pkgs.kak-lsp}/bin/kak-lsp -s $kak_session -vvv ) > /tmp/lsp_"$(date +%F-%T-%N)"_kak-lsp_log 2>&1 < /dev/null &
+      }
+
 
       # fzf
-      map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
       source "${fzf}/rc/fzf.kak"
       source "${fzf}/rc/modules/fzf-file.kak"   # fzf file chooser
       source "${fzf}/rc/modules/fzf-buffer.kak" # switching buffers with fzf
       source "${fzf}/rc/modules/fzf-search.kak" # search within file contents
       source "${fzf}/rc/modules/fzf-vcs.kak"
-      source "${fzf}/rc/modules/VCS/fzf-git.kak"
+      source "${fzf}/rc/modules/fzf-grep.kak"
 
       hook global ModuleLoaded fzf %{
-        set-option global fzf_implementation 'fzf'
+        set-option global fzf_implementation 'sk'
         set-option global fzf_highlight_command 'bat'
-        set-option global fzf_file_command "${pkgs.ripgrep}/bin/rg --files --hidden"
+        set-option global fzf_grep_command 'rg'
+        set-option global fzf_file_command "rg --files --hidden"
       }
 
       source "${smarttab}/rc/smarttab.kak"
@@ -117,8 +164,18 @@ in {
       }
 
       source "${repl-bridge}/repl-bridge.kak"
+
+      hook global ModeChange insert:.* %{
+          set-face global PrimaryCursor      rgb:ffffff,rgb:000000+F
+      }
+
+      hook global ModeChange .*:insert %{
+          set-face global PrimaryCursor      rgb:ffffff,rgb:008800+F
+      }
     '';
   };
+
+  home.file.".config/kak/colors/nord.kak".source = "${nord}/nord.kak";
   programs.fish.functions.kak = ''
     if test -z "$TMUX_SESSION_NAME"
       command kak $argv

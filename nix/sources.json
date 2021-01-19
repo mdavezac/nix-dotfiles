@@ -23,6 +23,18 @@
         "url": "https://github.com/nix-community/home-manager/archive/4b772fd6988dd206f0ed4cb1b2d7c4c6d4f0f455.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "kakoune-repl-bridge": {
+        "branch": "master",
+        "description": "Perform multiple calculations in the same repl in the background",
+        "homepage": null,
+        "owner": "JJK96",
+        "repo": "kakoune-repl-bridge",
+        "rev": "21ea22577f42f1d082c1977e821a9c3734acd330",
+        "sha256": "16w6qi0zmyb4wx95yx5m9id8kpf84bcvnw0y9k156d42wf4kqjp8",
+        "type": "tarball",
+        "url": "https://github.com/JJK96/kakoune-repl-bridge/archive/21ea22577f42f1d082c1977e821a9c3734acd330.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
@@ -45,6 +57,30 @@
         "sha256": "0zi54vbfi6i6i5hdd4v0l144y1c8rg6hq6818jjbbcnm182ygyfa",
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs/archive/929768261a3ede470eafb58d5b819e1a848aa8bf.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nord-kakoune": {
+        "branch": "master",
+        "description": "Nord Colorscheme for Kakoune",
+        "homepage": null,
+        "owner": "nesyamun",
+        "repo": "nord-kakoune",
+        "rev": "8031d920d2d1cf9e384a14d3bebfd937663049df",
+        "sha256": "1j4hn0x5blaqg67i3qvsrm2w91401f41jqipbi0bbqcbhb86w8yp",
+        "type": "tarball",
+        "url": "https://github.com/nesyamun/nord-kakoune/archive/8031d920d2d1cf9e384a14d3bebfd937663049df.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nord-kitty": {
+        "branch": "master",
+        "description": "An arctic, north-bluish clean and elegant Kitty theme",
+        "homepage": null,
+        "owner": "connorholyday",
+        "repo": "nord-kitty",
+        "rev": "8fd63735301f89dc1784a55f8fdb95e809879b12",
+        "sha256": "1pv83bgyyyq9ajsymlv36vrf60lnzryaxpwf9jg786qvg6cd2yrq",
+        "type": "tarball",
+        "url": "https://github.com/connorholyday/nord-kitty/archive/8fd63735301f89dc1784a55f8fdb95e809879b12.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "smarttab.kak": {

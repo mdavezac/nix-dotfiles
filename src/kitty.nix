@@ -1,19 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  jpeg = pkgs.fetchurl {
-    url = "https://img.wallpapersafari.com/desktop/1920/1080/89/41/WIoneJ.jpg";
-    sha256 = "00fa91vydmdhms4njn44425bj1fw64442zsh855a7zbpnjz4i4mv";
-    name = "wallpaper.jpg";
-  };
-  kitty-theme = pkgs.fetchurl {
-    url =
-      "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Atom.conf";
-    sha256 = "1cbxp60jrx1i8gqcfmb6mszlns3kzqyz9wyizhd7pjg66pv218l3";
-    name = "theme.conf";
-
-  };
-  png = pkgs.runCommand "wallpaper.png" { buildInputs = [ pkgs.imagemagick ]; }
-    "convert ${jpeg} $out";
+  kitty-theme = (import ../nix/sources.nix).nord-kitty;
 in {
   programs.kitty = {
     enable = true;
@@ -29,7 +16,8 @@ in {
       shell = "${pkgs.fish}/bin/fish --login";
       macos_quit_when_last_window_closed = true;
       hide_window_decorations = true;
-      include = "${kitty-theme}";
+      macos_option_as_alt = "left";
+      include = "${kitty-theme}/nord.conf";
     };
     keybindings = {
       "cmd+plus" = "change_font_size all +2.0";
