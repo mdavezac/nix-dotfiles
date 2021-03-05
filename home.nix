@@ -1,8 +1,20 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+let
+  sources = import ./nix/sources.nix;
+  pkgs = import sources.nixpkgs { };
+  vscode = pkgs.buildEnv {
+    name = "vscode";
+    paths = [pkgs.vscode pkgs.dotnet-sdk_5];
+    pathsToLink = ["/share" "/bin" "/Applications"];
+  };
+in {
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
-  home.packages = [ pkgs.cacert pkgs.any-nix-shell pkgs.neofetch pkgs.curl ];
+  home.packages = [
+    pkgs.cacert pkgs.any-nix-shell pkgs.neofetch pkgs.curl
+    vscode
+  ];
 
   programs.home-manager.enable = true;
 
@@ -15,8 +27,9 @@
     ./src/tmux.nix
     ./src/starship.nix
     ./src/kitty.nix
-    ./src/vscode
+    # ./src/vscode
     ./src/kakoune
+    ./src/doom
     ./projects
   ];
   home.sessionVariables.EDITOR = "nvim";
@@ -24,6 +37,7 @@
   home.file.".skhdrc".text = (builtins.readFile (pkgs.substituteAll {
     src = ./files/skhdrc;
     kitty = "${pkgs.kitty}";
+    emacs = "${pkgs.emacs}";
   }));
   home.file.".yabairc".source = ./files/yabairc;
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
@@ -37,4 +51,9 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "19.09";
+
+  home.activation.vscode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    cd $HOME/Applications
+    $DRY_RUN_CMD sudo ln -fs ${vscode}/Applications/Visual\ Studio\ Code.app/ .
+  '';
 }

@@ -2,8 +2,17 @@
 let
   pyls = pkgs.buildEnv {
     name = "pyls";
-    paths = [ pkgs.python37Packages.python-language-server ];
-    pathsToLink = [ "/bin" ];
+    paths = [
+      (pkgs.python37.withPackages (p:
+        with p; [
+          python-language-server
+          pyls-black
+          pyls-isort
+          pyflakes
+          rope
+        ]))
+    ];
+    pathsToLink = [ "/bin" "/lib" ];
   };
   lsp_toml = pkgs.substituteAll {
     src = ./lsp.toml;
@@ -15,6 +24,7 @@ let
   smarttab = sources."smarttab.kak";
   repl-bridge = sources.kakoune-repl-bridge;
   nord = sources."nord-kakoune";
+  powerline = sources."powerline.kak";
 in {
   programs.kakoune = {
     enable = true;
@@ -71,6 +81,7 @@ in {
         }
         {
           commands = ''
+            set-option window lintcmd "${pkgs.python37Packages.flake8}/bin/flake8 --filename='*' --format='%%(path)s:%%(row)d:%%(col)d: error: %%(text)s'"
             set window formatcmd '${pkgs.black}/bin/black --fast -q -'
             set-option window indentwidth 4
             lsp-enable-window
@@ -86,7 +97,6 @@ in {
             set-option window indentwidth 4
             lsp-enable-window
             hook window BufWritePre .* %{format}
-            map global --docstring "send to repl" user > ': repl-bridge python send<ret>R'
           '';
           name = "WinSetOption";
           option = "filetype=(nix)";
@@ -140,6 +150,19 @@ in {
           (${pkgs.kak-lsp}/bin/kak-lsp -s $kak_session -vvv ) > /tmp/lsp_"$(date +%F-%T-%N)"_kak-lsp_log 2>&1 < /dev/null &
       }
 
+      # powerline
+      source "${powerline}/rc/powerline.kak"
+      source "${powerline}/rc/modules/bufname.kak"
+      source "${powerline}/rc/modules/session.kak"
+      source "${powerline}/rc/modules/git.kak"
+      source "${powerline}/rc/modules/mode_info.kak"
+      source "${powerline}/rc/modules/lsp.kak"
+      source "${powerline}/rc/themes/default.kak"
+
+      powerline-start
+      hook global ModuleLoaded powerline %{
+          set-option global powerline_format "bufname git session mode_info lsp"
+      }
 
       # fzf
       source "${fzf}/rc/fzf.kak"

@@ -2,12 +2,7 @@
 pkgs.stdenv.mkDerivation {
   name = "spacevim_src";
   buildInputs = [ pkgs.neovim-unwrapped ];
-  src = pkgs.fetchFromGitHub {
-    owner = "SpaceVim";
-    repo = "SpaceVim";
-    rev = "v1.5.0";
-    sha256 = "1xw4l262x7wzs1m65bddwqf3qx4254ykddsw3c3p844pb3mzqhh7";
-  };
+  src = (import ../nix/sources.nix).spacevim;
   patchPhase = ''
     substituteInPlace autoload/SpaceVim.vim \
         --replace "exe 'helptags ' . help" ""

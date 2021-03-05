@@ -15,7 +15,7 @@
       set -e DIRENV_DIR
       set -e DIRENV_WATCHES
       function autotmux --on-variable TMUX_SESSION_NAME
-        if test "$TERM_PROGRAM" != "vscode"
+        if test "$TERM_PROGRAM" != "vscode" -a -z "$EMACS" -a -z "$INSIDE_EMACS"
           if test -n "$TMUX_SESSION_NAME" #only if set
             if test -z $TMUX #not if in TMUX
               if tmux has-session -t $TMUX_SESSION_NAME

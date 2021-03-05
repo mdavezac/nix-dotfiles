@@ -5,15 +5,41 @@ let
   pylance_dir = (import ../machine.nix).pylance_dir;
   aws = (import ../machine.nix).aws;
   pulumi = (import ../machine.nix).pulumi;
+  toTOML = path: toml : pkgs.runCommand "init.toml" {
+    buildInputs = [ pkgs.remarshal ];
+    preferLocalBuild = true;
+  } ''
+    remarshal -if json -of toml \
+      < ${pkgs.writeText "${path}" (builtins.toJSON toml)} \
+      > $out
+  '';
+  original = import ../src/starship.nix { inherit config lib pkgs; };
+  starsets = original.programs.starship.settings // {
+      nix_shell.disabled = true;
+      package.disabled = true;
+      python = {
+        disabled = false;
+        format = ''via [$symbol$version]($style) '';
+      };
+      gcloud = {
+        disabled = false;
+        format = "[$symbol$active]($style) ";
+      };
+    };
+
 in {
-  imports = builtins.map mkProject [
+  imports = (builtins.map mkProject [
     "tensossht"
     "learn"
     "website"
-    "move"
+    "copernic360"
     "packaging"
     "ai-pipeline"
-  ];
+    "alignment"
+    "plugin"
+  ]);
+
+  home.file.".aws/credentials".text = lib.generators.toINI { } aws;
 
   # tensossht: {{{
   projects.kagenova.tensossht = {
@@ -98,8 +124,8 @@ in {
         };
       };
     };
-  };
-  # }}}
+   };
+   # }}}
 
   # learn: {{{
   projects.kagenova.learn = {
@@ -111,14 +137,14 @@ in {
     };
     extraEnvrc = ''
       unset PYTHONPATH
-      layout poetry
+      layout poetry python3.7
       extra_pip_packages pdbpp ipython jupyter rstcheck
       check_precommit
     '';
     nixshell = {
       text = ''
         buildInputs = [
-          python38
+          python37
           poetry
         ];
       '';
@@ -126,63 +152,49 @@ in {
   };
   # }}}
 
-  # move: {{{
-  projects.kagenova.move = {
-    enable = false;
-    repos.move = {
+  # copernic360: {{{
+  projects.kagenova.copernic360 = let 
+    starship = toTOML "starship.toml" starsets;
+  in {
+    enable = true;
+    repos.copernic360 = {
       url =
         "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
-      dest = "move";
+      dest = ".";
       settings.user.email = emails.gitlab;
+      ignore = ''
+        pipeline/
+        .vim/
+        .local/
+        .envrc
+        TODOs.org
+      '';
     };
     repos.pipeline = {
       url =
         "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
       dest = "pipeline";
       settings.user.email = emails.gitlab;
-
     };
     extraEnvrc = ''
-      unset PYTHONPATH
-      layout python3
-      extra_pip_packages poetry pdbpp ipython jupyter
+      eval "$(lorri direnv)"
+      layout poetry 3.7
       check_precommit
-      export AWS_ACCESS_KEY_ID=${aws.access_key};
-      export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
-      export PULUMI_CONFIG_PASSPHRASE=${pulumi.ai-pipeline};
+      export STARSHIP_CONFIG=${starship}
     '';
-    nixshell.text = ''
-      buildInputs = [
-        python37
-        awscli2
-        google-cloud-sdk
-      ];
-    '';
-    coc = {
-      "pyls.enable" = false;
-      "python.linting.enabled" = true;
-      "python.linting.mypyEnabled" = false;
-      "python.linting.flake8Enabled" = true;
-      "python.linting.pylintEnabled" = false;
-      "python.jediEnabled" = false;
-      "python.formatting.provider" = "black";
-      "codeLens.enable" = true;
-      "diagnostic.enable" = true;
-      "diagnostic.virtualText" = true;
-      languageserver = {
-        terraform = {
-          command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
-          filetypes = [ "terraform" ];
-          initializationOptions = { };
-        };
-      };
-    };
-    vim = ''
-      let g:terraform_fold_sections=1
-      let g:terraform_fmt_on_save=1
-    '';
-
   };
+  home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI {} { core = {
+    account = "mayeul.davezac@kagenova.com";
+    project = "spatial360-development";
+  };};
+  home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI {} { core = {
+    account = "mayeul.davezac@kagenova.com";
+    project = "spatial360-staging";
+  };};
+  home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI {} { core = {
+    account = "mayeul.davezac@kagenova.com";
+    project = "spatial360-production";
+  };};
   # }}}
 
   # ai-pipeline: {{{
@@ -194,7 +206,19 @@ in {
       dest = ".";
       settings.user.email = emails.gitlab;
       ignore = ''
-        old/
+        app/
+        .vim/
+        .local/
+        .envrc
+        TODOs.org
+      '';
+    };
+    repos.app = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
+      dest = "app";
+      settings.user.email = emails.gitlab;
+      ignore = ''
         .vim/
         .local/
         .envrc
@@ -202,12 +226,11 @@ in {
     };
     extraEnvrc = ''
       eval "$(lorri direnv)"
-      layout poetry 3.6
+      layout poetry 3.7
       check_precommit
-      export AWS_ACCESS_KEY_ID=${aws.access_key};
-      export AWS_SECRET_ACCESS_KEY=${aws.secret_access_key};
-      export PULUMI_CONFIG_PASSPHRASE=${pulumi.ai-pipeline};
+      export AWS_REGION=eu-west-2
       export PULUMI_HOME=$(pwd)/.local/pulumi;
+      [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
     coc = {
       "pyls.enable" = false;
@@ -223,6 +246,7 @@ in {
     };
   };
   # }}}
+
   # website: {{{
   projects.kagenova.website = {
     enable = true;
@@ -361,6 +385,63 @@ in {
       };
       "clangd.path" = "/usr/local/Cellar/llvm/10.0.1_1/bin/clangd";
     };
+  };
+  # }}}
+
+  # cdt: {{{
+  projects.kagenova.alignment = {
+    enable = true;
+    repos.learn = {
+      url = "https://gitlab.com/kagenova/kagelearn/development/alignment.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = ''
+        .vim/
+        .local/
+        .envrc
+        TODOs.org
+      '';
+    };
+    extraEnvrc = ''
+      eval "$(lorri direnv)"
+      layout poetry 3.7
+      check_precommit
+      export PULUMI_CONFIG_PASSPHRASE="${pulumi.cdt}";
+      export PULUMI_HOME=$(pwd)/.local/pulumi;
+      [ -e TODOs.org ] || ln -s ~/org/cdt.org TODOs.org
+    '';
+    coc = {
+      "pyls.enable" = false;
+      "python.linting.enabled" = true;
+      "python.linting.mypyEnabled" = false;
+      "python.linting.flake8Enabled" = true;
+      "python.linting.pylintEnabled" = false;
+      "python.jediEnabled" = false;
+      "python.formatting.provider" = "black";
+      "codeLens.enable" = true;
+      "diagnostic.enable" = true;
+      "diagnostic.virtualText" = true;
+    };
+  };
+  # }}}
+
+  # plugin: {{{
+  projects.kagenova.plugin = {
+    enable = true;
+    repos.plugin = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/kagemove-plugin.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = ''
+        .vim/
+        .local/
+        .envrc
+      '';
+    };
+    extraEnvrc = ''
+      check_precommit
+    '';
   };
   # }}}
 }

@@ -22,10 +22,11 @@
       source /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
       source /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
     '';
+    functions.__fish_describe_command = '''';
   };
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
   };
-  programs.command-not-found.enable = true;
+  programs.command-not-found.enable = false;
 }

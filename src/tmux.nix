@@ -12,8 +12,7 @@ in {
     escapeTime = 0;
     terminal = "xterm-kitty";
     secureSocket = false;
-    plugins =
-      [ pkgs.tmuxPlugins.cpu pkgs.tmuxPlugins.nord pkgs.tmuxPlugins.tmux-fzf ];
+    plugins = [ pkgs.tmuxPlugins.cpu pkgs.tmuxPlugins.nord ];
     extraConfig = ''
       is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?x?)(diff)?$"'
       bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
@@ -24,6 +23,8 @@ in {
 
       set-option -g default-command "${attach} -l fish"
       set-option -g default-shell ${pkgs.fish}/bin/fish
+
+      bind-key "F" run-shell -b ${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/main.sh
     '';
   };
 }

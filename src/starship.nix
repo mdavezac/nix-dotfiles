@@ -7,7 +7,7 @@
         disabled = false;
         format = ''[nix]($style) '';
       };
-      conda.disabled = false;
+      conda.disabled = true;
       python = {
         enabled = true;
         format = ''via [$symbol$version]($style) '';
@@ -15,9 +15,8 @@
       gcloud.disabled = true;
       aws.disabled = true;
       character = {
-        symbol = "➜";
-        error_symbol = "✗";
-        use_symbol_for_status = true;
+        success_symbol = "[➜](bold green) ";
+        error_symbol = "[✗](bold red) ";
       };
     };
   };

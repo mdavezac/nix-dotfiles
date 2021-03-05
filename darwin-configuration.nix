@@ -2,7 +2,7 @@
 let
   sources = import ./nix/sources.nix;
   nivpkgs = import sources.nixpkgs { };
-
+  pkgs = nivpkgs;
 in {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -28,7 +28,7 @@ in {
   users.users.mdavezac.home = "/Users/mdavezac";
   fonts = {
     enableFontDir = true;
-    fonts = [ pkgs.nerdfonts pkgs.victor-mono ];
+    fonts = [ pkgs.nerdfonts ];
   };
 
   home-manager.users.mdavezac = import ./home.nix;

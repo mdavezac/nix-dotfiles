@@ -1,4 +1,16 @@
 {
+    "doom-emacs": {
+        "branch": "develop",
+        "description": "An Emacs framework for the stubborn martian hacker",
+        "homepage": "",
+        "owner": "hlissner",
+        "repo": "doom-emacs",
+        "rev": "2d718cc86f6a980059cc7d3f7f7dca499723e61c",
+        "sha256": "1vg20hkd8zgmhny9cngcavirql3z0fwm78s86f5ni6bnasamny4c",
+        "type": "tarball",
+        "url": "https://github.com/hlissner/doom-emacs/archive/2d718cc86f6a980059cc7d3f7f7dca499723e61c.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "fzf.kak": {
         "branch": "master",
         "description": "FZF  for Kakoune",
@@ -53,10 +65,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "929768261a3ede470eafb58d5b819e1a848aa8bf",
-        "sha256": "0zi54vbfi6i6i5hdd4v0l144y1c8rg6hq6818jjbbcnm182ygyfa",
+        "rev": "e5ce05cc1eee0b8d890726e9826791ef95c51793",
+        "sha256": "0gphycfms52zc2q12qn1737133kl6xacxc4f4ypvs7sv8v8br68w",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/929768261a3ede470eafb58d5b819e1a848aa8bf.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/e5ce05cc1eee0b8d890726e9826791ef95c51793.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nord-kakoune": {
@@ -83,6 +95,18 @@
         "url": "https://github.com/connorholyday/nord-kitty/archive/8fd63735301f89dc1784a55f8fdb95e809879b12.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "powerline.kak": {
+        "branch": "master",
+        "description": "Kakoune modeline, but with passion",
+        "homepage": "",
+        "owner": "jdugan6240",
+        "repo": "powerline.kak",
+        "rev": "1426af690048ec9c1599d18725758bb954d465d6",
+        "sha256": "1ycg5376rmglkiiz184r8kyjljvfnay8g208fs8b85ilg5xhkrk5",
+        "type": "tarball",
+        "url": "https://github.com/jdugan6240/powerline.kak/archive/1426af690048ec9c1599d18725758bb954d465d6.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "smarttab.kak": {
         "branch": "master",
         "description": "Automatic handling different styles of indentation and alignment.",
@@ -93,6 +117,30 @@
         "sha256": "00r9i4v6aiy6yabf22y27idl2cvjivdfwn21aypxr0d849rfg6q8",
         "type": "tarball",
         "url": "https://github.com/andreyorst/smarttab.kak/archive/6e3264df7a9a786961e634d5ae8fb117ca86ef0a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "spacemacs": {
+        "branch": "develop",
+        "description": "A community-driven Emacs distribution - The best editor is neither Emacs nor Vim,  it's Emacs *and* Vim!",
+        "homepage": "http://spacemacs.org",
+        "owner": "syl20bnr",
+        "repo": "spacemacs",
+        "rev": "138d6329efdc67a473759b34cb5c15b494e9eee2",
+        "sha256": "16nd6gq1i47ml63cj0mgjj8b1x3j6ah1kv4pcfd2bch0c3l4yfck",
+        "type": "tarball",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/138d6329efdc67a473759b34cb5c15b494e9eee2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "spacevim": {
+        "branch": "master",
+        "description": "A community-driven modular vim distribution - The ultimate vim configuration",
+        "homepage": "https://spacevim.org",
+        "owner": "SpaceVim",
+        "repo": "spacevim",
+        "rev": "25005c4a72814ca3a6f4592a7b1af0f66b9ce6c4",
+        "sha256": "1phl2ghn6m35gg67xz4d9yhc57jsvwnh1ic0w574lkj7zll8mzkf",
+        "type": "tarball",
+        "url": "https://github.com/SpaceVim/spacevim/archive/25005c4a72814ca3a6f4592a7b1af0f66b9ce6c4.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

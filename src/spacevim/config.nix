@@ -1,8 +1,8 @@
 pkgs:
 let
-  pyls = pkgs.buildEnv {
-    name = "pyls";
-    paths = [ pkgs.python37Packages.python-language-server ];
+  lsp = pkgs.buildEnv {
+    name = "lsp";
+    paths = with pkgs.python37Packages; [ python-language-server pyls-black ];
     pathsToLink = [ "/bin" ];
   };
 in {
@@ -39,12 +39,13 @@ in {
     { name = "lang#docker"; }
     { name = "lang#julia"; }
     { name = "lang#rust"; }
+    { name = "lang#csharp"; }
     { name = "autocomplete"; }
     {
       name = "lsp";
       filetypes = [ "python" ];
       python_file_head = [ ];
-      override_cmd.python = [ "${pyls}/bin/pyls" ];
+      override_cmd.python = [ "${lsp}/bin/pyls" ];
       enable_typeinfo = true;
     }
     {
@@ -56,7 +57,7 @@ in {
   options = {
     autocomplete_method = "coc";
     buffer_index_type = 4;
-    colorscheme = "gruvbox";
+    colorscheme = "nord";
     colorscheme_bg = "dark";
     default_indent = 4;
     enable_cursor_column = 0;
