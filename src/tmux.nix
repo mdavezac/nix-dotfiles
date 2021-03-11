@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 let
   attach = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace";
-in {
+in
+{
   programs.tmux = {
     enable = true;
     keyMode = "vi";
@@ -25,6 +26,7 @@ in {
       set-option -g default-shell ${pkgs.fish}/bin/fish
 
       bind-key "F" run-shell -b ${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/main.sh
+      set -g status off
     '';
   };
 }

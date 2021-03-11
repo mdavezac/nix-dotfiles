@@ -4,16 +4,23 @@ let
   pkgs = import sources.nixpkgs { };
   vscode = pkgs.buildEnv {
     name = "vscode";
-    paths = [pkgs.vscode pkgs.dotnet-sdk_5];
-    pathsToLink = ["/share" "/bin" "/Applications"];
+    paths = [ pkgs.vscode pkgs.dotnet-sdk_5 ];
+    pathsToLink = [ "/share" "/bin" "/Applications" ];
   };
-in {
+in
+{
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   home.packages = [
-    pkgs.cacert pkgs.any-nix-shell pkgs.neofetch pkgs.curl
+    pkgs.cacert
+    pkgs.any-nix-shell
+    pkgs.neofetch
+    pkgs.curl
     vscode
+    pkgs.rnix-lsp
+    pkgs.nixfmt
+    pkgs.nixpkgs-fmt
   ];
 
   programs.home-manager.enable = true;
