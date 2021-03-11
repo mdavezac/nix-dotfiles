@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  require = [ ./kagenova.nix ./imperial.nix ./personal.nix ./retired.nix ];
+  require = [ ./kagenova ./imperial.nix ./personal.nix ./retired.nix ];
   home.packages = [ pkgs.lorri pkgs.niv ];
   programs.direnv = {
     enable = true;
