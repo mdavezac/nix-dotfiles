@@ -23,21 +23,11 @@
         hostname = "bitbucket.com";
         identitiesOnly = true;
       };
-      hpc = {
-        user = "mdavezac";
-        hostname = "login.hpc.imperial.ac.uk";
-      };
-      "hpc-02" = {
-        user = "mdavezac";
-        hostname = "login-2.hpc.imperial.ac.uk";
-      };
-      "hpc-03" = {
-        user = "mdavezac";
-        hostname = "login-3.hpc.imperial.ac.uk";
-      };
-      "hpc-04" = {
-        user = "mdavezac";
-        hostname = "login-4.hpc.imperial.ac.uk";
+      deepaws = {
+        user = "ubuntu";
+        hostname = "ec2-3-8-99-1.eu-west-2.compute.amazonaws.com";
+        identityFile = "/Users/mdavezac/.ssh/AWSDeepLearning.pem";
+        identitiesOnly = true;
       };
     };
   };
