@@ -23,6 +23,12 @@ let
     gcloud = {
       disabled = false;
       format = "[$symbol$active]($style) ";
+      symbol = "💭 ";
+    };
+    aws = {
+      disabled = false;
+      format = "[$symbol$profile]($style) ";
+      symbol = "🅰 ";
     };
   };
 in
@@ -30,40 +36,47 @@ in
   imports = (
     builtins.map mkProject [
       "copernic360"
+      "ai-pipeline"
     ]
   );
 
   home.file.".aws/credentials".text = lib.generators.toINI {} aws;
 
-  projects.kagenova.copernic360 =
-    let
-      starship = toTOML "starship.toml" starsets;
-    in
-      {
-        enable = true;
-        repos.copernic360 = {
-          url =
-            "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
-          dest = ".";
-          settings.user.email = emails.gitlab;
-          ignore = "copernic360.code-workspace";
-        };
-        extraEnvrc = ''
-          eval "$(lorri direnv)"
-          layout poetry 3.7
-          check_precommit
-          export STARSHIP_CONFIG=${starship}
-          export AWS_REGION=eu-west-2
-          export PULUMI_HOME=$(pwd)/.local/pulumi;
-          [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
-        '';
-        file."copernic360.code-workspace".text = builtins.toJSON {
-          folders = [
-            { path = "."; }
-            { path = "../ai-pipeline"; }
-          ];
-        };
+  projects.kagenova.copernic360 = {
+    enable = true;
+    repos.copernic360 = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = ''
+        .vim/
+        .vscode/
+        .local/
+        .envrc
+        TODOs.org
+        copernic360.code-workspace
+      '';
+    };
+    extraEnvrc = ''
+      eval "$(lorri direnv)"
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
+      layout poetry 3.7
+      check_precommit
+      export STARSHIP_CONFIG=${toTOML "starship.toml" starsets}
+      [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
+    '';
+    file."copernic360.code-workspace".text = builtins.toJSON {
+      folders = [
+        { path = "."; }
+        { path = "../ai-pipeline"; }
+      ];
+      settings = {
+        "python.venvPath" = "\${workspaceRoot}/.local/venvs";
       };
+    };
+  };
+
   home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI {} {
     core = {
       account = "mayeul.davezac@kagenova.com";
@@ -82,4 +95,42 @@ in
       project = "spatial360-production";
     };
   };
+
+  # ai-pipeline: {{{
+  projects.kagenova.ai-pipeline = {
+    enable = true;
+    repos.pipeline = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = ''
+        .vim/
+        .vscode/
+        .local/
+        .envrc
+        TODOs.org
+        ai-pipeline.code-workspace
+      '';
+    };
+    extraEnvrc = ''
+      eval "$(lorri direnv)"
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
+      layout poetry 3.7
+      check_precommit
+      export STARSHIP_CONFIG=${toTOML "starship.toml" starsets}
+      export PULUMI_HOME=$(pwd)/.local/pulumi;
+      [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
+    '';
+    file."ai-pipeline.code-workspace".text = builtins.toJSON {
+      folders = [
+        { path = "."; }
+        { path = "../copernic360"; }
+      ];
+      settings = {
+        "python.venvPath" = "\${workspaceRoot}/.local/venvs";
+      };
+    };
+  };
+  # }}}
 }
