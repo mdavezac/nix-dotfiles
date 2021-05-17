@@ -27,7 +27,7 @@ let
 
 in (cloners config.repos) + ''
   export fish_history="${
-    builtins.replaceStrings [ "-" " " ] [ "_"  "_" ]
+    builtins.replaceStrings [ "-" " " ] [ "_" "_" ]
     (builtins.concatStringsSep "" project)
   }"
   export TMUX_SESSION_NAME=${builtins.concatStringsSep "-" project}

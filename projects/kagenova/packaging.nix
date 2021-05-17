@@ -67,6 +67,10 @@ in
         "python.venvFolders" = [ "/Users/mdavezac/kagenova/packaging/.direnv/" ];
         "python.formatting.provider" = "black";
         "cmake.generator " = "${pkgs.ninja}/bin/ninja";
+        "cmakeFormat.exePath" = "${pkgs.cmake-format}/bin/cmake-format";
+        "cmake.cmakePath" = "${pkgs.cmake}/bin/cmake";
+        "cmake.ctestPath" = "${pkgs.cmake}/bin/ctest";
+        "workbench.colorTheme" = "Community Material Theme Darker High Contrast";
       };
     };
 

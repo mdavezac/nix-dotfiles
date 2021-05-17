@@ -12,6 +12,7 @@
         user = "git";
         hostname = "gitlab.com";
         identitiesOnly = true;
+        identityFile = "/Users/mdavezac/.ssh/gitlab_rsa";
       };
       github = {
         user = "git";
@@ -22,6 +23,14 @@
         user = "git";
         hostname = "bitbucket.com";
         identitiesOnly = true;
+      };
+      kageml = {
+        user = "davezac";
+        hostname = "kagenova.ddnsfree.com";
+        identityFile = "/Users/mdavezac/.ssh/kageml_rsa";
+        port = 221;
+        identitiesOnly = true;
+        forwardAgent = true;
       };
       deepaws = {
         user = "ubuntu";

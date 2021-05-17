@@ -63,4 +63,4 @@ organize < shift - l : yabai -m window --resize left:-100:0
 organize < 0 : yabai -m space balance
 organize < f : yabai -m window --toggle float
 
-default < cmd - z : open -na @kitty@/Applications/kitty.app
+default < cmd - shift - t : open -na @kitty@/Applications/kitty.app

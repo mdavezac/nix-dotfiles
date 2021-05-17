@@ -11,7 +11,7 @@ in
     historyLimit = 100000;
     resizeAmount = 5;
     escapeTime = 0;
-    terminal = "xterm-kitty";
+    # terminal = "xterm-kitty";
     secureSocket = false;
     plugins = [ pkgs.tmuxPlugins.cpu pkgs.tmuxPlugins.nord ];
     extraConfig = ''

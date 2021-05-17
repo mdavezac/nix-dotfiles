@@ -72,26 +72,26 @@ in
         { path = "../ai-pipeline"; }
       ];
       settings = {
-        "python.venvPath" = "\${workspaceRoot}/.local/venvs";
+        "python.venvPath" = "\${workspaceFolder}/.local/venvs";
       };
     };
   };
 
   home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI {} {
     core = {
-      account = "mayeul.davezac@kagenova.com";
+      account = "pulumi-deployment@spatial360-development.iam.gserviceaccount.com";
       project = "spatial360-development";
     };
   };
   home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI {} {
     core = {
-      account = "mayeul.davezac@kagenova.com";
+      account = "pulumi-deployment@spatial360-staging.iam.gserviceaccount.com";
       project = "spatial360-staging";
     };
   };
   home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI {} {
     core = {
-      account = "mayeul.davezac@kagenova.com";
+      account = "pulumi-deployment@spatial360-production.iam.gserviceaccount.com";
       project = "spatial360-production";
     };
   };
@@ -125,12 +125,54 @@ in
     file."ai-pipeline.code-workspace".text = builtins.toJSON {
       folders = [
         { path = "."; }
-        { path = "../copernic360"; }
       ];
       settings = {
-        "python.venvPath" = "\${workspaceRoot}/.local/venvs";
+        "python.venvPath" = "\${workspaceFolder}/.local/venvs";
+        "workbench.colorTheme" = "Material Theme Darker High Contrast";
+        "nixEnvSelector.nixFile" = "\${workspaceFolder}/shell.nix";
       };
     };
+    file.".local/bin/switch_stack.fish".text = ''
+      function switch_stack -a stack
+          set local_pwd "/Users/mdavezac/kagenova/ai-pipeline/"
+          switch $stack
+              case development
+                  set name development
+                  set puldir $local_pwd/infrastructure
+              case bootstrap
+                  set name development
+                  set puldir $local_pwd/bootstrap
+              case staging
+                  set name staging
+                  set puldir $local_pwd/infrastructure
+              case bootstrap-staging
+                  set name staging
+                  set puldir $local_pwd/bootstrap
+              case bootstrap
+                  set name production
+                  set puldir $local_pwd/infrastructure
+              case bootstrap-production
+                  set name production
+                  set puldir $local_pwd/bootstrap
+              case production
+                  set name production
+                  set puldir $local_pwd/infrastructure
+              case '*'
+                  echo not a known stack $stack
+                  return 1
+          end
+          if test -z (string match "bootstrap*" "$stack")
+              set -gx GOOGLE_APPLICATION_CREDENTIALS $local_pwd/.local/spatial360-$name.json
+              set -gx COPERNIC360_HOST (pulumi stack output -C $local_pwd/infrastructure engine-url)
+          else
+              set -e GOOGLE_APPLICATION_CREDENTIALS
+              set -e COPERNIC360_HOST
+          end
+          set -gx AWS_PROFILE $name
+          gcloud config configurations activate copernic360-$name
+          pulumi -C $puldir stack select $stack
+      end
+    '';
   };
   # }}}
 }

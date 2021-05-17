@@ -1,9 +1,10 @@
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
-  nivpkgs = import sources.nixpkgs { };
+  nivpkgs = import sources.nixpkgs {};
   pkgs = nivpkgs;
-in {
+in
+{
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [ nivpkgs.nix-index ];
@@ -45,8 +46,8 @@ in {
   system.defaults.trackpad.ActuationStrength = 0;
   system.defaults.trackpad.Clicking = true;
 
-  services.skhd.enable = true;
-  services.yabai.enable = true;
+  services.skhd.enable = false;
+  services.yabai.enable = false;
   services.yabai.package = pkgs.yabai;
 
   services.lorri.enable = true;

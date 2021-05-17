@@ -34,8 +34,7 @@ in
       "learn"
       "website"
       "alignment"
-      "plugin"
-    ] ++ [ ./packaging.nix ./copernic360.nix ]
+    ] ++ [ ./packaging.nix ./copernic360.nix ./move.nix ]
   );
 
   # tensossht: {{{
@@ -216,26 +215,6 @@ in
       "diagnostic.enable" = true;
       "diagnostic.virtualText" = true;
     };
-  };
-  # }}}
-
-  # plugin: {{{
-  projects.kagenova.plugin = {
-    enable = true;
-    repos.plugin = {
-      url =
-        "https://gitlab.com/kagenova/kagemove/development/kagemove-plugin.git";
-      dest = ".";
-      settings.user.email = emails.gitlab;
-      ignore = ''
-        .vim/
-        .local/
-        .envrc
-      '';
-    };
-    extraEnvrc = ''
-      check_precommit
-    '';
   };
   # }}}
 }

@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
+  pkgs = import sources.nixpkgs {};
   vscode = pkgs.buildEnv {
     name = "vscode";
     paths = [ pkgs.vscode pkgs.dotnet-sdk_5 ];
@@ -17,7 +17,6 @@ in
     pkgs.any-nix-shell
     pkgs.neofetch
     pkgs.curl
-    vscode
     pkgs.rnix-lsp
     pkgs.nixfmt
     pkgs.nixpkgs-fmt
@@ -41,11 +40,15 @@ in
   ];
   home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.JULIA_PROJECT = "@.";
-  home.file.".skhdrc".text = (builtins.readFile (pkgs.substituteAll {
-    src = ./files/skhdrc;
-    kitty = "${pkgs.kitty}";
-    emacs = "${pkgs.emacs}";
-  }));
+  home.file.".skhdrc".text = (
+    builtins.readFile (
+      pkgs.substituteAll {
+        src = ./files/skhdrc;
+        kitty = "${pkgs.kitty}";
+        emacs = "${pkgs.emacs}";
+      }
+    )
+  );
   home.file.".yabairc".source = ./files/yabairc;
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
