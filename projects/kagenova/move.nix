@@ -8,6 +8,7 @@ in
     builtins.map mkProject [
       "plugin"
       "clearvr"
+      "mobile"
     ]
   );
 
@@ -19,15 +20,28 @@ in
         "https://gitlab.com/kagenova/kagemove/development/kagemove-clearvr-pilot.git";
       dest = ".";
       settings.user.email = emails.gitlab;
-      ignore = ''
-        .vim/
-        .local/
-        .envrc
-      '';
+      ignore = '''';
     };
+    file.".git/info/exclude".text = ''
+      .vim/
+      .local/
+      .envrc
+      .vscode/
+      clearvr.code-workspace
+    '';
     extraEnvrc = ''
       check_precommit
     '';
+    file."clearvr.code-workspace".text = builtins.toJSON {
+      folders = [
+        { path = "."; }
+        { path = "../plugin"; }
+        { path = "../mobile"; }
+      ];
+      settings = {
+        "python.venvPath" = "\${workspaceFolder}/.local/venvs";
+      };
+    };
   };
   # }}}
 
@@ -48,6 +62,22 @@ in
     extraEnvrc = ''
       check_precommit
     '';
+  };
+  # }}}
+  # mobile: {{{
+  projects.kagenova.mobile = {
+    enable = true;
+    repos.plugin = {
+      url =
+        "https://gitlab.com/kagenova/kagemove/development/kagemove-demo-mobile.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = ''
+        .vim/
+        .local/
+        .envrc
+      '';
+    };
   };
   # }}}
 }

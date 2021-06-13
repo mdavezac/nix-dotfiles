@@ -76,25 +76,24 @@ in
 
     nixshell = {
       text = ''
-        buildInputs = [
-          gobjectIntrospection
-          gtk3
-          (python37.withPackages(ps : with ps; [ matplotlib pygobject3 ipython pip scikit-build cython numpy]))
-          black
-          graphviz
-          doxygen
-          google-cloud-sdk
+        buildInputs = let
+          buildtools = pkgs.buildEnv {
+              name = "Build Tools";
+              paths = with niv; [
+                cmake ninja curl black doxygen
+              ];
+              pathsToLink = [ "/share" "/bin" ];
+            };
+        in [
+          python3
           ninja
-          cmake
           fftw
-          curl
+          buildtools
         ];
       '';
     };
     extraEnvrc = ''
-      export PIP_PREFIX=$(pwd)/.local/pip_packages
-      export PYTHONPATH="$PIP_PREFIX/lib/python3.7/site-packages:$PYTHONPATH:$PWD/ssht/src/"
-      export PATH="$PIP_PREFIX/bin:$PATH"
+      layout python3
     '';
     ipython = ''
       %load_ext autoreload

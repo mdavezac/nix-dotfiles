@@ -20,6 +20,7 @@ in
     pkgs.rnix-lsp
     pkgs.nixfmt
     pkgs.nixpkgs-fmt
+    pkgs.dotnet-sdk_5
   ];
 
   programs.home-manager.enable = true;
