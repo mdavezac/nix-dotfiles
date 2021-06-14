@@ -6,8 +6,8 @@ pkgs.stdenv.mkDerivation {
   patchPhase = ''
     substituteInPlace autoload/SpaceVim.vim \
         --replace "exe 'helptags ' . help" ""
-    substituteInPlace autoload/Spacevim/custom.vim \
-        --replace "getftime(local_conf) < getftime(local_conf_cache)" "0"
+    # substituteInPlace autoload/Spacevim/custom.vim \
+    #     --replace "getftime(local_conf) < getftime(local_conf_cache)" "0"
   '';
   buildPhase = ''
     ${pkgs.neovim-unwrapped}/bin/nvim -es -n -i shada NONE --headless \

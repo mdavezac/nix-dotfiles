@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  home.packages = [ pkgs.fish-foreign-env ];
+  home.packages = [ pkgs.fishPlugins.foreign-env ];
   programs.fish = {
     enable = true;
     shellAliases = {

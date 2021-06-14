@@ -42,11 +42,6 @@
         identitiesOnly = true;
         forwardAgent = true;
       };
-      vbox = {
-        user = "vagrant";
-        hostname = "127.0.0.1";
-        port = 2222;
-      };
     };
   };
 }

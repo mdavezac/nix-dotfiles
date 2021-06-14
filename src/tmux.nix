@@ -22,11 +22,12 @@ in
       bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
       bind -n C-\\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
 
-      set-option -g default-command "${attach} -l fish"
       set-option -g default-shell ${pkgs.fish}/bin/fish
 
       bind-key "F" run-shell -b ${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/main.sh
       set -g status off
-    '';
+    ''
+    #  + ''set-option -g default-command "${attach} -l fish"''
+    ;
   };
 }

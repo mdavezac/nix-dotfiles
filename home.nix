@@ -33,25 +33,25 @@ in
     ./src/git.nix
     ./src/tmux.nix
     ./src/starship.nix
-    ./src/kitty.nix
+    # ./src/kitty.nix
     # ./src/vscode
-    ./src/kakoune
-    ./src/doom
+    # ./src/kakoune
+    # ./src/doom
     ./projects
   ];
   home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.JULIA_PROJECT = "@.";
-  home.file.".skhdrc".text = (
-    builtins.readFile (
-      pkgs.substituteAll {
-        src = ./files/skhdrc;
-        kitty = "${pkgs.kitty}";
-        emacs = "${pkgs.emacs}";
-      }
-    )
-  );
-  home.file.".yabairc".source = ./files/yabairc;
-  home.file.".pdbrc.py".source = ./files/pdbrc.py;
+  # home.file.".skhdrc".text = (
+  #   builtins.readFile (
+  #     pkgs.substituteAll {
+  #       src = ./files/skhdrc;
+  #       kitty = "${pkgs.kitty}";
+  #       emacs = "${pkgs.emacs}";
+  #     }
+  #   )
+  # );
+  # home.file.".yabairc".source = ./files/yabairc;
+  # home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -61,10 +61,10 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "19.09";
+  # home.stateVersion = "19.09";
 
-  home.activation.vscode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    cd $HOME/Applications
-    $DRY_RUN_CMD sudo ln -fs ${vscode}/Applications/Visual\ Studio\ Code.app/ .
-  '';
+  # home.activation.vscode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   cd $HOME/Applications
+  #   $DRY_RUN_CMD sudo ln -fs ${vscode}/Applications/Visual\ Studio\ Code.app/ .
+  # '';
 }
