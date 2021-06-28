@@ -31,11 +31,7 @@ in
     ]
   );
 
-<<<<<<< HEAD
-=======
   # home.file.".aws/credentials".text = lib.generators.toINI {} aws;
-
->>>>>>> Disable AWS for now
   projects.kagenova.copernic360 = {
     enable = true;
     repos.copernic360 = {
