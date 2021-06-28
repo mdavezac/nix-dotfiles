@@ -40,7 +40,7 @@ in {
     };
     signing = {
       key = email;
-      signByDefault = true;
+      signByDefault = false;
     };
     ignores = lib.splitString "\n" (builtins.readFile ../files/gitignore);
     lfs.enable = true;
@@ -53,7 +53,9 @@ in {
     };
   };
 
-  programs.gpg.enable = true;
+  programs.gpg.enable = false;
+  services.gpg-agent.enable = false;
+  services.gpg-agent.pinentryFlavor = "tty";
 
   home.sessionVariables.COLORTERM = "truecolor";
 }
