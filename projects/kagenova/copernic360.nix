@@ -2,7 +2,7 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
-  aws = (import ../../machine.nix).aws;
+  # aws = (import ../../machine.nix).aws;
   utils = (pkgs.callPackage (import ../lib/utils.nix) {});
   starsets = {
     nix_shell.disabled = true;
@@ -31,6 +31,11 @@ in
     ]
   );
 
+<<<<<<< HEAD
+=======
+  # home.file.".aws/credentials".text = lib.generators.toINI {} aws;
+
+>>>>>>> Disable AWS for now
   projects.kagenova.copernic360 = {
     enable = true;
     repos.copernic360 = {
