@@ -92,7 +92,7 @@
           echo "Could not find poetry"
           exit 1
         fi
-        poetry env use ''${1:-python3}
+        poetry env use -q ''${1:-python3}
 
         export VIRTUAL_ENV=$(poetry env info --path)
         export POETRY_ACTIVE=1
