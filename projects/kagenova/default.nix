@@ -67,21 +67,10 @@ in
             settings.user.email = emails.gitlab;
           };
         };
-    nixshell = {
-      text = ''
-        buildInputs = [
-          (python38.withPackages (p: [ p.poetry p.pip ]))
-          graphviz
-          google-cloud-sdk
-          terraform_0_13
-          terraform-providers.gitlab
-          terraform-providers.google
-          terraform-providers.google-beta
-        ];
-      '';
-    };
     extraEnvrc = ''
+      eval "$(lorri direnv)"
       export TF_CPP_MIN_LOG_LEVEL=2
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       layout poetry
       extra_pip_packages pdbpp ipython jupyter rstcheck
       check_precommit
@@ -135,6 +124,7 @@ in
       settings.user.email = emails.gitlab;
     };
     extraEnvrc = ''
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       eval "$(lorri direnv)"
       layout poetry python3.6
       extra_pip_packages pdbpp ipython jupyter rstcheck
