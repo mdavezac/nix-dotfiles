@@ -4,7 +4,7 @@ let
   emails = import ../lib/emails.nix;
 in
 {
-  imports = builtins.map mkProject [ "packaging" ];
+  imports = builtins.map mkProject [ "packaging" "pyssht" ];
 
   projects.kagenova.packaging = {
     enable = true;
@@ -106,6 +106,54 @@ in
           \ "Python3,Pandas,SciPy,NumPy,Matplotlib,pytest"
       let g:neomake_python_enabled_makers=['mypy']
       let g:neoformat_enabled_python = ["isort", "docformatter", "black"]
+    '';
+  };
+
+  projects.kagenova.pyssht = {
+    enable = true;
+    repos = {
+      ssht = {
+        url = "https://github.com/astro-informatics/ssht.git";
+        dest = ".";
+      };
+    };
+
+    file."packaging.code-workspace".text = builtins.toJSON {
+      settings = {
+        "python.venvFolders" = [ ''''${workspaceFolder}/.direnv/'' ];
+        "python.formatting.provider" = "black";
+        "cmake.generator " = "${pkgs.ninja}/bin/ninja";
+        "cmakeFormat.exePath" = "${pkgs.cmake-format}/bin/cmake-format";
+        "cmake.cmakePath" = "${pkgs.cmake}/bin/cmake";
+        "cmake.ctestPath" = "${pkgs.cmake}/bin/ctest";
+        "workbench.colorTheme" = "Community Material Theme Darker High Contrast";
+      };
+    };
+
+    nixshell = {
+      text = ''
+        buildInputs = let
+          buildtools = pkgs.buildEnv {
+              name = "Build Tools";
+              paths = with niv; [
+                cmake ninja curl black doxygen
+              ];
+              pathsToLink = [ "/share" "/bin" ];
+            };
+        in [
+          python3
+          ninja
+          fftw
+          buildtools
+        ];
+      '';
+    };
+    extraEnvrc = ''
+      layout python3
+    '';
+    ipython = ''
+      %load_ext autoreload
+      %autoreload 2
     '';
   };
 }

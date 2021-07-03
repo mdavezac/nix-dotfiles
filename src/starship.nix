@@ -9,7 +9,7 @@
       };
       conda.disabled = true;
       python = {
-        enabled = true;
+        disabled = true;
         format = ''via [$symbol$version]($style) '';
       };
       gcloud.disabled = true;

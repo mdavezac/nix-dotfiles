@@ -2,7 +2,8 @@
 let
   machine = import ../machine.nix;
   email = (import ../projects/lib/emails.nix).github;
-in {
+in
+{
   home.packages = [ pkgs.pre-commit pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
 
   programs.gh = {

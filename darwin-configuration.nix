@@ -27,6 +27,7 @@ in
 
   imports = [ (sources.home-manager + "/nix-darwin") ];
   users.users.mdavezac.home = "/Users/mdavezac";
+  users.nix.configureBuildUsers = true;
   fonts = {
     enableFontDir = true;
     fonts = [ pkgs.nerdfonts ];

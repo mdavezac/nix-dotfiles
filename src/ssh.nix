@@ -9,7 +9,7 @@
       PreferredAuthentications publickey,password
     '';
     matchBlocks = {
-      gitlab = {
+      "gitlab.com" = {
         user = "git";
         hostname = "gitlab.com";
         identitiesOnly = true;
@@ -37,11 +37,15 @@
       };
       deepaws = {
         user = "ubuntu";
-        hostname = "ec2-3-8-99-1.eu-west-2.compute.amazonaws.com";
-        identityFile = "/Users/mdavezac/.ssh/AWSDeepLearning.pem";
+        hostname = "ec2-3-249-112-121.eu-west-1.compute.amazonaws.com";
+        identityFile = "/Users/mdavezac/.ssh/AWSmdavezac.pem";
         identitiesOnly = true;
-        forwardAgent = false;
+        forwardAgent = true;
       };
+      vbox = {
+        user = "vagrant";
+        hostname = "127.0.0.1";
+        port = 2222;
       };
     };
   };
