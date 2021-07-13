@@ -99,6 +99,10 @@ in
       url = "https://gitlab.com/kagenova/kagelearn/development/kagelearn.git";
       dest = ".";
       settings.user.email = emails.gitlab;
+      ignore = ''
+        .local/
+        .envrc
+      '';
     };
     extraEnvrc = ''
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
