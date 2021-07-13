@@ -2,6 +2,7 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
+  utils = (pkgs.callPackage (import ../lib/utils.nix) {});
 in
 {
   imports = (
@@ -32,7 +33,7 @@ in
     extraEnvrc = ''
       check_precommit
     '';
-    file."clearvr.code-workspace".text = builtins.toJSON {
+    file."clearvr.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }
         { path = "../plugin"; }

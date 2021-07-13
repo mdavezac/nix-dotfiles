@@ -3,29 +3,6 @@ let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
   pulumi = (import ../../machine.nix).pulumi;
-  toTOML = path: toml: pkgs.runCommand "init.toml"
-    {
-      buildInputs = [ pkgs.remarshal ];
-      preferLocalBuild = true;
-    } ''
-    remarshal -if json -of toml \
-      < ${pkgs.writeText "${path}" (builtins.toJSON toml)} \
-      > $out
-  '';
-  original = import ../src/starship.nix { inherit config lib pkgs; };
-  starsets = original.programs.starship.settings // {
-    nix_shell.disabled = true;
-    package.disabled = true;
-    python = {
-      disabled = false;
-      format = ''via [$symbol$version]($style) '';
-    };
-    gcloud = {
-      disabled = false;
-      format = "[$symbol$active]($style) ";
-    };
-  };
-
 in
 {
   imports = (

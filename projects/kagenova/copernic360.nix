@@ -3,17 +3,8 @@ let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
   aws = (import ../../machine.nix).aws;
-  toTOML = path: toml: pkgs.runCommand "init.toml"
-    {
-      buildInputs = [ pkgs.remarshal ];
-      preferLocalBuild = true;
-    } ''
-    remarshal -if json -of toml \
-      < ${pkgs.writeText "${path}" (builtins.toJSON toml)} \
-      > $out
-  '';
-  original = import ../../src/starship.nix { inherit config lib pkgs; };
-  starsets = original.programs.starship.settings // {
+  utils = (pkgs.callPackage (import ../lib/utils.nix) {});
+  starsets = {
     nix_shell.disabled = true;
     package.disabled = true;
     python = {
@@ -40,8 +31,6 @@ in
     ]
   );
 
-  home.file.".aws/credentials".text = lib.generators.toINI {} aws;
-
   projects.kagenova.copernic360 = {
     enable = true;
     repos.copernic360 = {
@@ -63,10 +52,10 @@ in
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       layout poetry 3.7
       check_precommit
-      export STARSHIP_CONFIG=${toTOML "starship.toml" starsets}
+      export STARSHIP_CONFIG=${utils.starship_conf starsets}
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
-    file."copernic360.code-workspace".text = builtins.toJSON {
+    file."copernic360.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }
         { path = "../ai-pipeline"; }
@@ -118,58 +107,74 @@ in
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       layout poetry 3.7
       check_precommit
-      export STARSHIP_CONFIG=${toTOML "starship.toml" starsets}
+      export STARSHIP_CONFIG=${utils.starship_conf starsets}
       export PULUMI_HOME=$(pwd)/.local/pulumi;
+      export AWS_SHARED_CREDENTIALS_FILE=$(pwd)/.local/aws/credentials
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
-    file."ai-pipeline.code-workspace".text = builtins.toJSON {
+    file.".local/aws/credentials".text = lib.generators.toINI {} aws;
+    file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }
       ];
       settings = {
         "python.venvPath" = "\${workspaceFolder}/.local/venvs";
-        "workbench.colorTheme" = "Material Theme Darker High Contrast";
+        "workbench.colorTheme" = "Community Material Theme Darker High Contrast";
         "nixEnvSelector.nixFile" = "\${workspaceFolder}/shell.nix";
       };
     };
     file.".local/bin/switch_stack.fish".text = ''
-      function switch_stack -a stack
+      function switch_stack -a arg
           set local_pwd "/Users/mdavezac/kagenova/ai-pipeline/"
-          switch $stack
+          set stack $arg
+          switch $arg
               case development
-                  set name development
+                  set gcp_config development
+                  set aws_profile development
                   set puldir $local_pwd/infrastructure
               case bootstrap
-                  set name development
+                  set gcp_config development
+                  set stack bootstrap
+                  set aws_profile development
                   set puldir $local_pwd/bootstrap
+              case monitoring-development
+                  set gcp_config development
+                  set stack development
+                  set aws_profile monitoring-development
+                  set puldir $local_pwd/infrastructure
               case staging
-                  set name staging
+                  set gcp_config staging
+                  set aws_profile staging
                   set puldir $local_pwd/infrastructure
               case bootstrap-staging
-                  set name staging
+                  set gcp_config staging
+                  set aws_profile staging
                   set puldir $local_pwd/bootstrap
               case bootstrap
-                  set name production
+                  set gcp_config production
+                  set aws_profile production
                   set puldir $local_pwd/infrastructure
               case bootstrap-production
-                  set name production
+                  set gcp_config production
+                  set aws_profile production
                   set puldir $local_pwd/bootstrap
               case production
-                  set name production
+                  set gcp_config production
+                  set aws_profile production
                   set puldir $local_pwd/infrastructure
               case '*'
                   echo not a known stack $stack
                   return 1
           end
-          if test -z (string match "bootstrap*" "$stack")
-              set -gx GOOGLE_APPLICATION_CREDENTIALS $local_pwd/.local/spatial360-$name.json
-              set -gx COPERNIC360_HOST (pulumi stack output -C $local_pwd/infrastructure engine-url)
-          else
+          if string match -qer "(bootstrap|monitoring).*" "$stack"
               set -e GOOGLE_APPLICATION_CREDENTIALS
               set -e COPERNIC360_HOST
+          else
+              set -gx GOOGLE_APPLICATION_CREDENTIALS $local_pwd/.local/spatial360-$gcp_config.json
+              set -gx COPERNIC360_HOST (pulumi stack output -C $local_pwd/infrastructure engine-url)
           end
-          set -gx AWS_PROFILE $name
-          gcloud config configurations activate copernic360-$name
+          set -gx AWS_PROFILE $aws_profile
+          gcloud config configurations activate copernic360-$gcp_config
           pulumi -C $puldir stack select $stack
       end
     '';

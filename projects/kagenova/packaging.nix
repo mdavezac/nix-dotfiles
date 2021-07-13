@@ -2,6 +2,7 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
+  utils = (pkgs.callPackage (import ../lib/utils.nix) {});
 in
 {
   imports = builtins.map mkProject [ "packaging" "pyssht" ];
@@ -56,7 +57,7 @@ in
       };
     };
 
-    file."packaging.code-workspace".text = builtins.toJSON {
+    file."packaging.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "ssht"; }
         { path = "so3"; }
@@ -115,10 +116,19 @@ in
       ssht = {
         url = "https://github.com/astro-informatics/ssht.git";
         dest = ".";
+        ignore = ''
+          pyssht.code-workspace
+          pyrightconfig.json
+          .vscode/
+          shell.nix
+          .envrc
+          .local/
+        '';
       };
     };
 
-    file."packaging.code-workspace".text = builtins.toJSON {
+    file."pyssht.code-workspace".source = utils.toPrettyJSON {
+      folders = [ { path = "."; } ];
       settings = {
         "python.venvFolders" = [ ''''${workspaceFolder}/.direnv/'' ];
         "python.formatting.provider" = "black";
@@ -128,6 +138,9 @@ in
         "cmake.ctestPath" = "${pkgs.cmake}/bin/ctest";
         "workbench.colorTheme" = "Community Material Theme Darker High Contrast";
       };
+    };
+    file."pyrightconfig.json".source = utils.toPrettyJSON {
+      venvPath = ".direnv/";
     };
 
     nixshell = {
