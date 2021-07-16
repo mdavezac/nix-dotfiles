@@ -38,11 +38,6 @@ in
               terraform/
             '';
           };
-          terraform = {
-            url = "https://${kagelearn_url}/tensossht/snippets/2012012.git";
-            dest = "terraform";
-            settings.user.email = emails.gitlab;
-          };
         };
     extraEnvrc = ''
       eval "$(lorri direnv)"
