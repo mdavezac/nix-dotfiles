@@ -37,6 +37,7 @@ in {
       http.sslcainfo = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       ghi.token = machine.github_token;
       pull.rebase = false;
+      credential.helper="cache --timeout=960000";
     };
     signing = {
       key = email;
