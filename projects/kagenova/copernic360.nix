@@ -31,7 +31,6 @@ in
     ]
   );
 
-  # home.file.".aws/credentials".text = lib.generators.toINI {} aws;
   projects.kagenova.copernic360 = {
     enable = true;
     repos.copernic360 = {
@@ -113,7 +112,7 @@ in
       export AWS_SHARED_CREDENTIALS_FILE=$(pwd)/.local/aws/credentials
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
-    file.".local/aws/credentials".text = lib.generators.toINI {} aws;
+    # file.".local/aws/credentials".text = lib.generators.toINI {} aws;
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }

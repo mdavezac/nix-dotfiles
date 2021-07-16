@@ -4,7 +4,7 @@
   programs.direnv = {
     enable = true;
     enableFishIntegration = true;
-    enableNixDirenvIntegration = false;
+    nix-direnv.enable = false;
   };
 
   programs.fish = {
