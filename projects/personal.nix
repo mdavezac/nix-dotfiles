@@ -2,8 +2,9 @@
 let
   mkProject = import ./lib/project.nix "personal";
   emails = import ./lib/emails.nix;
-in {
-  imports = builtins.map mkProject [ "pylada" "julia" "dftk" "advent_of_code" ];
+in
+{
+  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" ];
   # pylada: {{{
   projects.personal.pylada = {
     enable = true;
@@ -125,6 +126,20 @@ in {
       "rust-client.disableRustup" = true;
     };
 
+  };
+  # }}}
+
+  # cv: {{{
+  projects.personal.cv = {
+    enable = true;
+    repos.cv = {
+      url = "https://gitlab.com/mdavezac/cv.git";
+      dest = "cv";
+      settings.user.email = emails.gitlab;
+    };
+    nixshell.text = ''
+      buildInputs = [ tectonic biber ];
+    '';
   };
   # }}}
 }

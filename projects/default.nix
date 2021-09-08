@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }: {
-  require = [ ./kagenova ./imperial.nix ./personal.nix ./retired.nix ];
+  require = [ ./kagenova ./personal.nix ./retired.nix ];
   home.packages = [ pkgs.lorri pkgs.niv ];
   programs.direnv = {
     enable = true;
     enableFishIntegration = true;
-    enableNixDirenvIntegration = false;
+    nix-direnv.enable = false;
   };
 
   programs.fish = {

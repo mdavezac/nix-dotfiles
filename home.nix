@@ -2,14 +2,14 @@
 let
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs {};
-  vscode = pkgs.buildEnv {
-    name = "vscode";
-    paths = [ pkgs.vscode pkgs.dotnet-sdk_5 ];
-    pathsToLink = [ "/share" "/bin" "/Applications" ];
-  };
+  # vscode = pkgs.buildEnv {
+  # name = "vscode";
+  # paths = [ pkgs.vscode pkgs.dotnet-sdk_5 ];
+  # pathsToLink = [ "/share" "/bin" "/Applications" ];
+  # };
 in
 {
-  nixpkgs.config = import ./nixpkgs-config.nix;
+  # nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   home.packages = [
@@ -35,12 +35,24 @@ in
     ./src/starship.nix
     ./src/kitty.nix
     # ./src/vscode
-    ./src/kakoune
-    ./src/doom
+    # ./src/kakoune
+    # ./src/doom
     ./projects
   ];
-  home.sessionVariables.EDITOR = "nvim";
+  home.sessionVariables.EDITOR = "code";
   home.sessionVariables.JULIA_PROJECT = "@.";
+  home.file.".julia/config/startup.jl".text = ''
+    try
+      using Revise
+    catch e
+        @warn "Error initializing Revise" exception=(e, catch_backtrace())
+    end
+    try
+      using OhMyREPL
+    catch e
+        @warn "Error initializing OhMyREPL" exception=(e, catch_backtrace())
+    end
+  '';
   home.file.".skhdrc".text = (
     builtins.readFile (
       pkgs.substituteAll {
@@ -63,8 +75,8 @@ in
   # changes in each release.
   home.stateVersion = "19.09";
 
-  home.activation.vscode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    cd $HOME/Applications
-    $DRY_RUN_CMD sudo ln -fs ${vscode}/Applications/Visual\ Studio\ Code.app/ .
-  '';
+  # home.activation.vscode = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   cd $HOME/Applications
+  #   $DRY_RUN_CMD sudo ln -fs ${vscode}/Applications/Visual\ Studio\ Code.app/ .
+  # '';
 }

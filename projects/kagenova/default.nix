@@ -11,7 +11,9 @@ in
       "learn"
       "website"
       "alignment"
-    ] ++ [ ./packaging.nix ./copernic360.nix ./move.nix ]
+      "puzzles"
+      "pando"
+    ] ++ [ ./packaging.nix ./copernic360.nix ./move.nix ./blockchain.nix ]
   );
 
   # tensossht: {{{
@@ -102,6 +104,7 @@ in
       ignore = ''
         .local/
         .envrc
+        TODOs.org
       '';
     };
     extraEnvrc = ''
@@ -188,4 +191,27 @@ in
     };
   };
   # }}}
+
+  # puzzles: {{{
+  projects.kagenova.puzzles = {
+    enable = true;
+    repos =
+      {
+        tensossht = {
+          url = "https://gitlab.com/kagenova/internal/tools-practice/google-code-jam";
+          dest = ".";
+          settings = { user.email = emails.gitlab; };
+          ignore = ''
+            .vim/
+            .local/
+            .envrc
+            .vscode/
+          '';
+        };
+      };
+    extraEnvrc = ''layout python3'';
+  };
+  # }}}
+
+
 }

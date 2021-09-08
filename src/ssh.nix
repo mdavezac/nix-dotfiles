@@ -35,9 +35,16 @@
         port = 221;
         identitiesOnly = true;
       };
+      hiro = {
+        user = "davezac";
+        hostname = "hiroprotagonist.net";
+        identityFile = "/Users/mdavezac/.ssh/kageml_rsa";
+        port = 221;
+        identitiesOnly = true;
+      };
       deepaws = {
         user = "ubuntu";
-        hostname = "ec2-3-249-112-121.eu-west-1.compute.amazonaws.com";
+        hostname = "ec2-34-249-71-13.eu-west-1.compute.amazonaws.com";
         identityFile = "/Users/mdavezac/.ssh/AWSmdavezac.pem";
         identitiesOnly = true;
         forwardAgent = true;

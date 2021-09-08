@@ -1,10 +1,8 @@
-{ pkgs ? import <nixpkgs>{} }:
+{ pkgs ? import <nixpkgs> {} }:
 
 with pkgs;
 
 mkShell {
-  name="dotfiles";
-  buildInputs = [
-    ansible
-  ];
+  name = "dotfiles";
+  buildInputs = [];
 }

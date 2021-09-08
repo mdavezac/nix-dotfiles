@@ -34,6 +34,7 @@ in
   };
 
   home-manager.users.mdavezac = import ./home.nix;
+  home-manager.useGlobalPkgs = true;
 
   system.defaults.dock.autohide = true;
   system.defaults.dock.mru-spaces = false;

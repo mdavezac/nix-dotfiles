@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "hlissner",
         "repo": "doom-emacs",
-        "rev": "2d718cc86f6a980059cc7d3f7f7dca499723e61c",
-        "sha256": "1vg20hkd8zgmhny9cngcavirql3z0fwm78s86f5ni6bnasamny4c",
+        "rev": "6678f3833b5c237b8bf4a0a65449244bec5554e5",
+        "sha256": "19lnfiha5qxgbmv404p68nw9c7602873x19wg746kqmzciba5fi7",
         "type": "tarball",
-        "url": "https://github.com/hlissner/doom-emacs/archive/2d718cc86f6a980059cc7d3f7f7dca499723e61c.tar.gz",
+        "url": "https://github.com/hlissner/doom-emacs/archive/6678f3833b5c237b8bf4a0a65449244bec5554e5.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "fzf.kak": {
@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "andreyorst",
         "repo": "fzf.kak",
-        "rev": "f23daa698ad95493fbd675ae153e3cac13ef34e9",
-        "sha256": "0q19ynjixy0wx9ygwj26bdm6ilkd820gy21kid73imgvkm6cgx85",
+        "rev": "124c3a27510d6ef707250a2f31cb66a923f54ca6",
+        "sha256": "0rwmc5n20yyx37djaczsk684rrwpilkcy46waxxqlanlcnb61wsw",
         "type": "tarball",
-        "url": "https://github.com/andreyorst/fzf.kak/archive/f23daa698ad95493fbd675ae153e3cac13ef34e9.tar.gz",
+        "url": "https://github.com/andreyorst/fzf.kak/archive/124c3a27510d6ef707250a2f31cb66a923f54ca6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -29,10 +29,10 @@
         "homepage": "https://nix-community.github.io/home-manager/",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4b772fd6988dd206f0ed4cb1b2d7c4c6d4f0f455",
-        "sha256": "1nlgnc00hjkmjdagj9kayxcymwxhqz9n28b84b6xblawpjbmdg4j",
+        "rev": "b0d769691cc379c9ab91d3acec5d14e75c02c02b",
+        "sha256": "0zqp8rn0j8s40nzwp228h8ck4w94sx991b72s1r10aqw0jjh8qx5",
         "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/4b772fd6988dd206f0ed4cb1b2d7c4c6d4f0f455.tar.gz",
+        "url": "https://github.com/nix-community/home-manager/archive/b0d769691cc379c9ab91d3acec5d14e75c02c02b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "kakoune-repl-bridge": {
@@ -53,22 +53,22 @@
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "3cd7914b2c4cff48927e11c216dadfab7d903fe5",
-        "sha256": "1agq4nvbhrylf2s77kb4xhh9k7xcwdwggq764k4jgsbs70py8cw3",
+        "rev": "e0ca65c81a2d7a4d82a189f1e23a48d59ad42070",
+        "sha256": "1pq9nh1d8nn3xvbdny8fafzw87mj7gsmp6pxkdl65w2g18rmcmzx",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/3cd7914b2c4cff48927e11c216dadfab7d903fe5.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/e0ca65c81a2d7a4d82a189f1e23a48d59ad42070.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
-        "branch": "nixpkgs-unstable",
+        "branch": "master",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e5ce05cc1eee0b8d890726e9826791ef95c51793",
-        "sha256": "0gphycfms52zc2q12qn1737133kl6xacxc4f4ypvs7sv8v8br68w",
+        "rev": "3dcb36f234d7191381992995e9960fd55a5d5832",
+        "sha256": "05d4brlx39b1ykzsk6gsms0h0q1wgsn4k03w4mq6d1w4cz8gd1wx",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/e5ce05cc1eee0b8d890726e9826791ef95c51793.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/3dcb36f234d7191381992995e9960fd55a5d5832.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nord-kakoune": {
@@ -89,22 +89,22 @@
         "homepage": null,
         "owner": "connorholyday",
         "repo": "nord-kitty",
-        "rev": "8fd63735301f89dc1784a55f8fdb95e809879b12",
-        "sha256": "1pv83bgyyyq9ajsymlv36vrf60lnzryaxpwf9jg786qvg6cd2yrq",
+        "rev": "3a819c1f207cd2f98a6b7c7f9ebf1c60da91c9e9",
+        "sha256": "0j3byv5wfd7kiq6k8l1g38zg68p19vgbd1hfj6llnfqhdfkspfb5",
         "type": "tarball",
-        "url": "https://github.com/connorholyday/nord-kitty/archive/8fd63735301f89dc1784a55f8fdb95e809879b12.tar.gz",
+        "url": "https://github.com/connorholyday/nord-kitty/archive/3a819c1f207cd2f98a6b7c7f9ebf1c60da91c9e9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "powerline.kak": {
         "branch": "master",
         "description": "Kakoune modeline, but with passion",
         "homepage": "",
-        "owner": "jdugan6240",
+        "owner": "andreyorst",
         "repo": "powerline.kak",
-        "rev": "1426af690048ec9c1599d18725758bb954d465d6",
-        "sha256": "1ycg5376rmglkiiz184r8kyjljvfnay8g208fs8b85ilg5xhkrk5",
+        "rev": "c15ee7e46e4f73bd5cc83134bcbbd0a067301369",
+        "sha256": "18sm0l8jd1fgwvsyd6nbxrn629wgqqp97sr7v3k7qyl1gjz9zcbq",
         "type": "tarball",
-        "url": "https://github.com/jdugan6240/powerline.kak/archive/1426af690048ec9c1599d18725758bb954d465d6.tar.gz",
+        "url": "https://github.com/andreyorst/powerline.kak/archive/c15ee7e46e4f73bd5cc83134bcbbd0a067301369.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "smarttab.kak": {
@@ -113,10 +113,10 @@
         "homepage": "",
         "owner": "andreyorst",
         "repo": "smarttab.kak",
-        "rev": "6e3264df7a9a786961e634d5ae8fb117ca86ef0a",
-        "sha256": "00r9i4v6aiy6yabf22y27idl2cvjivdfwn21aypxr0d849rfg6q8",
+        "rev": "1dd3f33c4f65da5c13aee5d44b2e77399595830f",
+        "sha256": "0g49k47ggppng95nwanv2rqmcfsjsgy3z1764wrl5b49h9wifhg2",
         "type": "tarball",
-        "url": "https://github.com/andreyorst/smarttab.kak/archive/6e3264df7a9a786961e634d5ae8fb117ca86ef0a.tar.gz",
+        "url": "https://github.com/andreyorst/smarttab.kak/archive/1dd3f33c4f65da5c13aee5d44b2e77399595830f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "spacemacs": {
@@ -125,10 +125,10 @@
         "homepage": "http://spacemacs.org",
         "owner": "syl20bnr",
         "repo": "spacemacs",
-        "rev": "138d6329efdc67a473759b34cb5c15b494e9eee2",
-        "sha256": "16nd6gq1i47ml63cj0mgjj8b1x3j6ah1kv4pcfd2bch0c3l4yfck",
+        "rev": "40ae5e2293c6edb5aed1c554ec6b825f24db45d8",
+        "sha256": "1ki4h1ygzqv95fvck8dmbw7vlkvxzs0qxp0hgfz0d0gcjpx95mdm",
         "type": "tarball",
-        "url": "https://github.com/syl20bnr/spacemacs/archive/138d6329efdc67a473759b34cb5c15b494e9eee2.tar.gz",
+        "url": "https://github.com/syl20bnr/spacemacs/archive/40ae5e2293c6edb5aed1c554ec6b825f24db45d8.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "spacevim": {
@@ -137,10 +137,10 @@
         "homepage": "https://spacevim.org",
         "owner": "SpaceVim",
         "repo": "spacevim",
-        "rev": "25005c4a72814ca3a6f4592a7b1af0f66b9ce6c4",
-        "sha256": "1phl2ghn6m35gg67xz4d9yhc57jsvwnh1ic0w574lkj7zll8mzkf",
+        "rev": "225e417ff83b552eb26f8ce99abfe58d32903a53",
+        "sha256": "1rbywqwi14p5p626wxg9nqr7qccbcfcyr2frj890m2pxvlxp0j7h",
         "type": "tarball",
-        "url": "https://github.com/SpaceVim/spacevim/archive/25005c4a72814ca3a6f4592a7b1af0f66b9ce6c4.tar.gz",
+        "url": "https://github.com/SpaceVim/spacevim/archive/225e417ff83b552eb26f8ce99abfe58d32903a53.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
