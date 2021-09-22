@@ -21,6 +21,8 @@ in
     pkgs.nixfmt
     pkgs.nixpkgs-fmt
     pkgs.dotnet-sdk_5
+    pkgs.taskwarrior-tui
+    pkgs.taskwarrior
   ];
 
   programs.home-manager.enable = true;
