@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
-  nivpkgs = import sources.nixpkgs {};
+  nivpkgs = import sources.nixpkgs { };
   pkgs = nivpkgs;
 in
 {
@@ -29,7 +29,7 @@ in
   users.users.mdavezac.home = "/Users/mdavezac";
   users.nix.configureBuildUsers = true;
   fonts = {
-    enableFontDir = true;
+    enableFontDir = false;
     fonts = [ pkgs.nerdfonts ];
   };
 
@@ -53,4 +53,31 @@ in
   services.yabai.package = pkgs.yabai;
 
   services.lorri.enable = true;
+
+  homebrew = {
+    enable = true;
+    cleanup = "zap";
+    extraConfig = ''
+      tap "fabianishere/personal", "https://github.com/fabianishere/homebrew-personal"
+      tap "homebrew/cask", "https://github.com/Homebrew/homebrew-cask/"
+    '';
+    brews = [ "dust" "node" "pam_reattach" ];
+    casks = [
+      "kitty"
+      "visual-studio-code"
+      "brave-browser"
+      # "firefox"
+      "dash"
+      "docker"
+      "disk-inventory-x"
+      "virtualbox"
+      "virtualbox-extension-pack"
+      "julia"
+      "nvidia-geforce-now"
+      "unity-hub"
+      "keepingyouawake"
+      "epic-games"
+      # "android-platform-tools"
+    ];
+  };
 }

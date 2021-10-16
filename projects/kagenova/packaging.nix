@@ -2,7 +2,7 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
-  utils = (pkgs.callPackage (import ../lib/utils.nix) {});
+  utils = (pkgs.callPackage (import ../lib/utils.nix) { });
 in
 {
   imports = builtins.map mkProject [ "packaging" "pyssht" ];
@@ -47,6 +47,14 @@ in
             url = "https://github.com/astro-informatics/s2let-archiv.git";
             fetch = "+refs/heads/*:refs/remotes/public/*";
           };
+        };
+      };
+
+      flags = {
+        url = "https://github.com/astro-informatics/src_flag.git";
+        dest = "flag";
+        settings = {
+          user.email = emails.github;
         };
       };
 
@@ -128,7 +136,7 @@ in
     };
 
     file."pyssht.code-workspace".source = utils.toPrettyJSON {
-      folders = [ { path = "."; } ];
+      folders = [{ path = "."; }];
       settings = {
         "python.venvFolders" = [ ''''${workspaceFolder}/.direnv/'' ];
         "python.formatting.provider" = "black";

@@ -4,7 +4,7 @@ let
   emails = import ./lib/emails.nix;
 in
 {
-  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" ];
+  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" "oni" ];
   # pylada: {{{
   projects.personal.pylada = {
     enable = true;
@@ -134,11 +134,27 @@ in
     enable = true;
     repos.cv = {
       url = "https://gitlab.com/mdavezac/cv.git";
-      dest = "cv";
+      dest = ".";
       settings.user.email = emails.gitlab;
     };
     nixshell.text = ''
       buildInputs = [ tectonic biber ];
+    '';
+  };
+  # }}}
+  # oni: {{{
+  projects.personal.oni = {
+    enable = true;
+    repos.cv = {
+      url = "https://github.com/onivim/oni2";
+      dest = ".";
+      settings.user.email = emails.github;
+    };
+    nixshell.text = ''
+      buildInputs = [
+         libtool gettext libpng cmake ragel
+         # nodejs-16_x nodePackages.esy nodePackages.node-gyp
+      ];
     '';
   };
   # }}}

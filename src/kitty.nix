@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  kitty-theme = (import ../nix/sources.nix).nord-kitty;
+  kitty-theme = pkgs.nord-kitty;
 in {
   programs.kitty = {
     enable = true;

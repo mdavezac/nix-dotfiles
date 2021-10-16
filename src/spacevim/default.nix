@@ -30,15 +30,15 @@ let
 in
 {
   home.packages = [
-    pkgs.universal-ctags
-    pkgs.nodejs
-    pkgs.yarn
-    pkgs.cscope
-    pkgs.neovim-remote
+    # pkgs.universal-ctags
+    # pkgs.nodejs
+    # pkgs.yarn
+    # pkgs.cscope
+    # pkgs.neovim-remote
     pkgs.fzf
   ];
 
-  home.file.".Spacevim.d/init.toml".source = "${toml}";
+#  home.file.".Spacevim.d/init.toml".source = "${toml}";
   home.file.".Spacevim.d/spell/en.utf-8.add".text = "${spell}";
   home.file.".Spacevim.d/spell/en.utf-8.add.spl".source = "${spell_binary}";
   home.file.".Spacevim.d/autoload/localcustomconfig.vim".text =
@@ -64,7 +64,7 @@ in
     extraConfig = ''
       source ${mypkgs.spacevim_src}/init.vim
     '';
-    extraPython3Packages = (ps: with ps; [ pynvim msgpack ]);
+    # extraPython3Packages = (ps: with ps; [ pynvim msgpack ]);
     withPython3 = true;
     withRuby = true;
   };

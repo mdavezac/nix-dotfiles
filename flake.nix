@@ -1,0 +1,62 @@
+{
+  description = "My dotfiles";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-20.09-darwin";
+
+    darwin.url = "github:LnL7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+    flake-utils.url = "github:numtide/flake-utils";
+
+    foreign-fish = {
+      url = "github:oh-my-fish/plugin-foreign-env";
+      flake = false;
+    };
+    nord-kitty = {
+      url = "github:connorholyday/nord-kitty";
+      flake = false;
+    };
+  };
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, ... }:
+    let
+      nixpkgsConfig = with inputs; {
+        config = { allowUnfree = true; };
+        overlays = [
+          (final: prev:
+            let system = prev.stdenv.system;
+            in rec {
+              stable = nixpkgs-stable-darwin.legacyPackages.${system};
+              kitty = stable.kitty;
+              foreign-fish = inputs.foreign-fish;
+              nord-kitty = inputs.nord-kitty;
+            })
+        ];
+
+      };
+    in {
+      darwinConfigurations = {
+        macbook = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          inputs = inputs;
+          modules = [
+            home-manager.darwinModules.home-manager
+            ./darwin.nix
+            rec {
+              nix.nixPath = { nixpkgs = "$HOME/.config/nixpkgs/nixpkgs.nix"; };
+              nixpkgs = nixpkgsConfig;
+              users.users.mdavezac.home = "/Users/mdavezac";
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.mdavezac = { imports = [ ./home.nix ]; };
+            }
+          ];
+        };
+      };
+    };
+}

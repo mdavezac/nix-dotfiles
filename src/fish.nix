@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }: {
-  home.packages = [ pkgs.fishPlugins.foreign-env ];
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -11,18 +10,24 @@
       grep = "${pkgs.ripgrep}/bin/rg";
       clang-format = "/usr/local/opt/llvm/bin/clang-format";
       clang-tidy = "/usr/local/opt/llvm/bin/clang-tidy";
+      ls = "${pkgs.exa}/bin/exa --icons";
     };
+    promptInit = ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
+    '';
     interactiveShellInit = ''
-      ${pkgs.any-nix-shell}/bin/any-nix-shell fish | source
-
-      set -U fish_user_path /etc/profiles/per-user/mdavezac/bin
-
+      fish_add_path $HOME/.nix-profile/bin
+      fish_add_path /run/current-system/sw/bin/
       ${pkgs.python3Packages.pip}/bin/pip completion --fish | source
       fenv source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
       source /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
       source /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
     '';
-    functions.__fish_describe_command = '''';
+    functions.__fish_describe_command = "";
+    plugins = [{
+      name = "fish-foreign-env";
+      src = pkgs.foreign-fish;
+    }];
   };
   programs.zoxide = {
     enable = true;

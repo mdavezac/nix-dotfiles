@@ -3,7 +3,7 @@ let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
   aws = (import ../../machine.nix).aws;
-  utils = (pkgs.callPackage (import ../lib/utils.nix) {});
+  utils = (pkgs.callPackage (import ../lib/utils.nix) { });
   starsets = {
     nix_shell.disabled = true;
     package.disabled = true;
@@ -32,7 +32,7 @@ in
   );
 
   projects.kagenova.copernic360 = {
-    enable = true;
+    enable = false;
     repos.copernic360 = {
       url =
         "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
@@ -66,19 +66,19 @@ in
     };
   };
 
-  home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI {} {
+  home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI { } {
     core = {
       account = "pulumi-deployment@spatial360-development.iam.gserviceaccount.com";
       project = "spatial360-development";
     };
   };
-  home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI {} {
+  home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI { } {
     core = {
       account = "pulumi-deployment@spatial360-staging.iam.gserviceaccount.com";
       project = "spatial360-staging";
     };
   };
-  home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI {} {
+  home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI { } {
     core = {
       account = "pulumi-deployment@spatial360-production.iam.gserviceaccount.com";
       project = "spatial360-production";
@@ -110,9 +110,10 @@ in
       export STARSHIP_CONFIG=${utils.starship_conf starsets}
       export PULUMI_HOME=$(pwd)/.local/pulumi;
       export AWS_SHARED_CREDENTIALS_FILE=$(pwd)/.local/aws/credentials
+      export COMPOSE_FILE=$(pwd)/.docker/docker-compose.yml
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
-    file.".local/aws/credentials".text = lib.generators.toINI {} aws;
+    file.".local/aws/credentials".text = lib.generators.toINI { } aws;
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }

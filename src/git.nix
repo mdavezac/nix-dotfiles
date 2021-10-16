@@ -2,17 +2,18 @@
 let
   machine = import ../machine.nix;
   email = (import ../projects/lib/emails.nix).github;
-in
-{
+in {
   home.packages = [ pkgs.pre-commit pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
 
   programs.gh = {
     enable = true;
-    editor = "nvim";
-    gitProtocol = "https";
-    aliases = {
-      co = "pr checkout";
-      pv = "pr view -w";
+    settings = {
+      editor = "nvim";
+      git_protocol = "https";
+      aliases = {
+        co = "pr checkout";
+        pv = "pr view -w";
+      };
     };
   };
   programs.fish.interactiveShellInit = ''

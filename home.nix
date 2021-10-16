@@ -1,16 +1,7 @@
 { config, pkgs, lib, ... }:
-let
-  sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs {};
-  # vscode = pkgs.buildEnv {
-  # name = "vscode";
-  # paths = [ pkgs.vscode pkgs.dotnet-sdk_5 ];
-  # pathsToLink = [ "/share" "/bin" "/Applications" ];
-  # };
-in
 {
   # nixpkgs.config = import ./nixpkgs-config.nix;
-  xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+  # xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   home.packages = [
     pkgs.cacert
@@ -55,15 +46,15 @@ in
         @warn "Error initializing OhMyREPL" exception=(e, catch_backtrace())
     end
   '';
-  home.file.".skhdrc".text = (
-    builtins.readFile (
-      pkgs.substituteAll {
-        src = ./files/skhdrc;
-        kitty = "${pkgs.kitty}";
-        emacs = "${pkgs.emacs}";
-      }
-    )
-  );
+  # home.file.".skhdrc".text = (
+  #   builtins.readFile (
+  #     pkgs.substituteAll {
+  #       src = ./files/skhdrc;
+  #       kitty = "${pkgs.kitty}";
+  #       emacs = "${pkgs.emacs}";
+  #     }
+  #   )
+  # );
   home.file.".yabairc".source = ./files/yabairc;
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
