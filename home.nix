@@ -19,7 +19,7 @@
   programs.home-manager.enable = true;
 
   imports = [
-    ./src/spacevim
+    # ./src/spacevim
     ./src/ssh.nix
     ./src/fish.nix
     ./src/cmdl.nix

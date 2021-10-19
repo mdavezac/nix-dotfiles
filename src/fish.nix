@@ -3,8 +3,6 @@
     enable = true;
     shellAliases = {
       cat = "${pkgs.bat}/bin/bat";
-      vi = "nvim";
-      vim = "nvim";
       tmux = "${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux";
       ctags = "${pkgs.universal-ctags}/bin/ctags";
       grep = "${pkgs.ripgrep}/bin/rg";
