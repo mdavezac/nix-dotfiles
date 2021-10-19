@@ -13,7 +13,13 @@ in
       "alignment"
       "puzzles"
       "pando"
-    ] ++ [ ./packaging.nix ./copernic360.nix ./move.nix ./blockchain.nix ]
+    ] ++ [
+      ./packaging.nix
+      ./copernic360.nix
+      ./move.nix
+      ./blockchain.nix
+      ./consulting.nix
+    ]
   );
 
   # tensossht: {{{
@@ -23,31 +29,23 @@ in
       let
         kagelearn_url = "gitlab.com/kagenova/kagelearn/development";
       in
-        {
-          tensossht = {
-            url = "https://${kagelearn_url}/tensossht.git";
-            dest = ".";
-            settings = { user.email = emails.gitlab; };
-            ignore = ''
-              .vim/
-              .local/
-              .envrc
-              .vscode/
-              shell.nix
-              vm/
-              profiling/
-              gpu/
-              terraform/
-            '';
-          };
-          terraform = {
-            url = "https://${kagelearn_url}/tensossht/snippets/2012012.git";
-            dest = "terraform";
-            settings.user.email = emails.gitlab;
-          };
+      {
+        tensossht = {
+          url = "https://${kagelearn_url}/tensossht.git";
+          dest = ".";
+          settings = { user.email = emails.gitlab; };
+          ignore = '''';
         };
+      };
+    file.".git/info/exclude".text = ''
+      .vim/
+      .local/
+      .envrc
+      .vscode/
+      shell.nix
+    '';
     extraEnvrc = ''
-      eval "$(lorri direnv)"
+      use flake
       export TF_CPP_MIN_LOG_LEVEL=2
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       layout poetry
@@ -87,7 +85,7 @@ in
         terraform = {
           command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
           filetypes = [ "terraform" ];
-          initializationOptions = {};
+          initializationOptions = { };
         };
       };
     };

@@ -1,4 +1,6 @@
 # https://numtide.github.io/devshell
+imports = ["service.postgres", "language.c"]
+
 [[commands]]
 package = "devshell.cli"
 help = "Per project developer environments"
@@ -10,7 +12,77 @@ package = "poetry"
 package = "python38"
 
 [[commands]]
-package = "postgresql"
+name = "cleandb"
+help = "Create clean new test database"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    poetry run bash ./clean-db.sh
+"""
+
+[[commands]]
+name = "new_testuser"
+help = "Create new test user"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    poetry run python manage.py test_user
+"""
+
+[[commands]]
+name = "runserver"
+help = "Start development server"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    poetry run python manage.py runserver
+"""
+
+[[commands]]
+name = "test"
+help = "Run tests"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    poetry run python manage.py test $@
+"""
+
+[[commands]]
+name = "celery"
+help = "Start celery server"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    poetry run celery -A twisto -l info worker
+"""
 
 [devshell]
-packages = ["graphviz"]
+packages = [
+    "pkgconfig",
+    "file",
+    "gdal",
+    "cairo",
+    "black",
+    "redis",
+    "elasticsearch7",
+    "elasticsearchPlugins.analysis-icu",
+]
+
+[service.postgres]
+package = "mypostgresql"
+
+[language.c]
+includes = ["graphviz", "geos"]
+libraries = ["glib.out", "pango", "fontconfig", "openssl.out"]
+
+[[env]]
+name = "DYLD_FALLBACK_LIBRARY_PATH"
+prefix = "$DEVSHELL_DIR/lib"
+
+[[env]]
+name = "LDFLAGS"
+eval = "-L$DEVSHELL_DIR/lib"
+
+[[env]]
+name = "PGUSER"
+eval = "$USER"
