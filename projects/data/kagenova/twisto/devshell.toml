@@ -1,0 +1,16 @@
+# https://numtide.github.io/devshell
+[[commands]]
+package = "devshell.cli"
+help = "Per project developer environments"
+
+[[commands]]
+package = "poetry"
+
+[[commands]]
+package = "python38"
+
+[[commands]]
+package = "postgresql"
+
+[devshell]
+packages = ["graphviz"]

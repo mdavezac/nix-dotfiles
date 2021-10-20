@@ -14,6 +14,7 @@
       flake = false;
     };
     flake-utils.url = "github:numtide/flake-utils";
+    devshell.url = "github:numtide/devshell";
 
     foreign-fish = {
       url = "github:oh-my-fish/plugin-foreign-env";
@@ -23,6 +24,7 @@
       url = "github:connorholyday/nord-kitty";
       flake = false;
     };
+    rnix-lsp.url = github:nix-community/rnix-lsp;
   };
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, ... }:
     let
@@ -38,7 +40,6 @@
               nord-kitty = inputs.nord-kitty;
             })
         ];
-
       };
     in {
       darwinConfigurations = {
@@ -57,6 +58,33 @@
             }
           ];
         };
+      };
+      devShell.x86_64-darwin = let
+        pkgs = import nixpkgs {
+          system = "x86_64-darwin";
+          config = { allowUnfree = true; };
+          overlays = [ inputs.devshell.overlay 
+            (final: prev: {
+              rnix-lsp = inputs.rnix-lsp.defaultPackage.x86_64-darwin;
+            })
+          ];
+        };
+      in pkgs.devshell.mkShell {
+        name = "dotfiles";
+        packages = [ pkgs.devshell.cli pkgs.rnix-lsp ];
+
+        commands = [
+          {
+            name = "build";
+            command = "darwin-rebuild build --flake .#macbook";
+            help = "Build the current configuration";
+          }
+          {
+            name = "update";
+            command = "darwin-rebuild switch --flake .#macbook";
+            help = "Switch to the current configuration";
+          }
+        ];
       };
     };
 }
