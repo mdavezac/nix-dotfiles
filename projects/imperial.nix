@@ -2,8 +2,8 @@
 let
   mkProject = import ./lib/project.nix "imperial";
   emails = import ./lib/emails.nix;
-  pylance_dir = (import ../machine.nix).pylance_dir;
-in {
+in
+{
   imports =
     builtins.map mkProject [ "muse" "strainmap" "joss" "evosim" "grad_course" ];
 
@@ -261,47 +261,21 @@ in {
     nixshell.text = ''
       buildInputs = [jekyll];
     '';
-    coc = {
-      "python.linting.enabled" = true;
-      "python.linting.mypyEnabled" = true;
-      "python.linting.flake8Enabled" = true;
-      "python.linting.pylintEnabled" = false;
-      "python.jediEnabled" = false;
-      "python.venvPath" = "$" + "{workspaceFolder}/.direnv";
-      "python.formatting.provider" = "black";
-      languageserver = {
-        pylance = {
-          enable = true;
-          filetypes = [ "python" ];
-          module = pylance_dir;
-          initializationOptions = { };
-          settings = {
-            "python.analysis.typeCheckingMode" = "basic";
-            "python.analysis.diagnosticMode" = "openFilesOnly";
-            "python.analysis.autoSearchPaths" = true;
-            "python.analysis.extraPaths" = [ ];
-            "python.analysis.diagnosticSeverityOverrides" = { };
-            "python.analysis.useLibraryCodeForTypes" = true;
-          };
-        };
-      };
+
+    home.file."imperial/grad_course/.local/bin/code" = {
+      executable = true;
+      text = ''
+        #!/bin/bash
+
+        function script_dir {
+            echo "$(cd "$(dirname "''${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+        }
+
+        ${pkgs.vscode}/bin/code \
+            --user-data-dir $(script_dir)/../vscode/data  \
+            --extensions-dir $(script_dir)/../vscode/extensions \
+            "$@"
+      '';
     };
-  };
-
-  home.file."imperial/grad_course/.local/bin/code" = {
-    executable = true;
-    text = ''
-      #!/bin/bash
-
-      function script_dir {
-          echo "$(cd "$(dirname "''${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-      }
-
-      ${pkgs.vscode}/bin/code \
-          --user-data-dir $(script_dir)/../vscode/data  \
-          --extensions-dir $(script_dir)/../vscode/extensions \
-          "$@"
-    '';
-  };
-  # }}}
-}
+    # }}}
+  }

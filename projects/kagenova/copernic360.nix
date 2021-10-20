@@ -2,7 +2,6 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
-  aws = (import ../../machine.nix).aws;
   utils = (pkgs.callPackage (import ../lib/utils.nix) { });
   starsets = {
     nix_shell.disabled = true;
@@ -109,11 +108,9 @@ in
       check_precommit
       export STARSHIP_CONFIG=${utils.starship_conf starsets}
       export PULUMI_HOME=$(pwd)/.local/pulumi;
-      export AWS_SHARED_CREDENTIALS_FILE=$(pwd)/.local/aws/credentials
       export COMPOSE_FILE=$(pwd)/.docker/docker-compose.yml
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
     '';
-    file.".local/aws/credentials".text = lib.generators.toINI { } aws;
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
         { path = "."; }

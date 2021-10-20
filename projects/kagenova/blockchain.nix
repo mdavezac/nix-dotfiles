@@ -55,14 +55,9 @@ in
       settings.user.email = emails.gitlab;
     };
     extraEnvrc = ''
-      export AWS_SHARED_CREDENTIALS_FILE=$(realpath $(pwd)/.local/aws/credentials)
       export AWS_PROFILE="development"
       export AWS_REGION="eu-west-2"
     '';
-    file.".local/aws/credentials".text = let
-      aws = (import ../../machine.nix).aws;
-    in
-      lib.generators.toINI {} aws;
     nixshell = {
       text = ''
         buildInputs = [

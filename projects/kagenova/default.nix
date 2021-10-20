@@ -2,7 +2,6 @@
 let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
-  pulumi = (import ../../machine.nix).pulumi;
 in
 {
   imports = (
@@ -171,7 +170,6 @@ in
       eval "$(lorri direnv)"
       layout poetry 3.7
       check_precommit
-      export PULUMI_CONFIG_PASSPHRASE="${pulumi.cdt}";
       export PULUMI_HOME=$(pwd)/.local/pulumi;
       [ -e TODOs.org ] || ln -s ~/org/cdt.org TODOs.org
     '';

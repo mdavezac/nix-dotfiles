@@ -3,11 +3,11 @@
   file = { project, config, lib, pkgs, path }:
     let
       prjList = if builtins.isList project then project else [ project ];
-      name = if config.shell == "mkShell" then
-        ''name="'' + (lib.concatStringsSep "-" prjList) + ''";''
-      else
-        "";
-      home = (import ../../machine.nix).home;
+      name =
+        if config.shell == "mkShell" then
+          ''name="'' + (lib.concatStringsSep "-" prjList) + ''";''
+        else
+          "";
       text = config: name: ''
         { pkgs ? import <nixpkgs> {} }:
 
@@ -16,7 +16,7 @@
         ${config.shell} {
           ${name}
           ${
-            builtins.replaceStrings [ "@path@" "@home@" ] [ path home ]
+            builtins.replaceStrings [ "@path@" ] [ path ]
             config.text
           }
         }
@@ -26,5 +26,6 @@
           "${pkgs.nixfmt}/bin/nixfmt < ${
             pkgs.writeText "shell.nix" text
           } > $out");
-    in (format (text config name));
+    in
+    (format (text config name));
 }

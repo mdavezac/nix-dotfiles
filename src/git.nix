@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  machine = import ../machine.nix;
   email = (import ../projects/lib/emails.nix).github;
-in {
+in
+{
   home.packages = [ pkgs.pre-commit pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
 
   programs.gh = {
@@ -34,7 +34,6 @@ in {
       format.pretty =
         "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
       http.sslcainfo = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      ghi.token = machine.github_token;
       pull.rebase = false;
     };
     signing = {

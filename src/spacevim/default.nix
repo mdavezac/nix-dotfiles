@@ -2,7 +2,6 @@
 let
   mypkgs = import ../../packages { inherit pkgs; };
   config = import ./config.nix pkgs;
-  github_token = (import ../../machine.nix).github_token;
   toml = pkgs.runCommand "init.toml" {
     buildInputs = [ pkgs.remarshal ];
     preferLocalBuild = true;
@@ -54,7 +53,6 @@ in
           cscope = "${pkgs.cscope}/bin/cscope";
           isort = "${pkgs.python38Packages.isort}/bin/isort";
           ctags = "${pkgs.universal-ctags}/bin/ctags";
-          github_token = github_token;
         }
       )
     );
