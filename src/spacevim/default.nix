@@ -2,10 +2,11 @@
 let
   mypkgs = import ../../packages { inherit pkgs; };
   config = import ./config.nix pkgs;
-  toml = pkgs.runCommand "init.toml" {
-    buildInputs = [ pkgs.remarshal ];
-    preferLocalBuild = true;
-  } ''
+  toml = pkgs.runCommand "init.toml"
+    {
+      buildInputs = [ pkgs.remarshal ];
+      preferLocalBuild = true;
+    } ''
     remarshal -if json -of toml \
       < ${pkgs.writeText "spacevim.json" (builtins.toJSON config)} \
       > $out
@@ -15,10 +16,11 @@ let
     broadcasted
     TOML
   '';
-  spell_binary = pkgs.runCommand "en.utf-8.add.spl" {
-    buildInputs = [ pkgs.neovim-unwrapped ];
-    preferLocalBuild = true;
-  } ''
+  spell_binary = pkgs.runCommand "en.utf-8.add.spl"
+    {
+      buildInputs = [ pkgs.neovim-unwrapped ];
+      preferLocalBuild = true;
+    } ''
     cat > en.utf-8.add <<EOF
     ${spell}
     EOF
@@ -37,7 +39,7 @@ in
     pkgs.fzf
   ];
 
-#  home.file.".Spacevim.d/init.toml".source = "${toml}";
+  #  home.file.".Spacevim.d/init.toml".source = "${toml}";
   home.file.".Spacevim.d/spell/en.utf-8.add".text = "${spell}";
   home.file.".Spacevim.d/spell/en.utf-8.add.spl".source = "${spell_binary}";
   home.file.".Spacevim.d/autoload/localcustomconfig.vim".text =
