@@ -14,6 +14,7 @@
     pkgs.dotnet-sdk_5
     pkgs.taskwarrior-tui
     pkgs.taskwarrior
+    pkgs.aws-vault
   ];
 
   programs.home-manager.enable = true;
