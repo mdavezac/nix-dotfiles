@@ -24,6 +24,10 @@
       url = "github:connorholyday/nord-kitty";
       flake = false;
     };
+    kitty-themes = {
+      url = "github:dexpota/kitty-themes";
+      flake = false;
+    };
     rnix-lsp.url = github:nix-community/rnix-lsp;
   };
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, flake-utils, ... }:
@@ -33,15 +37,18 @@
         overlays = [
           (final: prev:
             let system = prev.stdenv.system;
-            in rec {
+            in
+            rec {
               stable = nixpkgs-stable-darwin.legacyPackages.${system};
               kitty = stable.kitty;
               foreign-fish = inputs.foreign-fish;
               nord-kitty = inputs.nord-kitty;
+              kitty-themes = inputs.kitty-themes;
             })
         ];
       };
-    in {
+    in
+    {
       darwinConfigurations = {
         macbook = darwin.lib.darwinSystem {
           system = "x86_64-darwin";
@@ -59,32 +66,35 @@
           ];
         };
       };
-      devShell.x86_64-darwin = let
-        pkgs = import nixpkgs {
-          system = "x86_64-darwin";
-          config = { allowUnfree = true; };
-          overlays = [ inputs.devshell.overlay 
-            (final: prev: {
-              rnix-lsp = inputs.rnix-lsp.defaultPackage.x86_64-darwin;
-            })
+      devShell.x86_64-darwin =
+        let
+          pkgs = import nixpkgs {
+            system = "x86_64-darwin";
+            config = { allowUnfree = true; };
+            overlays = [
+              inputs.devshell.overlay
+              (final: prev: {
+                rnix-lsp = inputs.rnix-lsp.defaultPackage.x86_64-darwin;
+              })
+            ];
+          };
+        in
+        pkgs.devshell.mkShell {
+          name = "dotfiles";
+          packages = [ pkgs.devshell.cli pkgs.rnix-lsp ];
+
+          commands = [
+            {
+              name = "build";
+              command = "darwin-rebuild build --flake .#macbook";
+              help = "Build the current configuration";
+            }
+            {
+              name = "update";
+              command = "darwin-rebuild switch --flake .#macbook";
+              help = "Switch to the current configuration";
+            }
           ];
         };
-      in pkgs.devshell.mkShell {
-        name = "dotfiles";
-        packages = [ pkgs.devshell.cli pkgs.rnix-lsp ];
-
-        commands = [
-          {
-            name = "build";
-            command = "darwin-rebuild build --flake .#macbook";
-            help = "Build the current configuration";
-          }
-          {
-            name = "update";
-            command = "darwin-rebuild switch --flake .#macbook";
-            help = "Switch to the current configuration";
-          }
-        ];
-      };
     };
 }

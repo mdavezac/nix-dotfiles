@@ -103,6 +103,22 @@
         "type": "github"
       }
     },
+    "kitty-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1573943989,
+        "narHash": "sha256-DBvkVxInRhKhx5S7dzz5bcSFCf1h6A27h+lIPIXLr4U=",
+        "owner": "dexpota",
+        "repo": "kitty-themes",
+        "rev": "fca3335489bdbab4cce150cb440d3559ff5400e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dexpota",
+        "repo": "kitty-themes",
+        "type": "github"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -216,6 +232,7 @@
         "flake-utils": "flake-utils",
         "foreign-fish": "foreign-fish",
         "home-manager": "home-manager",
+        "kitty-themes": "kitty-themes",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable-darwin": "nixpkgs-stable-darwin",
         "nord-kitty": "nord-kitty",

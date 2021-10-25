@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  kitty-theme = pkgs.nord-kitty;
-in {
+  kitty-theme = pkgs.kitty-themes;
+in
+{
   programs.kitty = {
     enable = true;
     settings = {
@@ -17,7 +18,7 @@ in {
       macos_quit_when_last_window_closed = true;
       hide_window_decorations = true;
       macos_option_as_alt = "left";
-      include = "${kitty-theme}/nord.conf";
+      include = "${kitty-theme}/themes/glacier.conf";
     };
     keybindings = {
       "cmd+plus" = "change_font_size all +2.0";
