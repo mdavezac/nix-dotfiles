@@ -13,12 +13,15 @@ in
       aliases = {
         co = "pr checkout";
         pv = "pr view -w";
+        mypr = "pr list -S author:mdavezac";
       };
     };
   };
-  programs.fish.interactiveShellInit = ''
-    ${pkgs.gitAndTools.gh}/bin/gh completion --shell fish | source
-  '';
+  home.file.".config/fish/completions/gh.fish".source =
+    pkgs.runCommand
+      "fish-completion"
+      { }
+      "${pkgs.gitAndTools.gh}/bin/gh completion -s fish > $out";
 
   programs.git = {
     enable = true;
