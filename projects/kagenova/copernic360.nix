@@ -97,6 +97,7 @@ in
         .vscode/
         .local/
         .envrc
+        .envrc.secrets
         TODOs.org
         ai-pipeline.code-workspace
       '';
@@ -110,6 +111,7 @@ in
       export PULUMI_HOME=$(pwd)/.local/pulumi;
       export COMPOSE_FILE=$(pwd)/.docker/docker-compose.yml
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
+      source_env_if_exists $PWD/.envrc.secrets
     '';
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
@@ -123,7 +125,6 @@ in
     };
     file.".local/bin/switch_stack.fish".text = ''
       function switch_stack -a arg
-          set -e AWS_PROFILE
           set -e SQL_PASSWORD
           set -e SQL_USERNAME
           set -e SQL_PORT
@@ -137,7 +138,7 @@ in
           switch $arg
               case development
                   set gcp_config development
-                  set aws_profile development
+                  set aws_profile mdavezac-testing
                   set puldir $local_pwd/infrastructure
               case bootstrap
                   set gcp_config development
@@ -181,10 +182,10 @@ in
                   return 1
           end
           set -gx AWS_PROFILE $aws_profile
-          pulumi -C $puldir stack select $stack
+          aws-vault exec $aws_profile -- pulumi -C $puldir stack select $stack
           if ! string match -qer "(bootstrap|monitoring).*" "$stack"
               set -gx GOOGLE_APPLICATION_CREDENTIALS $local_pwd/.local/spatial360-$gcp_config.json
-              set -gx COPERNIC360_HOST (pulumi stack output -C $local_pwd/infrastructure engine-url)
+              set -gx COPERNIC360_HOST (aws-vault exec $aws_profile -- pulumi stack output -C $local_pwd/infrastructure engine-url)
           end
           gcloud config configurations activate copernic360-$gcp_config
       end
