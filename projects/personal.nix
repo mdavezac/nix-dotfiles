@@ -4,7 +4,7 @@ let
   emails = import ./lib/emails.nix;
 in
 {
-  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" "oni" ];
+  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" "oni" "spacenix" ];
   # pylada: {{{
   projects.personal.pylada = {
     enable = true;
@@ -155,6 +155,25 @@ in
          libtool gettext libpng cmake ragel
          # nodejs-16_x nodePackages.esy nodePackages.node-gyp
       ];
+    '';
+  };
+  # }}}
+  # spacenix: {{{
+  projects.personal.spacenix = {
+    enable = true;
+    extraEnvrc = null;
+    file.".setup.fish".text = ''
+      gh repo clone spacevim.nix
+      mv spacevim.nix/* spacevim.nix/.* .
+      rmdir spacevim.nix
+      git config --local user.name "Mayeul d'Avezac"
+      git config --local user.email "${emails.github}"
+      echo ".setup.fish" >.git/info/exclude 
+      echo ".envrc.extra" >>.git/info/exclude 
+    '';
+    file.".envrc.extra".text = ''
+      export fish_history="personalneovim"
+      export TMUX_SESSION_NAME=personal-nvim
     '';
   };
   # }}}
