@@ -64,7 +64,6 @@
       "kitty"
       "visual-studio-code"
       "brave-browser"
-      # "firefox"
       "dash"
       "docker"
       "disk-inventory-x"
@@ -75,7 +74,8 @@
       "unity-hub"
       "keepingyouawake"
       "epic-games"
-      # "android-platform-tools"
+      "slack"
+      "openvpn-connect"
     ];
   };
 }

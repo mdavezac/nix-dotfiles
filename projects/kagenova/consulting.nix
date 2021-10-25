@@ -18,8 +18,8 @@ in
       [ -e .devshell ] || ln -s ~/personal/dotfiles/projects/data/kagenova/twisto .devshell
       export PRJ_DATA_DIR=$(pwd)/.local/devshell/data
       export PRJ_ROOT=$PWD/.local/devshell
-      source_env .devshell
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
+      source_env .devshell
     '';
     file.".git/info/exclude".text = ''
       .local/
@@ -28,6 +28,10 @@ in
       .envrc
       .vscode/
       .devshell
+      .direnv/
+      .mypy/
+      .mypy_cache/
+      .vscodeignore
     '';
   };
 }
