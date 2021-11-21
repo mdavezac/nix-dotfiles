@@ -4,6 +4,7 @@
     forwardAgent = true;
     extraConfig = ''
       IdentitiesOnly yes
+      IgnoreUnknown UseKeychain
       UseKeychain yes
       AddKeysToAgent yes
       PreferredAuthentications publickey,password

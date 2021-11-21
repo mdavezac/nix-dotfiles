@@ -21,6 +21,13 @@ command = """
 """
 
 [[commands]]
+name = "openforti"
+help = "OpenForti VPN for access to SWETS"
+command = """
+    sudo openfortivpn -c $(git rev-parse --show-toplevel)/.openfortivpn.cfg
+"""
+
+[[commands]]
 name = "new_testuser"
 help = "Create new test user"
 category = "dev helpers"
@@ -39,12 +46,12 @@ command = """
 """
 
 [[commands]]
-name = "test"
+name = "tests"
 help = "Run tests"
 category = "dev helpers"
 command = """
     cd $(git rev-parse --show-toplevel)/twisto
-    poetry run python manage.py test $@
+    python manage.py test "$@"
 """
 
 [[commands]]
@@ -54,6 +61,15 @@ category = "dev helpers"
 command = """
     cd $(git rev-parse --show-toplevel)/twisto
     poetry run celery -A twisto -l info worker
+"""
+
+[[commands]]
+name = "generate_graphql"
+help = "regenerate graphql schemas"
+category = "dev helpers"
+command = """
+    cd $(git rev-parse --show-toplevel)/twisto
+    python3 manage.py graphql_sdl --out ./gql_schemas/schema.graphql
 """
 
 [devshell]
@@ -86,3 +102,11 @@ eval = "-L$DEVSHELL_DIR/lib"
 [[env]]
 name = "PGUSER"
 eval = "$USER"
+
+[[env]]
+name = "EDITOR"
+value = "nvim"
+
+[[env]]
+name = "NVIM_LISTEN_ADDRESS"
+eval = "${PRJ_DATA_DIR}/nvim.rpc"

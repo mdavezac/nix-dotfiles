@@ -36,9 +36,9 @@ in
   home-manager.users.mdavezac = import ./home.nix;
   home-manager.useGlobalPkgs = true;
 
-  system.defaults.dock.autohide = true;
+  system.defaults.dock.autohide = false;
   system.defaults.dock.mru-spaces = false;
-  system.defaults.dock.orientation = "left";
+  system.defaults.dock.orientation = "bottom";
   system.defaults.dock.showhidden = true;
 
   system.defaults.finder.AppleShowAllExtensions = true;

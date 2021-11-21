@@ -44,6 +44,9 @@ in
       shell.nix
     '';
     extraEnvrc = ''
+      if ! has nix_direnv_version || ! nix_direnv_version 1.3.0; then
+        source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/1.3.0/direnvrc" "sha256-cVSyO0/m0hbePv+plzua014InR0lNXa+0LTn0yEW0xc="
+      fi
       use flake
       export TF_CPP_MIN_LOG_LEVEL=2
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
@@ -208,6 +211,4 @@ in
     extraEnvrc = ''layout python3'';
   };
   # }}}
-
-
 }

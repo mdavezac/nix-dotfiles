@@ -10,10 +10,13 @@
 
     ip4r.url = "github:RhodiumToad/ip4r/2.4.1";
     ip4r.flake = false;
+
+    spacenix.url = "/Users/mdavezac/personal/spacenix";
   };
 
   outputs = inputs@{ self, devshell, nixpkgs, ... }:
     let
+      system = "x86_64-darwin";
       ip4rMaker = { stdenv, postgresql, ip4r-src, ... }: stdenv.mkDerivation rec {
         name = "ip4r";
         version = "2.4.1";
@@ -42,9 +45,41 @@
         '';
       };
 
-      pkgs = import nixpkgs {
-        system = "x86_64-darwin";
+      configuration.nvim = {
+        languages.nix = true;
+        layers.projects.enable = false;
+        treesitter-languages = [ "json" "toml" "python" "yaml" "graphql" ];
+        lsp-instances.pyright.cmd = [
+          "${pkgs.nodePackages.pyright}/bin/pyright-langserver"
+          "--stdio"
+        ];
+        formatters = {
+          black = {
+            exe = "black";
+            args = [ "--config" "twisto/pyproject.toml" "-q" "-" ];
+            filetype = "python";
+            enable = true;
+          };
+          isort = {
+            exe = "isort";
+            args = [ "--settings-file" "./twisto/.isort.cfg" "-" ];
+            filetype = "python";
+            enable = true;
+          };
+        };
+        colorscheme = "monochrome";
+        init.lua = ''
+            vim.g.monochrome_style = "subtle";
+        '';
+        post.vim = ''
+            highlight Folded guibg=#222222 guifg=#555555 gui=italic
+        '';
+      };
+
+      pkgs = import nixpkgs rec {
+        inherit system;
         config.allowUnfree = true;
+        config.allowUnsupportedSystem = true;
         overlays = [
           devshell.overlay
           (self: super: rec {
@@ -58,17 +93,23 @@
       };
     in
     {
-      devShell.x86_64-darwin = pkgs.devshell.mkShell {
-        imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
-      };
-      apps.repl.x86_64-darwin = inputs.flake-utils.lib.mkApp {
-        drv = pkgs.writeShellScriptBin "repl" ''
+      devShell.${system} =
+        let
+          cmd = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -s $@";
+          nvim = (inputs.spacenix.wrapper.${system} configuration);
+        in
+        pkgs.devshell.mkShell {
+          imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
+          devshell.packages = [ nvim ];
+          commands = builtins.map (x: { name = x; command = cmd;}) [ "vim" "vi" ];
+        };
+      apps.repl."${system}" = inputs.flake-utils.lib.mkApp {
+          drv = pkgs.writeShellScriptBin "repl" ''
             confnix=$(mktemp)
-          echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
-          trap "rm $confnix" EXIT
-          nix repl $confnix
-        '';
-      };
+            echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
+            trap "rm $confnix" EXIT
+            nix repl $confnix
+          '';
+        };
     };
 }
-

@@ -8,10 +8,6 @@
     pkgs.any-nix-shell
     pkgs.neofetch
     pkgs.curl
-    pkgs.rnix-lsp
-    pkgs.nixfmt
-    pkgs.nixpkgs-fmt
-    pkgs.dotnet-sdk_5
     pkgs.taskwarrior-tui
     pkgs.taskwarrior
     pkgs.aws-vault

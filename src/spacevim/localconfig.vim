@@ -12,28 +12,28 @@ endf
 
 func! localcustomconfig#after() abort  "" global
   let g:EditorConfig_exclude_patterns = ["fugitive://.*", "scp://.*"]
- 
+
   set noswapfile
   set nobackup
   set nowb
- 
+
   set smartcase
   set ignorecase
- 
+
   noremap gw gw
   noremap gq gq
- 
+
   set expandtab
   let g:neoformat_run_all_formatters = 1
   set sidescrolloff=0
- 
+
   "" persistent_undo
   if !isdirectory("$HOME/.local/share/spacevim/backup")
       silent !mkdir "$HOME/.local/share/spacevim/backup" > /dev/null 2>&1
   endif
   set undodir=$HOME/.local/share/spacevim/backup
   set undofile
- 
+
   "" python_plugins
   let g:spacevim_buffer_index_type = 1
   let g:neomake_python_enabled_makers = ["flake8"]
@@ -86,13 +86,13 @@ func! localcustomconfig#after() abort  "" global
   if isdirectory(".vim") && filereadable(".vim/init.vim")
       exe "source .vim/init.vim"
   endif
- 
+
   "" ignore-stuff
   let g:spacevim_wildignore='/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg'
   let g:spacevim_wildignore+='.ttf,*.TTF,*.png,*/target/*,.git,.svn,.hg'
   let g:spacevim_wildignore+='.DS_Store,*.svg,.tox/*,.vscode/*'
   let g:spacevim_wildignore+='.mypy_cache/*,.*-cache'
- 
+
   "" terminal
   tnoremap <C-h> <C-\><C-N><C-w>h
   tnoremap <C-j> <C-\><C-N><C-w>j

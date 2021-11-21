@@ -10,6 +10,7 @@ in
       "plugin"
       "clearvr"
       "mobile"
+      "meshing"
     ]
   );
 
@@ -32,6 +33,8 @@ in
     '';
     extraEnvrc = ''
       check_precommit
+      export PRJ_DATA_DIR=$(pwd)/.local/devshell/data
+      export PRJ_ROOT=$PWD/.local/devshell
     '';
     file."clearvr.code-workspace".source = utils.toPrettyJSON {
       folders = [
@@ -79,6 +82,29 @@ in
         .envrc
       '';
     };
+  };
+  # }}}
+  # meshing: {{{
+  projects.kagenova.meshing = {
+    enable = true;
+    repos.meshing = {
+      url = "https://gitlab.com/kagenova/hacks/kagemove-clearvr-mesh-merge.git";
+      dest = ".";
+      settings.user.email = emails.gitlab;
+      ignore = '''';
+    };
+    file.".git/info/exclude".text = ''
+      .vim/
+      .local/
+      .envrc
+      .vscode/
+    '';
+    extraEnvrc = ''
+      check_precommit
+      export PRJ_DATA_DIR=$(pwd)/.local/devshell/data
+      export PRJ_ROOT=$PWD/.local/devshell
+      source_env .devshell
+    '';
   };
   # }}}
 }

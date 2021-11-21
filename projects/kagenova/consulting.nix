@@ -19,6 +19,7 @@ in
       export PRJ_DATA_DIR=$(pwd)/.local/devshell/data
       export PRJ_ROOT=$PWD/.local/devshell
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
+      export DJANGO_SETTINGS_MODULE="twisto.settings.development"
       source_env .devshell
     '';
     file.".git/info/exclude".text = ''
@@ -32,6 +33,10 @@ in
       .mypy/
       .mypy_cache/
       .vscodeignore
+      .openfortivpn.cfg
+      appendonly.aof
+      dump.rdb
+      pyrightconfig.json
     '';
   };
 }
