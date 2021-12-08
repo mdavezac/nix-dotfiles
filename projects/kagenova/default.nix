@@ -44,16 +44,13 @@ in
       shell.nix
     '';
     extraEnvrc = ''
-      if ! has nix_direnv_version || ! nix_direnv_version 1.3.0; then
-        source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/1.3.0/direnvrc" "sha256-cVSyO0/m0hbePv+plzua014InR0lNXa+0LTn0yEW0xc="
-      fi
-      use flake
-      export TF_CPP_MIN_LOG_LEVEL=2
-      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
-      layout poetry
-      extra_pip_packages pdbpp ipython jupyter rstcheck
       check_precommit
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       PATH_add .local/bin/
+      export PRJ_DATA_DIR=$PWD/.local/devshell/data
+      export PRJ_ROOT=$PWD/.local/devshell
+      source_env_if_exists $PWD/.envrc.flake
+      extra_pip_packages pdbpp ipython jupyter rstcheck
     '';
     ipython = ''
       %load_ext autoreload
@@ -62,35 +59,6 @@ in
       import numpy as np
       import tensorflow as tf
     '';
-    vim = ''
-      set textwidth=88
-      set colorcolumn=89
-      let g:investigate_dash_for_python =
-          \ "Python3,Pandas,SciPy,NumPy,Matplotlib,pytest,tensorflow"
-      let g:neomake_python_enabled_makers=['mypy']
-      let g:neoformat_enabled_python = ["isort", "docformatter", "black"]
-      let g:neoformat_python_docformatter.args = [
-        \ '--wrap-descriptions', 88,
-        \ '--wrap-summaries', 88,
-        \ '-' ]
-      let g:terraform_fold_sections=1
-      let g:terraform_fmt_on_save=1
-    '';
-    coc = {
-      "python.linting.enabled" = true;
-      "python.linting.mypyEnabled" = false;
-      "python.linting.flake8Enabled" = true;
-      "python.linting.pylintEnabled" = false;
-      "python.jediEnabled" = false;
-      "python.formatting.provider" = "black";
-      languageserver = {
-        terraform = {
-          command = "${pkgs.terraform-lsp}/bin/terraform-lsp";
-          filetypes = [ "terraform" ];
-          initializationOptions = { };
-        };
-      };
-    };
   };
   # }}}
 

@@ -47,12 +47,9 @@
 
       configuration.nvim = {
         languages.nix = true;
+        languages.python = true;
         layers.projects.enable = false;
-        treesitter-languages = [ "json" "toml" "python" "yaml" "graphql" ];
-        lsp-instances.pyright.cmd = [
-          "${pkgs.nodePackages.pyright}/bin/pyright-langserver"
-          "--stdio"
-        ];
+        treesitter-languages = [ "json" "toml" "yaml" "graphql" ];
         formatters = {
           black = {
             exe = "black";
@@ -67,13 +64,18 @@
             enable = true;
           };
         };
-        colorscheme = "monochrome";
+        background = "dark";
+        colorscheme = "zenbones";
         init.lua = ''
-            vim.g.monochrome_style = "subtle";
+          vim.g.monochrome_style = "subtle";
         '';
         post.vim = ''
-            highlight Folded guibg=#222222 guifg=#555555 gui=italic
+          " highlight Folded guibg=#222222 guifg=#555555 gui=italic
+          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+          let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
         '';
+        dash.python = [ "Django" ];
+        plugins.start = [ pkgs.vimPlugins.vim-markdown ];
       };
 
       pkgs = import nixpkgs rec {
@@ -95,21 +97,28 @@
     {
       devShell.${system} =
         let
-          cmd = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -s $@";
-          nvim = (inputs.spacenix.wrapper.${system} configuration);
+          nvim = inputs.spacenix.wrapper.${system} configuration;
+          cmd = ''
+            rpc=$PRJ_DATA_DIR/nvim.rpc
+            [ -e $rpc ] && ${pkgs.neovim-remote}/bin/nvr --servername $rpc -s $@ || ${nvim}/bin/nvim $@
+          '';
         in
         pkgs.devshell.mkShell {
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
           devshell.packages = [ nvim ];
-          commands = builtins.map (x: { name = x; command = cmd;}) [ "vim" "vi" ];
+          commands = builtins.map (x: { name = x; command = cmd; }) [ "vim" "vi" ];
+          env = [{
+            name = "EDITOR";
+            value = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -cc split --remote-wait -s $@";
+          }];
         };
       apps.repl."${system}" = inputs.flake-utils.lib.mkApp {
-          drv = pkgs.writeShellScriptBin "repl" ''
-            confnix=$(mktemp)
-            echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
-            trap "rm $confnix" EXIT
-            nix repl $confnix
-          '';
-        };
+        drv = pkgs.writeShellScriptBin "repl" ''
+          confnix=$(mktemp)
+          echo "builtins.getFlake (toString $(git rev-parse --show-toplevel))" >$confnix
+          trap "rm $confnix" EXIT
+          nix repl $confnix
+        '';
+      };
     };
 }

@@ -3,7 +3,7 @@
   home.packages = [ pkgs.lorri pkgs.niv ];
   programs.direnv = {
     enable = true;
-    enableFishIntegration = true;
+    enableFishIntegration = false;
     nix-direnv.enable = false;
   };
 
@@ -11,6 +11,7 @@
     shellAliases.tmux =
       "${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux";
     interactiveShellInit = ''
+      ${pkgs.direnv}/bin/direnv hook fish | source
       set -e DIRENV_DIFF
       set -e DIRENV_DIR
       set -e DIRENV_WATCHES

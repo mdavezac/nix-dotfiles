@@ -10,10 +10,8 @@
       clang-tidy = "/usr/local/opt/llvm/bin/clang-tidy";
       ls = "${pkgs.exa}/bin/exa --icons";
     };
-    promptInit = ''
-      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
-    '';
     interactiveShellInit = ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source
       fish_add_path $HOME/.nix-profile/bin
       fish_add_path /run/current-system/sw/bin/
       ${pkgs.python3Packages.pip}/bin/pip completion --fish | source
