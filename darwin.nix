@@ -10,35 +10,15 @@
     lorri.enable = true;
   };
 
-  # Copy applications into ~/Applications/Nix Apps. This workaround allows us
-  # to find applications installed by nix through spotlight.
-  system.activationScripts.applications.text = pkgs.lib.mkForce (
-    ''
-      if [[ -L "$HOME/Applications" ]]; then
-        rm "$HOME/Applications"
-        mkdir -p "$HOME/Applications/Nix Apps"
-      fi
-      rm -rf "$HOME/Applications/Nix Apps"
-      mkdir -p "$HOME/Applications/Nix Apps"
-      for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
-        src="$(/usr/bin/stat -f%Y "$app")"
-        echo "copying $app"
-        cp -rL "$src" "$HOME/Applications/Nix Apps"
-      done
-    ''
-  );
-
   # Make fingerprint sudo work in terminal and in tmux
-  system.activationScripts.sudo.text = pkgs.lib.mkForce (
-    ''
-      if ! command grep 'pam_tid.so' /etc/pam.d/sudo --silent; then
-        command sudo sed -i -e '1s;^;auth       sufficient     pam_tid.so\n;' /etc/pam.d/sudo
-      fi
-      if ! command grep 'pam_reattach.so' /etc/pam.d/sudo --silent; then
-        command sudo sed -i -e '1s;^;auth     optional     pam_reattach.so\n;' /etc/pam.d/sudo
-      fi
-    ''
-  );
+  system.activationScripts.postUserActivation.text = ''
+    if ! command grep 'pam_tid.so' /etc/pam.d/sudo --silent; then
+      command sudo sed -i -e '1s;^;auth       sufficient     pam_tid.so\n;' /etc/pam.d/sudo
+    fi
+    if ! command grep 'pam_reattach.so' /etc/pam.d/sudo --silent; then
+      command sudo sed -i -e '1s;^;auth     optional     pam_reattach.so\n;' /etc/pam.d/sudo
+    fi
+  '';
   system.stateVersion = 4;
   system.defaults = {
     dock = {
@@ -88,14 +68,13 @@
       "virtualbox-extension-pack"
       "julia"
       "nvidia-geforce-now"
-      "unity-hub"
       "keepingyouawake"
       "epic-games"
       "twist"
       # for twisto
       "wkhtmltopdf"
       "slack"
-      "openvpn-connect"
+      "tunnelblick"
     ];
   };
 }
