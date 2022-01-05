@@ -45,12 +45,14 @@
         '';
       };
 
+
       configuration.nvim = {
         languages.nix = true;
         languages.python = true;
+        layers.testing.python = "djangotest";
         layers.projects.enable = false;
-        treesitter-languages = [ "json" "toml" "yaml" "graphql" ];
-        formatters = {
+        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" ];
+        formatters = pkgs.lib.mkOverride 0 {
           black = {
             exe = "black";
             args = [ "--config" "twisto/pyproject.toml" "-q" "-" ];
@@ -73,9 +75,12 @@
           " highlight Folded guibg=#222222 guifg=#555555 gui=italic
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
+          let test#python#djangotest#executable = "python twisto/manage.py test"
         '';
         dash.python = [ "Django" ];
+        dash.dockerfile = [ "Docker" ];
         plugins.start = [ pkgs.vimPlugins.vim-markdown ];
+        textwidth = 180;
       };
 
       pkgs = import nixpkgs rec {
