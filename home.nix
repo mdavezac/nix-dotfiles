@@ -43,16 +43,6 @@
         @warn "Error initializing OhMyREPL" exception=(e, catch_backtrace())
     end
   '';
-  # home.file.".skhdrc".text = (
-  #   builtins.readFile (
-  #     pkgs.substituteAll {
-  #       src = ./files/skhdrc;
-  #       kitty = "${pkgs.kitty}";
-  #       emacs = "${pkgs.emacs}";
-  #     }
-  #   )
-  # );
-  home.file.".yabairc".source = ./files/yabairc;
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
   # This value determines the Home Manager release that your

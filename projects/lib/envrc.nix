@@ -35,7 +35,6 @@ builtins.replaceStrings [ "-" " " ] [ "_" "_" ]
   export TMUX_SESSION_NAME=${builtins.concatStringsSep "-" project}
 '' + lib.optionalString (isNixshellEnabled config.nixshell) ''
   eval "$(lorri direnv)"
-  fixnix
 '' + lib.optionalString (lib.stringLength config.vim > 0) ''
   nvim_setup
 '' + lib.optionalString (lib.stringLength config.ipython > 0) ''
