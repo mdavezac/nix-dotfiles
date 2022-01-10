@@ -1,8 +1,8 @@
 {
   description = "My dotfiles";
-  inputs =rec {
+  inputs = rec {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-21.05-darwin";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -76,7 +76,7 @@
                   };
                   to = {
                     owner = "NixOS";
-                    repo = "nixpkgs-21.05-darwin";
+                    repo = "nixpkgs-21.11-darwin";
                     rev = inputs.nixpkgs-stable.rev; # (3)
                     type = "github";
                   };
