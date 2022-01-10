@@ -52,20 +52,19 @@
         layers.testing.python = "djangotest";
         layers.projects.enable = false;
         treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" ];
-        formatters = pkgs.lib.mkOverride 0 {
-          black = {
-            exe = "black";
-            args = [ "--config" "twisto/pyproject.toml" "-q" "-" ];
-            filetype = "python";
-            enable = true;
-          };
-          isort = {
-            exe = "isort";
-            args = [ "--settings-file" "./twisto/.isort.cfg" "-" ];
-            filetype = "python";
-            enable = true;
-          };
+        formatters.black = pkgs.lib.mkForce {
+          exe = "black";
+          args = [ "--config" "twisto/pyproject.toml" "-q" "-" ];
+          filetype = "python";
+          enable = true;
         };
+        formatters.isort = {
+          exe = "isort";
+          args = [ "--settings-file" "./twisto/.isort.cfg" "-" ];
+          filetype = "python";
+          enable = true;
+        };
+        linters."diagnostics.mypy" = { exe = "mypy"; enable = true; };
         background = "dark";
         colorscheme = "zenbones";
         init.lua = ''

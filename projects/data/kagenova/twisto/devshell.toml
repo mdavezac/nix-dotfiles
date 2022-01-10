@@ -120,3 +120,7 @@ value = "nvim"
 [[env]]
 name = "NVIM_LISTEN_ADDRESS"
 eval = "${PRJ_DATA_DIR}/nvim.rpc"
+
+[[env]]
+name = "FONTCONFIG_PATH"
+value = "/Users/mdavezac/.config/fontconfig"
