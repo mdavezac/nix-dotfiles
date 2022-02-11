@@ -8,7 +8,6 @@ in
   programs.gh = {
     enable = true;
     settings = {
-      editor = "nvim";
       git_protocol = "https";
       aliases = {
         co = "pr checkout";

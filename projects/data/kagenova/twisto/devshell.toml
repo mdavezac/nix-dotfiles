@@ -9,7 +9,7 @@ help = "Per project developer environments"
 package = "poetry"
 
 [[commands]]
-package = "python38"
+package = "python39"
 
 
 [[commands]]
@@ -44,6 +44,14 @@ category = "dev helpers"
 command = """
     cd $(git rev-parse --show-toplevel)/twisto
     poetry run python manage.py test_user
+"""
+
+[[commands]]
+name = "ipy_shell"
+help = "IPython with django"
+category = "dev helpers"
+command = """
+    python $(git rev-parse --show-toplevel)/twisto/manage.py shell -iipython
 """
 
 [[commands]]

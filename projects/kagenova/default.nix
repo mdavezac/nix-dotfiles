@@ -49,6 +49,7 @@ in
       PATH_add .local/bin/
       export PRJ_DATA_DIR=$PWD/.local/devshell/data
       export PRJ_ROOT=$PWD/.local/devshell
+      source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake
       extra_pip_packages pdbpp ipython jupyter rstcheck
     '';

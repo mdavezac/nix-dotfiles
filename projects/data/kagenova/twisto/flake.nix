@@ -1,7 +1,7 @@
 {
   description = "Tripping Avenger's environment";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-21.05-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
@@ -49,22 +49,25 @@
       configuration.nvim = {
         languages.nix = true;
         languages.python = true;
-        layers.testing.python = "djangotest";
-        layers.projects.enable = false;
+        layers.testing.enable = false;
         treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" ];
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
-          args = [ "--config" "twisto/pyproject.toml" "-q" "-" ];
+          args = [ "--config" "./twisto/pyproject.toml" "-q" "-" ];
           filetype = "python";
           enable = true;
         };
-        formatters.isort = {
+        formatters.isort = pkgs.lib.mkForce {
           exe = "isort";
-          args = [ "--settings-file" "./twisto/.isort.cfg" "-" ];
+          args = [ "--settings-file" "./twisto/pyproject.toml" "-" ];
           filetype = "python";
           enable = true;
         };
-        linters."diagnostics.mypy" = { exe = "mypy"; enable = true; };
+        linters."diagnostics.mypy" = {
+          exe = "mypy";
+          enable = true;
+          timeout = 10000;
+        };
         background = "dark";
         colorscheme = "zenbones";
         init.lua = ''
@@ -79,7 +82,14 @@
         dash.python = [ "Django" ];
         dash.dockerfile = [ "Docker" ];
         plugins.start = [ pkgs.vimPlugins.vim-markdown ];
-        textwidth = 180;
+        textwidth = 120;
+        which-key.bindings = [
+          {
+            key = "<leader>gd";
+            command = "<CMD>DiffviewOpen origin/master...HEAD<CR>";
+            description = "Diff current branch";
+          }
+        ];
       };
 
       pkgs = import nixpkgs rec {
@@ -111,10 +121,11 @@
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
           devshell.packages = [ nvim ];
           commands = builtins.map (x: { name = x; command = cmd; }) [ "vim" "vi" ];
-          env = [{
-            name = "EDITOR";
-            value = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -cc split --remote-wait -s $@";
-          }];
+          env =
+            let
+              editor = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -cc split --remote-wait -s $@";
+            in
+            [{ name = "GIT_EDITOR"; value = editor; } { name = "EDITOR"; value = editor; }];
         };
       apps.repl."${system}" = inputs.flake-utils.lib.mkApp {
         drv = pkgs.writeShellScriptBin "repl" ''
