@@ -111,21 +111,6 @@
         "type": "github"
       }
     },
-    "flake-utils_4": {
-      "locked": {
-        "lastModified": 1644229661,
-        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "guihua": {
       "flake": false,
       "locked": {
@@ -273,8 +258,14 @@
     },
     "neovim": {
       "inputs": {
-        "flake-utils": "flake-utils_4",
-        "nixpkgs": "nixpkgs_3"
+        "flake-utils": [
+          "spacenix",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "spacenix",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "dir": "contrib",
@@ -326,22 +317,6 @@
       }
     },
     "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1645334861,
-        "narHash": "sha256-We9ECiMglthzbZ5S6Myqqf+RHzBFZPoM2qL5/jDkUjs=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "d5f237872975e6fb6f76eef1368b5634ffcd266f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
       "locked": {
         "lastModified": 1643653624,
         "narHash": "sha256-+8hLMsQrZ2rkvcEtEId6HMe8GPxVb5ga+Vh1fdsqJDU=",
@@ -493,7 +468,7 @@
         "neon": "neon",
         "neorg": "neorg",
         "neovim": "neovim",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nvim-cmp": "nvim-cmp",
         "nvim-lspconfig": "nvim-lspconfig",
         "nvim-notify": "nvim-notify",
@@ -507,11 +482,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1645440246,
-        "narHash": "sha256-4yMwqEnH/dLcXhdGkDX6f9Fy+RFxq4jpacFu/A2pSZM=",
-        "ref": "main",
-        "rev": "e88bff871767e5886350d86f4e1c2b113cb0e61b",
-        "revCount": 108,
+        "lastModified": 1645440466,
+        "narHash": "sha256-uMRRIZg54qtAVcgcLhOe3Fu69R0HtVXx8oGflyK6jPI=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

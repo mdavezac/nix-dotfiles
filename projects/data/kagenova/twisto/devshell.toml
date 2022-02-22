@@ -22,15 +22,6 @@ command = """
 """
 
 [[commands]]
-name = "mproxy"
-help = "Start man-in-the-middle proxy with local certificates"
-category = "dev helpers"
-command = """
-    cd $(git rev-parse --show-toplevel)/service_mocks 
-    ./mitmproxy/mitmproxy.sh --ssl-insecure
-"""
-
-[[commands]]
 name = "openforti"
 help = "OpenForti VPN for access to SWETS"
 command = """
@@ -100,6 +91,7 @@ packages = [
     "redis",
     "elasticsearch7",
     "elasticsearchPlugins.analysis-icu",
+    "gettext"
 ]
 
 [service.postgres]

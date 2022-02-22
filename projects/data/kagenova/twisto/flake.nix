@@ -70,11 +70,7 @@
         };
         background = "dark";
         colorscheme = "zenbones";
-        init.lua = ''
-          vim.g.monochrome_style = "subtle";
-        '';
         post.vim = ''
-          " highlight Folded guibg=#222222 guifg=#555555 gui=italic
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
           let test#python#djangotest#executable = "python twisto/manage.py test"
