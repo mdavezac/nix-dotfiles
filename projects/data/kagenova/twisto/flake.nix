@@ -50,7 +50,7 @@
         languages.nix = true;
         languages.python = true;
         layers.testing.enable = false;
-        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" ];
+        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" ];
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
           args = [ "--config" "./twisto/pyproject.toml" "-q" "-" ];

@@ -25,22 +25,10 @@
         post.vim = ''
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
         '';
-        dash.python = [ "tensorflow" ];
+        dash.python = [ "tensorflow2" ];
         formatters.isort.exe = pkgs.lib.mkForce "isort";
         formatters.black.exe = pkgs.lib.mkForce "black";
         layers.terminal.repl.favored.python = pkgs.lib.mkForce "ipython";
-        layers.neorg.workspaces = pkgs.lib.mkForce [
-          {
-            name = "kagenova";
-            path = "~/kagenova/notes/";
-            key = "k";
-          }
-          {
-            name = "personal";
-            path = "~/personal/notes/";
-            key = "p";
-          }
-        ];
       };
     in
     {
