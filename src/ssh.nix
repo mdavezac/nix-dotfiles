@@ -17,11 +17,12 @@
         identityFile = "/Users/mdavezac/.ssh/gitlab_rsa";
         forwardAgent = false;
       };
-      github = {
+      "github.com" = {
         user = "git";
         hostname = "github.com";
         identitiesOnly = true;
         forwardAgent = false;
+        identityFile = "/Users/mdavezac/.ssh/github";
       };
       bitbucket = {
         user = "git";
