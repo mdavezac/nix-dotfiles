@@ -1,5 +1,5 @@
 # https://numtide.github.io/devshell
-imports = ["service.postgres", "language.c"]
+imports = ["services.postgres", "language.c"]
 
 [[commands]]
 package = "devshell.cli"
@@ -87,14 +87,13 @@ packages = [
     "file",
     "gdal",
     "cairo",
-    "black",
     "redis",
     "elasticsearch7",
     "elasticsearchPlugins.analysis-icu",
-    "gettext"
+    "gettext",
 ]
 
-[service.postgres]
+[services.postgres]
 package = "mypostgresql"
 
 [language.c]

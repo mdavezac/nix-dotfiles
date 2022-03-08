@@ -51,15 +51,17 @@
         languages.python = true;
         layers.testing.enable = false;
         treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" ];
+        layers.terminal.repl.enable = false;
+        backup-dir = "$PRJ_DATA_DIR/vim-backup";
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
-          args = [ "--config" "./twisto/pyproject.toml" "-q" "-" ];
+          args = [ "--config" "./pyproject.toml" "-" ];
           filetype = "python";
           enable = true;
         };
         formatters.isort = pkgs.lib.mkForce {
           exe = "isort";
-          args = [ "--settings-file" "./twisto/pyproject.toml" "-" ];
+          args = [ "--settings-file" "./pyproject.toml" "-" ];
           filetype = "python";
           enable = true;
         };
@@ -69,7 +71,7 @@
           timeout = 10000;
         };
         background = "dark";
-        colorscheme = "zenbones";
+        colorscheme = "nightfox";
         post.vim = ''
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
@@ -77,7 +79,7 @@
         '';
         dash.python = [ "Django" ];
         dash.dockerfile = [ "Docker" ];
-        plugins.start = [ pkgs.vimPlugins.vim-markdown ];
+        plugins.start = [ pkgs.vimPlugins.vim-markdown pkgs.vimPlugins.nightfox-nvim ];
         textwidth = 120;
         which-key.bindings = [
           {
@@ -85,6 +87,11 @@
             command = "<CMD>DiffviewOpen origin/master...HEAD<CR>";
             description = "Diff current branch";
           }
+        ];
+        layers.completion.sources.other = [
+          { name = "emoji"; }
+          { name = "path"; }
+          { name = "buffer"; }
         ];
       };
 

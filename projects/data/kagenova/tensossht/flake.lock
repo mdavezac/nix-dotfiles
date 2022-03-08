@@ -293,11 +293,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1644613700,
-        "narHash": "sha256-wLRPJclMH8vsHuFtyI78aF09lw5mbi3lMB6uiK5S2wE=",
+        "lastModified": 1645433236,
+        "narHash": "sha256-4va4MvJ076XyPp5h8sm5eMQvCrJ6yZAbBmyw95dGyw4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "23d785aa6f853e6cf3430119811c334025bbef55",
+        "rev": "7f9b6e2babf232412682c09e57ed666d8f84ac2d",
         "type": "github"
       },
       "original": {
@@ -471,8 +471,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1645379791,
-        "narHash": "sha256-ercgMnbg8TUnMM8KDWx70kzGN0/NUs1k0dkaGa6pCV4=",
+        "lastModified": 1645440466,
+        "narHash": "sha256-Jd4LB/Rynp2XW0diRy7sYqQdYEZ9B+9+61SeenHq1gU=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },
