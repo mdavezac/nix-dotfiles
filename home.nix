@@ -8,9 +8,9 @@
     pkgs.any-nix-shell
     pkgs.neofetch
     pkgs.curl
-    pkgs.taskwarrior-tui
-    pkgs.taskwarrior
     pkgs.aws-vault
+    pkgs.tealdeer
+    pkgs.sd
   ];
 
   programs.home-manager.enable = true;
