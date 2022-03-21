@@ -11,6 +11,7 @@
     pkgs.aws-vault
     pkgs.tealdeer
     pkgs.sd
+    pkgs.lastpass-cli
   ];
 
   programs.home-manager.enable = true;
