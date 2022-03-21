@@ -29,7 +29,7 @@
       flake = false;
     };
 
-    spacenix.url = "/Users/mdavezac/personal/spacenix";
+    spacenix.url = "github:mdavezac/spacevim.nix";
   };
   outputs = inputs@{ self, nixpkgs-stable, darwin, home-manager, flake-utils, ... }:
     let
