@@ -51,7 +51,6 @@
         languages.python = true;
         layers.testing.enable = false;
         treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" ];
-        layers.terminal.repl.enable = false;
         backup-dir = "$PRJ_DATA_DIR/vim-backup";
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
@@ -67,6 +66,7 @@
         };
         linters."diagnostics.mypy" = {
           exe = "mypy";
+          extra_args = [ "--config-file" "mypy.ini" ];
           enable = true;
           timeout = 10000;
         };
@@ -76,6 +76,23 @@
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
           let test#python#djangotest#executable = "python twisto/manage.py test"
+        '';
+        post.lua = ''
+          local iron = require('iron')
+
+          iron.core.add_repl_definitions {
+            python = {
+              ipython = {
+                command = {"ipy_shell"}
+              }
+            }
+          }
+
+          iron.core.set_config {
+            preferred = {
+              python = "ipython",
+            }
+          }
         '';
         dash.python = [ "Django" ];
         dash.dockerfile = [ "Docker" ];

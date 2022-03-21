@@ -112,6 +112,7 @@ in
       export COMPOSE_FILE=$(pwd)/.docker/docker-compose.yml
       [ -e TODOs.org ] || ln -s ~/org/copernic360.org TODOs.org
       source_env_if_exists $PWD/.envrc.secrets
+      source_env_if_exists $PWD/.local/nvim/envrc
     '';
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [

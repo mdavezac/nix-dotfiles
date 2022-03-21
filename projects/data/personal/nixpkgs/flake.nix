@@ -3,6 +3,8 @@
   inputs = {
     devshell.url = "github:numtide/devshell";
     spacenix.url = "/Users/mdavezac/personal/spacenix";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    spacenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, devshell, nixpkgs, ... }:
@@ -17,18 +19,15 @@
       };
 
       configuration.nvim = {
-        layers.git.github = false;
+        layers.git.github = true;
         languages.nix = true;
-        languages.python = true;
-        treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
-        colorscheme = "zenbones";
+        languages.python = false;
+        layers.dash.enable = false;
+        treesitter-languages = [ "json" "toml" "yaml" ];
+        colorscheme = "papercolor";
         post.vim = ''
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
         '';
-        dash.python = [ "tensorflow2" ];
-        formatters.isort.exe = pkgs.lib.mkForce "isort";
-        formatters.black.exe = pkgs.lib.mkForce "black";
-        layers.terminal.repl.favored.python = pkgs.lib.mkForce "ipython";
       };
     in
     {

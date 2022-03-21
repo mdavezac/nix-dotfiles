@@ -4,7 +4,15 @@ let
   emails = import ./lib/emails.nix;
 in
 {
-  imports = builtins.map mkProject [ "pylada" "julia" "advent_of_code" "cv" "oni" "spacenix" ];
+  imports = builtins.map mkProject [
+    "pylada"
+    "julia"
+    "advent_of_code"
+    "cv"
+    "oni"
+    "spacenix"
+    "nixpkgs"
+  ];
   # pylada: {{{
   projects.personal.pylada = {
     enable = true;
@@ -177,4 +185,25 @@ in
     '';
   };
   # }}}
+  projects.personal.nixpkgs = {
+    enable = true;
+    extraEnvrc = ''
+      source_env_if_exists $PWD/.local/nvim/envrc
+      source_env_if_exists $PWD/.envrc.flake
+    '';
+    file.".setup.fish".text = ''
+      if test ! -e ".git"
+          gh repo clone nixpkgs
+          mv nixpkgs/* nixpkgs/.* .
+          rmdir nixpkgs
+          git remote add nixpkgs https://github.com/NixOS/nixpkgs
+      end
+      git config --local user.name "Mayeul d'Avezac"
+      git config --local user.email "${emails.github}"
+      echo ".setup.fish" >.git/info/exclude 
+      echo ".local" >>.git/info/exclude 
+      echo ".envrc" >> .git/info/exclude 
+      echo ".envrc.extra" >>.git/info/exclude 
+    '';
+  };
 }

@@ -51,7 +51,6 @@ in
       export PRJ_ROOT=$PWD/.local/devshell
       source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake
-      extra_pip_packages pdbpp ipython jupyter rstcheck
     '';
     ipython = ''
       %load_ext autoreload
@@ -165,7 +164,7 @@ in
     enable = true;
     repos =
       {
-        tensossht = {
+        puzzles = {
           url = "https://gitlab.com/kagenova/internal/tools-practice/google-code-jam";
           dest = ".";
           settings = { user.email = emails.gitlab; };

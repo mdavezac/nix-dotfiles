@@ -3,7 +3,7 @@ let
   email = (import ../projects/lib/emails.nix).github;
 in
 {
-  home.packages = [ pkgs.pre-commit pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
+  home.packages = [ pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
 
   programs.gh = {
     enable = true;
