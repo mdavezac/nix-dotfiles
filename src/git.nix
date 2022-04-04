@@ -38,6 +38,7 @@ in
       http.sslcainfo = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       pull.rebase = false;
     };
+    aliases.children = "!${pkgs.bash}/bin/bash -c 'c=\${1:-HEAD}; set -- $(git rev-list --all --not \"$c\"^@ --children | grep $(git rev-parse \"$c\") ); shift; echo $1' -";
     signing = {
       key = email;
       signByDefault = true;

@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "aniseed": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1647464092,
+        "narHash": "sha256-qejD2J4NGNlotoIgN+ED1mTTlW0n6ZfddRi64EobJSs=",
+        "owner": "olical",
+        "repo": "aniseed",
+        "rev": "4242b5620b47791c9aff7a7e8dbae9647f6d3994",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olical",
+        "repo": "aniseed",
+        "type": "github"
+      }
+    },
     "catpuccino": {
       "flake": false,
       "locked": {
@@ -13,6 +29,22 @@
       "original": {
         "owner": "Pocco81",
         "repo": "Catppuccino.nvim",
+        "type": "github"
+      }
+    },
+    "cmp-cmdline": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1644756337,
+        "narHash": "sha256-8KlmtXYfapji+n6tntAGlTcHYT3CJtdZaFR8luEu7Go=",
+        "owner": "hrsh7th",
+        "repo": "cmp-cmdline",
+        "rev": "f4beb74e8e036f9532bedbcac0b93c7a55a0f8b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hrsh7th",
+        "repo": "cmp-cmdline",
         "type": "github"
       }
     },
@@ -134,11 +166,11 @@
     },
     "flake-utils_5": {
       "locked": {
-        "lastModified": 1644229661,
-        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "lastModified": 1648297722,
+        "narHash": "sha256-W+qlPsiZd8F3XkzXOzAoR+mpFqzm3ekQkJNa+PIh1BQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "rev": "0f8662f1319ad6abf89b3380dd2722369fc51ade",
         "type": "github"
       },
       "original": {
@@ -348,11 +380,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1647297614,
-        "narHash": "sha256-ulGq3W5XsrBMU/u5k9d4oPy65pQTkunR4HKKtTq0RwY=",
+        "lastModified": 1648390671,
+        "narHash": "sha256-u69opCeHUx3CsdIerD0wVSR+DjfDQjnztObqfk9Trqc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "73ad5f9e147c0d2a2061f1d4bd91e05078dc0b58",
+        "rev": "ce8cbe3c01fd8ee2de526ccd84bbf9b82397a510",
         "type": "github"
       },
       "original": {
@@ -364,16 +396,15 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1643653624,
-        "narHash": "sha256-+8hLMsQrZ2rkvcEtEId6HMe8GPxVb5ga+Vh1fdsqJDU=",
+        "lastModified": 1647639920,
+        "narHash": "sha256-Id5AfZzk5aSSF67OR5dQYfiJOCFVVUU3RNGcp9f6HLc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a529f0c125a78343b145a8eb2b915b0295e4f459",
+        "rev": "fcb6bb628b199f82f5209bf27ba747e6585fe69e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -501,7 +532,9 @@
     },
     "spacenix": {
       "inputs": {
+        "aniseed": "aniseed",
         "catpuccino": "catpuccino",
+        "cmp-cmdline": "cmp-cmdline",
         "dash-nvim": "dash-nvim",
         "devshell": "devshell_2",
         "flake-utils": "flake-utils_4",
@@ -522,20 +555,37 @@
         "nvim-treesitter-textsubjects": "nvim-treesitter-textsubjects",
         "octo": "octo",
         "rainglow": "rainglow",
+        "trouble-nvim": "trouble-nvim",
         "ultest": "ultest",
         "vim-diffview": "vim-diffview",
         "vim-test": "vim-test",
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1646742721,
-        "narHash": "sha256-U6v45diCHuCqkmLxJi1DIHq1lX1lwoJaRnK8RKiOdrA=",
+        "lastModified": 1647767833,
+        "narHash": "sha256-CWHUgg9LLRPUsVdX4izZo2dssOgFzkA6W5alz6Aa6CY=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },
       "original": {
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
+      }
+    },
+    "trouble-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1647585739,
+        "narHash": "sha256-oUf8YbJ9HmSLN8o2c7CXzCYPu7PwKzvVKNiM9HtHQbQ=",
+        "owner": "folke",
+        "repo": "trouble.nvim",
+        "rev": "691d490cc4eadc430d226fa7d77aaa84e2e0a125",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "trouble.nvim",
+        "type": "github"
       }
     },
     "ultest": {

@@ -13,7 +13,7 @@ let
       };
       settings = lib.mkOption {
         type = lib.types.attrs;
-        default = {};
+        default = { };
       };
       origin = lib.mkOption {
         type = lib.types.str;
@@ -35,7 +35,7 @@ let
     enable = lib.mkEnableOption "${group} project: ${project}";
     repos = lib.mkOption {
       type = lib.types.attrsOf gitMod;
-      default = {};
+      default = { };
     };
     workspace = lib.mkOption {
       type = lib.types.submodule {
@@ -51,7 +51,7 @@ let
         };
       };
 
-      default = {};
+      default = { };
     };
 
     extraEnvrc = lib.mkOption {
@@ -74,7 +74,7 @@ let
           };
         };
       };
-      default = {};
+      default = { };
     };
 
     vim = lib.mkOption {
@@ -86,7 +86,7 @@ let
     file = lib.mkOption {
       description = "Add files to project root";
       type = lib.types.attrs;
-      default = {};
+      default = { };
     };
 
     vim-spell = lib.mkOption {
@@ -104,7 +104,7 @@ let
     coc = lib.mkOption {
       description = "Content of coc settings";
       type = lib.types.attrs;
-      default = {};
+      default = { };
     };
   };
 
@@ -119,9 +119,10 @@ let
 in
 {
   options.projects = lib.setAttrByPath [ group project ] ops;
-  config = let
-    path = cfg.workspace.prefix + "/" + cfg.workspace.subfolder;
-  in
+  config =
+    let
+      path = cfg.workspace.prefix + "/" + cfg.workspace.subfolder;
+    in
     lib.mkIf cfg.enable (
       lib.mkMerge [
         (
@@ -150,7 +151,7 @@ in
         (
           lib.mkIf (lib.stringLength cfg.vim > 0) {
             home.file."${path}/.vim/init.vim".text = cfg.vim
-            + (
+              + (
               if (lib.stringLength cfg.vim-spell > 0) then
                 "set spellfile=~/${path}/.vim/vimspell-custom.utf-8.add,~/${path}/.vim/vimspell.utf-8.add"
               else
@@ -181,7 +182,8 @@ in
           lib.mkIf ((builtins.length (lib.attrValues cfg.file)) > 0) {
             home.file = (
               lib.mapAttrs'
-                (name: value: lib.nameValuePair ("${path}/${name}") (value)) cfg.file
+                (name: value: lib.nameValuePair ("${path}/${name}") (value))
+                cfg.file
             );
           }
         )

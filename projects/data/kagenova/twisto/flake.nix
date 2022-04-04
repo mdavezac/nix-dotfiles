@@ -50,6 +50,7 @@
         languages.nix = true;
         languages.python = true;
         layers.testing.enable = false;
+        layers.lsp.debug-nulls = true;
         treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" ];
         backup-dir = "$PRJ_DATA_DIR/vim-backup";
         formatters.black = pkgs.lib.mkForce {
@@ -66,9 +67,8 @@
         };
         linters."diagnostics.mypy" = {
           exe = "mypy";
-          extra_args = [ "--config-file" "mypy.ini" ];
-          enable = true;
-          timeout = 10000;
+          enable = false;
+          timeout = 30000;
         };
         background = "dark";
         colorscheme = "nightfox";
@@ -109,6 +109,14 @@
           { name = "emoji"; }
           { name = "path"; }
           { name = "buffer"; }
+        ];
+        layers.completion.sources."/" = [
+          { name = "buffer"; }
+          {
+            name = "nvim_lsp";
+            priority = 2;
+            group_index = 2;
+          }
         ];
       };
 
