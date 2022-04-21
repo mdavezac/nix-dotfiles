@@ -11,7 +11,7 @@ in
       "website"
       "alignment"
       "puzzles"
-      "pando"
+      "aws-marketplace"
     ] ++ [
       ./packaging.nix
       ./copernic360.nix
@@ -100,6 +100,7 @@ in
           [[ "$packages" == *"$package"* ]] \
             || python -m pip install $package
       done
+      source_env_if_exists $PWD/.local/nvim/envrc
     '';
     nixshell = {
       text = ''
@@ -177,6 +178,28 @@ in
         };
       };
     extraEnvrc = ''layout python3'';
+  };
+  # }}}
+
+  # aws-marketplace: {{{
+  projects.kagenova.aws-marketplace = {
+    enable = true;
+    extraEnvrc = ''
+      check_precommit
+      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
+      PATH_add .local/bin/
+      export PRJ_DATA_DIR=$PWD/.local/devshell/data
+      export PRJ_ROOT=$PWD/.local/devshell
+      source_env_if_exists $PWD/.local/nvim/envrc
+      source_env_if_exists $PWD/.envrc.flake
+    '';
+    ipython = ''
+      %load_ext autoreload
+      %autoreload 2
+
+      import numpy as np
+      import tensorflow as tf
+    '';
   };
   # }}}
 }
