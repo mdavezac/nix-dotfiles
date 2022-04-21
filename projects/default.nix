@@ -41,13 +41,22 @@
         local origin=$3
         local git=${pkgs.git}/bin/git
 
-        $git clone --no-checkout --origin=$origin $url $destination/.git/data
-        mv $destination/.git/data/.git/* $destination/.git/
-        rmdir $destination/.git/data/.git
-        rmdir $destination/.git/data
-        cd $destination
-        $git reset --hard HEAD
-        cd -
+        [ -e "$destination/.git/HEAD" ] && return 1;
+
+        tmpdir=$(mktemp -d)
+        mkdir -p $tmpdir
+        trap "rm -rf $tmpdir" EXIT
+
+        url=''${url/#github:/https:\/\/github.com\/}
+        url=''${url/#ssh_github:/git@github.com:}
+        url=''${url/#gitlab:/https:\/\/gitlab.com\/}
+        url=''${url/#ssh_gitlab:/git@gitlab.com:}
+
+        $git clone --no-checkout --origin=$origin $url $tmpdir
+        mkdir -p $destination/.git/
+        mv $tmpdir/.git/* $destination/.git/
+
+        $git -C $destination reset --hard HEAD
     }
   '';
   home.file.".config/direnv/lib/git_settings.sh".text = ''

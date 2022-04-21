@@ -37,6 +37,7 @@ in
         "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
       http.sslcainfo = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       pull.rebase = false;
+      init.defaultBranch = "main";
     };
     aliases.children = "!${pkgs.bash}/bin/bash -c 'c=\${1:-HEAD}; set -- $(git rev-list --all --not \"$c\"^@ --children | grep $(git rev-parse \"$c\") ); shift; echo $1' -";
     signing = {

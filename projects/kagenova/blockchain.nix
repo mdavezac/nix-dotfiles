@@ -4,7 +4,7 @@ let
   emails = import ../lib/emails.nix;
 in
 {
-  imports = builtins.map mkProject [ "blockchain" "pandp" ];
+  imports = builtins.map mkProject [ "blockchain" "pando" ];
 
   projects.kagenova.blockchain = {
     enable = true;

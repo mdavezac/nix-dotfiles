@@ -1,6 +1,6 @@
 {
   description = "My dotfiles";
-  inputs = rec {
+  inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
 
@@ -61,7 +61,7 @@
           modules = [
             home-manager.darwinModules.home-manager
             ./darwin.nix
-            rec {
+            {
               nix.nixPath = { nixpkgs = "$HOME/.config/nixpkgs/nixpkgs.nix"; };
               nixpkgs = nixpkgsConfig;
               users.users.mdavezac.home = "/Users/mdavezac";
