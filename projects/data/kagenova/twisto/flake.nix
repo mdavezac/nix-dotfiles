@@ -51,7 +51,7 @@
         languages.python = true;
         layers.testing.enable = false;
         layers.lsp.debug-nulls = true;
-        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" ];
+        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" "markdown" ];
         backup-dir = "$PRJ_DATA_DIR/vim-backup";
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
@@ -67,8 +67,8 @@
         };
         linters."diagnostics.mypy" = {
           exe = "mypy";
-          enable = false;
-          timeout = 30000;
+          enable = true;
+          timeout = 40000;
         };
         background = "dark";
         colorscheme = "nightfox";

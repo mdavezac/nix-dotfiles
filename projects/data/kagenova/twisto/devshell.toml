@@ -9,7 +9,7 @@ help = "Per project developer environments"
 package = "poetry"
 
 [[commands]]
-package = "python39"
+package = "python310"
 
 
 [[commands]]
@@ -91,6 +91,8 @@ packages = [
     "elasticsearch7",
     "elasticsearchPlugins.analysis-icu",
     "gettext",
+    "pandoc",
+    "tectonic"
 ]
 
 [services.postgres]

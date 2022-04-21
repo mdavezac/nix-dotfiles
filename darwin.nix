@@ -57,7 +57,6 @@
       "pam_reattach"
       # for twisto
       "openfortivpn"
-      "python@3.10"
     ];
     casks = [
       "kitty"
