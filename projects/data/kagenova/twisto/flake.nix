@@ -65,6 +65,12 @@
           filetype = "python";
           enable = true;
         };
+        formatters.docformatter = pkgs.lib.mkForce {
+          exe = "docformatter";
+          args = [ "--wrap-summaries" "119" "--wrap-descriptions" "112" "-" ];
+          filetype = "python";
+          enable = true;
+        };
         linters."diagnostics.mypy" = {
           exe = "mypy";
           enable = true;
@@ -73,7 +79,10 @@
         background = "dark";
         colorscheme = "nightfox";
         post.vim = ''
-          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+          augroup SpellingBufferEnter
+              autocmd BufEnter *.py setlocal spell
+          augroup END
+	  autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
           let test#python#djangotest#executable = "python twisto/manage.py test"
         '';

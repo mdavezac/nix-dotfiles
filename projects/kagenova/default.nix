@@ -192,6 +192,8 @@ in
       export PRJ_ROOT=$PWD/.local/devshell
       source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake
+      use flake
+      use poetry
     '';
     ipython = ''
       %load_ext autoreload
