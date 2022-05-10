@@ -37,6 +37,7 @@ in
       appendonly.aof
       dump.rdb
       pyrightconfig.json
+      run.py
     '';
     ipython = ''
       %load_ext autoreload

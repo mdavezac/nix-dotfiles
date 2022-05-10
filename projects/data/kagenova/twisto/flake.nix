@@ -77,12 +77,12 @@
           timeout = 40000;
         };
         background = "dark";
-        colorscheme = "nightfox";
+        colorscheme = "zenwritten";
         post.vim = ''
           augroup SpellingBufferEnter
-              autocmd BufEnter *.py setlocal spell
+             autocmd BufEnter *.py setlocal spell
           augroup END
-	  autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
           let test#python#djangotest#executable = "python twisto/manage.py test"
         '';
@@ -107,11 +107,22 @@
         dash.dockerfile = [ "Docker" ];
         plugins.start = [ pkgs.vimPlugins.vim-markdown pkgs.vimPlugins.nightfox-nvim ];
         textwidth = 120;
+        init.vim = ''
+          function PythonModuleName()
+              let relpath = fnamemodify(expand("%"), ":.:s?twisto/??")
+              return substitute(substitute(relpath, ".py", "", ""), "\/", ".", "g")
+          endfunction
+        '';
         which-key.bindings = [
           {
             key = "<leader>gd";
             command = "<CMD>DiffviewOpen origin/master...HEAD<CR>";
             description = "Diff current branch";
+          }
+          {
+            key = "<leader>fm";
+            command = "<CMD>let @\\\" = PythonModuleName()<CR>";
+            description = "Filename as python module";
           }
         ];
         layers.completion.sources.other = [
@@ -150,7 +161,7 @@
         let
           nvim = inputs.spacenix.wrapper.${system} configuration;
           cmd = ''
-            rpc=$PRJ_DATA_DIR/nvim.rpc
+              rpc=$PRJ_DATA_DIR/nvim.rpc
             [ -e $rpc ] && ${pkgs.neovim-remote}/bin/nvr --servername $rpc -s $@ || ${nvim}/bin/nvim $@
           '';
         in
