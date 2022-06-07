@@ -186,14 +186,12 @@ in
     enable = true;
     extraEnvrc = ''
       check_precommit
-      export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       PATH_add .local/bin/
       export PRJ_DATA_DIR=$PWD/.local/devshell/data
       export PRJ_ROOT=$PWD/.local/devshell
       source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake
-      use flake
-      use poetry
+      export AWS_REGION=eu-west-1
     '';
     ipython = ''
       %load_ext autoreload

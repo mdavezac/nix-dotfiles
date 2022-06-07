@@ -73,11 +73,15 @@
         };
         linters."diagnostics.mypy" = {
           exe = "mypy";
-          enable = true;
+          enable = false;
           timeout = 40000;
         };
+        linters."diagnostics.flake8" = pkgs.lib.mkForce {
+          exe = "flake8";
+          enable = true;
+        };
         background = "dark";
-        colorscheme = "zenwritten";
+        colorscheme = "catppuccin";
         post.vim = ''
           augroup SpellingBufferEnter
              autocmd BufEnter *.py setlocal spell
@@ -167,7 +171,7 @@
         in
         pkgs.devshell.mkShell {
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
-          devshell.packages = [ nvim ];
+          devshell.packages = [ nvim pkgs.git ];
           commands = builtins.map (x: { name = x; command = cmd; }) [ "vim" "vi" ];
           env =
             let

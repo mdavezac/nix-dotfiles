@@ -103,7 +103,7 @@ in
       '';
     };
     extraEnvrc = ''
-      eval "$(lorri direnv)"
+      use flake
       export POETRY_VIRTUALENVS_PATH=$(pwd)/.local/venvs
       layout poetry 3.7
       check_precommit
@@ -169,7 +169,7 @@ in
                   set puldir $local_pwd/bootstrap
               case production
                   set gcp_config production
-                  set aws_profile production
+                  set aws_profile mdavezac
                   set puldir $local_pwd/infrastructure
               case local
                   set -e GOOGLE_APPLICATION_CREDENTIALS

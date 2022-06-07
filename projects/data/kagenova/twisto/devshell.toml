@@ -100,7 +100,7 @@ package = "mypostgresql"
 
 [language.c]
 includes = ["graphviz", "geos"]
-libraries = ["glib.out", "pango", "fontconfig", "openssl.out"]
+libraries = ["glib.out", "pango", "fontconfig", "openssl.out", "harfbuzz"]
 
 [[env]]
 name = "DYLD_FALLBACK_LIBRARY_PATH"
