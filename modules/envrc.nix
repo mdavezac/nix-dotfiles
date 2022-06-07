@@ -35,6 +35,4 @@ let
 in
 {
   config.home.file = (add_workspace_files (root_file_path ".envrc") envrc_file);
-  /* // (add_repos_files ".git/nix/config" git_config_extras_file) */
-  /* // (add_repos_files ".git/info/exclude" git_exclude); */
 }

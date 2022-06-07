@@ -54,6 +54,42 @@ let
       type = lib.types.listOf lib.types.str;
       default = [ ];
     };
+    devshell = lib.mkOption {
+      description = "Options related to adding a devshell flake";
+      type = lib.types.submodule {
+        options.enable = lib.mkOption {
+          description = "Enable adding a devshell flake";
+          type = lib.types.bool;
+          default = false;
+        };
+        options.packages = lib.mkOption {
+          description = "List of packages silently added (not in dmenu)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.nixpkgs_url = lib.mkOption {
+          description = "Repo from which to get nixpkgs for the flake";
+          type = lib.types.str;
+          default = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
+        };
+        options.imports = lib.mkOption {
+          description = "Flake inputs (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.inputs = lib.mkOption {
+          description = "Flake imports (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.overlays = lib.mkOption {
+          description = "Overlays added to flake's pkgs (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+      };
+      default = { };
+    };
     python = lib.mkOption {
       description = "Options related to python";
       type = lib.types.submodule {
@@ -63,14 +99,14 @@ let
           default = false;
         };
         options.version = lib.mkOption {
-          description = "Python version";
+          description = "Python version added in devshell";
           type = lib.types.str;
           default = "3.10";
         };
         options.packager = lib.mkOption {
           description = "Python packaging framework";
-          type = lib.types.choices [ null "poetry" ];
-          default = null;
+          type = lib.types.enum [ "none" "poetry" ];
+          default = "none";
         };
       };
       default = { };
@@ -102,6 +138,42 @@ let
       type = lib.types.listOf lib.types.str;
       default = [ ];
     };
+    devshell = lib.mkOption {
+      description = "Options related to adding a devshell flake";
+      type = lib.types.submodule {
+        options.enable = lib.mkOption {
+          description = "Enable adding a devshell flake";
+          type = lib.types.bool;
+          default = false;
+        };
+        options.packages = lib.mkOption {
+          description = "List of packages silently added (not in dmenu)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.imports = lib.mkOption {
+          description = "Flake inputs (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.inputs = lib.mkOption {
+          description = "Flake imports (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.overlays = lib.mkOption {
+          description = "Overlays added to flake's pkgs (as strings)";
+          type = lib.types.listOf lib.types.str;
+          default = [ ];
+        };
+        options.nixpkgs_url = lib.mkOption {
+          description = "Repo from which to get nixpkgs for the flake";
+          type = lib.types.str;
+          default = "github:nixos/nixpkgs/nixpkgs-21.11-darwin";
+        };
+      };
+      default = { };
+    };
   };
 in
 {
@@ -121,6 +193,9 @@ in
     default = { };
   };
   config._workspaces = lib.mapAttrs
-    (name: cfg: { inherit (cfg) enable file envrc root; })
+    (name: cfg: {
+      inherit (cfg) enable file envrc root;
+      devshell = { inherit (cfg.devshell) enable packages nixpkgs_url inputs imports; };
+    })
     config.workspaces;
 }

@@ -1,8 +1,4 @@
-{ config, pkgs, lib, ... }:
-{
-  # nixpkgs.config = import ./nixpkgs-config.nix;
-  # xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
-
+{ config, pkgs, lib, ... }: {
   home.packages = [
     pkgs.cacert
     pkgs.any-nix-shell
@@ -28,6 +24,7 @@
     # ./src/kakoune
     # ./src/doom
     ./projects
+    ./new_projects.nix
   ];
   home.sessionVariables.EDITOR = "code";
   home.sessionVariables.JULIA_PROJECT = "@.";

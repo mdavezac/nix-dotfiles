@@ -1,3 +1,10 @@
 {
-  imports = [ ./options.nix ./files.nix ./git.nix ./envrc.nix ./devshell.nix ];
+  imports = [
+    ./options.nix
+    ./files.nix
+    ./devshell
+    ./git.nix
+    ./envrc.nix
+    ./python.nix
+  ];
 }

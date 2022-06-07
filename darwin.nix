@@ -76,6 +76,7 @@
       "wkhtmltopdf"
       "slack"
       "tunnelblick"
+      "postman"
     ];
   };
 }

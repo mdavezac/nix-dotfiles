@@ -63,7 +63,7 @@ let
 in
 {
   config._workspaces = lib.mkMerge [
-    (envrc_lines config.workspaces)
+    (lib.mkOrder 20000 (envrc_lines config.workspaces))
     (add_repos_files ".git/nix/config" git_config_extras_file config.workspaces)
     (add_repos_files ".git/info/exclude" git_exclude config.workspaces)
   ];
