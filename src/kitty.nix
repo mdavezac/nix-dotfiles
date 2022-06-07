@@ -18,6 +18,7 @@ in
       macos_quit_when_last_window_closed = true;
       hide_window_decorations = true;
       macos_option_as_alt = "left";
+      macos_traditional_fullscreen = true;
       include = "${kitty-theme}/themes/glacier.conf";
     };
     keybindings = {
