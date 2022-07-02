@@ -12,9 +12,12 @@
     ip4r.flake = false;
 
     spacenix.url = "/Users/mdavezac/personal/spacenix";
+
+    helix.url = "github:helix-editor/helix";
+    kubectl.url = "github:cidem/kubectl-nix";
   };
 
-  outputs = inputs@{ self, devshell, nixpkgs, ... }:
+  outputs = inputs@{ self, devshell, nixpkgs, kubectl, ... }:
     let
       system = "x86_64-darwin";
       ip4rMaker = { stdenv, postgresql, ip4r-src, ... }: stdenv.mkDerivation rec {
@@ -47,11 +50,13 @@
 
 
       configuration.nvim = {
+        include-lspconfig = pkgs.lib.mkForce true;
         languages.nix = true;
         languages.python = true;
+        languages.markdown = true;
         layers.testing.enable = false;
         layers.lsp.debug-nulls = true;
-        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" "markdown" ];
+        treesitter-languages = [ "json" "toml" "yaml" "graphql" "dockerfile" "bash" "make" "rst" ];
         backup-dir = "$PRJ_DATA_DIR/vim-backup";
         formatters.black = pkgs.lib.mkForce {
           exe = "black";
@@ -73,7 +78,7 @@
         };
         linters."diagnostics.mypy" = {
           exe = "mypy";
-          enable = false;
+          enable = true;
           timeout = 40000;
         };
         linters."diagnostics.flake8" = pkgs.lib.mkForce {
@@ -81,35 +86,22 @@
           enable = true;
         };
         background = "dark";
-        colorscheme = "catppuccin";
+        colorscheme = "onedark";
         post.vim = ''
           augroup SpellingBufferEnter
              autocmd BufEnter *.py setlocal spell
           augroup END
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-          let g:vim_markdown_fenced_languages = ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'python=python']
+          let g:vim_markdown_fenced_languages = ["c++=cpp", "viml=vim", "bash=sh", "ini=dosini", "python=python"]
           let test#python#djangotest#executable = "python twisto/manage.py test"
         '';
-        post.lua = ''
-          local iron = require('iron')
-
-          iron.core.add_repl_definitions {
-            python = {
-              ipython = {
-                command = {"ipy_shell"}
-              }
-            }
-          }
-
-          iron.core.set_config {
-            preferred = {
-              python = "ipython",
-            }
-          }
-        '';
+        layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipy_shell' }";
         dash.python = [ "Django" ];
         dash.dockerfile = [ "Docker" ];
-        plugins.start = [ pkgs.vimPlugins.vim-markdown pkgs.vimPlugins.nightfox-nvim ];
+        plugins.start = [
+          pkgs.vimPlugins.tabular
+          pkgs.vimPlugins.nightfox-nvim
+        ];
         textwidth = 120;
         init.vim = ''
           function PythonModuleName()
@@ -134,13 +126,10 @@
           { name = "path"; }
           { name = "buffer"; }
         ];
+        layers.completion.sources.":" = [{ name = "path"; } { name = "cmdline"; }];
         layers.completion.sources."/" = [
           { name = "buffer"; }
-          {
-            name = "nvim_lsp";
-            priority = 2;
-            group_index = 2;
-          }
+          { name = "treesitter"; priority = 2; group_index = 2; }
         ];
       };
 
@@ -157,6 +146,9 @@
             };
             mypostgresql = self.postgresql.withPackages (p: [ p.postgis ip4r ]);
           })
+          (self: super: {
+            kubectl = kubectl.packages."${system}"."1_19_3";
+          })
         ];
       };
     in
@@ -171,13 +163,14 @@
         in
         pkgs.devshell.mkShell {
           imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
-          devshell.packages = [ nvim pkgs.git ];
+          devshell.packages = [ nvim pkgs.git pkgs.kubectl ];
           commands = builtins.map (x: { name = x; command = cmd; }) [ "vim" "vi" ];
           env =
             let
               editor = "${pkgs.neovim-remote}/bin/nvr --servername $PRJ_DATA_DIR/nvim.rpc -cc split --remote-wait -s $@";
             in
-            [{ name = "GIT_EDITOR"; value = editor; } { name = "EDITOR"; value = editor; }];
+            [{ name = "GIT_EDITOR"; value = editor; }
+              { name = "EDITOR"; value = editor; }];
         };
       apps.repl."${system}" = inputs.flake-utils.lib.mkApp {
         drv = pkgs.writeShellScriptBin "repl" ''

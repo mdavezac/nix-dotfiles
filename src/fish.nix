@@ -17,7 +17,7 @@
       ${pkgs.python3Packages.pip}/bin/pip completion --fish | source
       fenv source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
       source /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
-      source /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
+      source /Applications/Docker.app/Contents/Resources/etc/docker.fish
     '';
     functions.__fish_describe_command = "";
     plugins = [{

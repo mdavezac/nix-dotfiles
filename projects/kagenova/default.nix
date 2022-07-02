@@ -192,6 +192,7 @@ in
       source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake
       export AWS_REGION=eu-west-1
+      export TFHUB_CACHE_DIR=$PWD/.local/cache/tfhub
     '';
     ipython = ''
       %load_ext autoreload
