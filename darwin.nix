@@ -40,7 +40,7 @@
   users.nix.configureBuildUsers = true;
 
   fonts = {
-    enableFontDir = false;
+    fontDir.enable = false;
     fonts = [ pkgs.nerdfonts ];
   };
 
@@ -73,10 +73,7 @@
       "epic-games"
       "twist"
       # for twisto
-      "wkhtmltopdf"
       "slack"
-      "tunnelblick"
-      "postman"
     ];
   };
 }

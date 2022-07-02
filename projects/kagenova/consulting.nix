@@ -7,7 +7,7 @@ in
   imports = builtins.map mkProject [ "twisto" ];
 
   projects.kagenova.twisto = {
-    enable = true;
+    enable = false;
     repos.tripping-avenger = {
       url = "https://github.com/TwistoPayments/tripping-avenger.git";
       dest = ".";

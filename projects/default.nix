@@ -3,7 +3,6 @@
   home.packages = [ pkgs.lorri pkgs.niv ];
   programs.direnv = {
     enable = true;
-    enableFishIntegration = false;
     nix-direnv.enable = false;
   };
 
