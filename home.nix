@@ -8,6 +8,7 @@
     pkgs.tealdeer
     pkgs.sd
     pkgs.lastpass-cli
+    pkgs.cachix
   ];
 
   programs.home-manager.enable = true;
