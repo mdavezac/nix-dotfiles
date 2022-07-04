@@ -14,13 +14,7 @@ let
 
   devshell_setup = workspaces: lib.mapAttrs
     (name: cfg: {
-      file.".local/devshell/.envrc".text = ''
-        if [ ! -e .git ] ; then
-           git init .
-           git add flake.nix  
-        fi
-        use flake --impure
-      '';
+      file.".local/devshell/.envrc".source = ../files/flake_envrc;
     })
     (lib.filterAttrs (k: v: v.enable && v.devshell.enable) workspaces);
 in
