@@ -13,7 +13,7 @@ rec {
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ devshell.overlay ] ++ (builtins.attrValues spacenix.overlays);
+          overlays = [ devshell.overlay ];
         };
         configuration.nvim = {
           layers.git.github = false;
@@ -36,16 +36,6 @@ rec {
             nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
             nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
           in
-          pkgs.devshell.mkShell
-            {
-              imports = [ nvim_mod ];
-              devshell.name = "360Learning";
-              commands = [
-                { package = pkgs.poetry; }
-                { package = pkgs.awscli2; }
-                { package = pkgs.aws-vault; }
-              ];
-              devshell.packages = [ pkgs.imagemagick pkgs.python310 ];
-            };
+          pkgs.devshell.mkShell { imports = [ nvim_mod ]; motd = ""; };
       });
 }

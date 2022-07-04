@@ -183,7 +183,7 @@ in
 
   # aws-marketplace: {{{
   projects.kagenova.aws-marketplace = {
-    enable = true;
+    enable = false;
     extraEnvrc = ''
       check_precommit
       PATH_add .local/bin/

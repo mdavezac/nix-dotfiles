@@ -9,7 +9,7 @@ let
           exit 0
         fi
 
-        local VENV=$(poetry env use python$1 && poetry env list --full-path | cut -d' ' -f1)
+        local VENV=$(poetry env use --quiet python$1 && poetry env info -p)
         if [[ -z $VENV || ! -d $VENV/bin ]]; then
           echo 'No poetry virtual environment found. Use `poetry install` to create one first.'
           exit 0

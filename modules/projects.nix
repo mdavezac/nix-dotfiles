@@ -6,5 +6,6 @@
     ./git.nix
     ./envrc.nix
     ./python.nix
+    ./fish.nix
   ];
 }

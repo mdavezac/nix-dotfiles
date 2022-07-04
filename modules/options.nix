@@ -90,6 +90,22 @@ let
       };
       default = { };
     };
+    fish = lib.mkOption {
+      description = "Options related to fish";
+      type = lib.types.submodule {
+        options.enable = lib.mkOption {
+          description = "Enable fish-shell options";
+          type = lib.types.bool;
+          default = true;
+        };
+        options.history = lib.mkOption {
+          description = "Enable session-specific history";
+          type = lib.types.bool;
+          default = true;
+        };
+      };
+      default = { };
+    };
     python = lib.mkOption {
       description = "Options related to python";
       type = lib.types.submodule {
