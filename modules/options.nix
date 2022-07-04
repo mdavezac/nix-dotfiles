@@ -103,6 +103,11 @@ let
           type = lib.types.bool;
           default = true;
         };
+        options.tmux = lib.mkOption {
+          description = "Enable automatic tmux session";
+          type = lib.types.bool;
+          default = true;
+        };
       };
       default = { };
     };

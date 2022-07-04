@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  fish_setup = workspaces: lib.mapAttrs
+  fish_history = workspaces: lib.mapAttrs
     (name: cfg:
       let
         session_name = builtins.replaceStrings [ "-" " " ] [ "_" "_" ] name;
@@ -16,10 +16,28 @@ let
           ''
         ];
       })
-    (lib.filterAttrs (k: v: v.fish.enable) workspaces);
+    (lib.filterAttrs (k: v: v.fish.enable && v.fish.history) workspaces);
+  fish_tmux_session = workspaces: lib.mapAttrs
+    (name: cfg:
+      let
+        session_name = builtins.replaceStrings [ "-" " " ] [ "-" "-" ] name;
+        root_name = if (builtins.isNull cfg.root) then "" else
+        (
+          (builtins.replaceStrings [ "/" ] [ "_" ] cfg.root) + "-"
+        );
+      in
+      {
+        envrc = [
+          ''
+            export TMUX_SESSION_NAME=${root_name}${session_name}
+          ''
+        ];
+      })
+    (lib.filterAttrs (k: v: v.fish.enable && v.fish.tmux) workspaces);
 in
 {
   config._workspaces = lib.mkMerge [
-    (fish_setup config.workspaces)
+    (fish_history config.workspaces)
+    (fish_tmux_session config.workspaces)
   ];
 }
