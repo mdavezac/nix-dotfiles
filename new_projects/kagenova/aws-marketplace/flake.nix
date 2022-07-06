@@ -27,7 +27,7 @@ rec {
           dash.python = [ "tensorflow2" ];
           formatters.isort.exe = pkgs.lib.mkForce "isort";
           formatters.black.exe = pkgs.lib.mkForce "black";
-          layers.terminal.repl.favored.python = pkgs.lib.mkForce "ipython";
+          layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipython' }";
         };
       in
       {
