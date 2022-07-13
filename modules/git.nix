@@ -54,7 +54,7 @@ let
           mv $tmpdir/.git/* $destination/.git/
 
           $git -C $destination reset --hard HEAD
-          $git -C $destination config --local include.path .git/nix/config
+          $git -C $destination config --local include.path nix/config
       }
     '';
   };
@@ -63,7 +63,7 @@ let
 in
 {
   config._workspaces = lib.mkMerge [
-    (lib.mkOrder 20000 (envrc_lines config.workspaces))
+    (lib.mkOrder 1 (envrc_lines config.workspaces))
     (add_repos_files ".git/nix/config" git_config_extras_file config.workspaces)
     (add_repos_files ".git/info/exclude" git_exclude config.workspaces)
   ];

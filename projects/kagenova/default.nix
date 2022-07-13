@@ -23,7 +23,7 @@ in
 
   # tensossht: {{{
   projects.kagenova.tensossht = {
-    enable = true;
+    enable = false;
     repos =
       let
         kagelearn_url = "gitlab.com/kagenova/kagelearn/development";

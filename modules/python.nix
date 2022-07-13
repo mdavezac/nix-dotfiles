@@ -1,10 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  poetry_envrc_lib = pkgs.writeTextFile {
+  workspace_root = name: cfg: cfg.root + "/" + name;
+  poetry_envrc_lib = name: cfg: pkgs.writeTextFile {
     name = "poetry_envrc_lib.sh";
     text = ''
       layout_poetry() {
-        if [[ ! -f pyproject.toml ]]; then
+        if [[ ! -f ~/${workspace_root name cfg}/${cfg.python.subdirectory}/pyproject.toml ]]; then
           log_error 'No pyproject.toml found. Use `poetry new` or `poetry init` to create one first.'
           exit 0
         fi
@@ -26,7 +27,7 @@ let
     (name: cfg: {
       envrc = [
         ''
-          source ${poetry_envrc_lib}
+          source ${poetry_envrc_lib name cfg}
           export POETRY_VIRTUALENVS_PATH=$PWD/.local/poetry/venvs
           layout poetry ${cfg.python.version}
         ''

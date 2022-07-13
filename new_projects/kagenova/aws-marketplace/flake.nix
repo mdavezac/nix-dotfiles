@@ -17,6 +17,7 @@ rec {
         };
         configuration.nvim = {
           layers.git.github = false;
+          languages.markdown = true;
           languages.nix = true;
           languages.python = true;
           treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];

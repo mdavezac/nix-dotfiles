@@ -129,6 +129,11 @@ let
           type = lib.types.enum [ "none" "poetry" ];
           default = "none";
         };
+        options.subdirectory = lib.mkOption {
+          description = "Workspace subdirectory where pyproject.toml can be found";
+          type = lib.types.str;
+          default = ".";
+        };
       };
       default = { };
     };

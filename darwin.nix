@@ -55,8 +55,6 @@
       "dust"
       "node"
       "pam_reattach"
-      # for twisto
-      "openfortivpn"
     ];
     casks = [
       "kitty"
