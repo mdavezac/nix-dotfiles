@@ -401,16 +401,18 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1656712277,
-        "narHash": "sha256-KhKwFt1q53pTa/ytbO+fefjHMJzY0pgnJjTrXEGvDNw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs-21.11-darwin",
-        "rev": "f5a6d714ea330a5f8154bf228806a3bdf43bc988",
+        "lastModified": 1656782561,
+        "narHash": "sha256-sZVLNNKIcELllTHqydsckz8HBfVqxeAt51acaaQWLCw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "18038cee44aa0c3c99a2319c3c1c4d16d6612d81",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "nixos",
+        "ref": "nixpkgs-22.05-darwin",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_3": {
@@ -458,22 +460,6 @@
       "original": {
         "owner": "hrsh7th",
         "repo": "nvim-cmp",
-        "type": "github"
-      }
-    },
-    "nvim-dap-python": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1657265025,
-        "narHash": "sha256-E8JnKdju+gi5bVkGmxhTvG6BqCmi0Yu2wpba1Qj/TN8=",
-        "owner": "mfussenegger",
-        "repo": "nvim-dap-python",
-        "rev": "cc6732ab33a84b3a6b4300fcda5b2f837851b88e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mfussenegger",
-        "repo": "nvim-dap-python",
         "type": "github"
       }
     },
@@ -620,7 +606,6 @@
         "neovim": "neovim",
         "nixpkgs": "nixpkgs_4",
         "nvim-cmp": "nvim-cmp",
-        "nvim-dap-python": "nvim-dap-python",
         "nvim-lspconfig": "nvim-lspconfig",
         "nvim-notify": "nvim-notify",
         "nvim-spellsitter": "nvim-spellsitter",
@@ -633,8 +618,11 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1658143402,
-        "narHash": "sha256-n1m3gbF4XVeqQ+ulYsuVbBoLzpBRMhRWjp06mXJKrpU=",
+        "lastModified": 1657658386,
+        "narHash": "sha256-pC5UkKNhTj6q0CBA32wIoCPk2XrlAo3GP+T1KsO0JD0=",
+        "ref": "refs/heads/main",
+        "rev": "b81940f4a5f527876d9ca0cfadb558f2a86a5efa",
+        "revCount": 135,
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

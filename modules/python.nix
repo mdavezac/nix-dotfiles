@@ -36,6 +36,17 @@ let
     })
     (lib.filterAttrs (k: v: v.python.enable && v.python.packager == "poetry") workspaces);
 
+  pip_setup = workspaces: lib.mapAttrs
+    (name: cfg: {
+      envrc = [
+        ''
+          layout python python${cfg.python.version}
+        ''
+      ];
+      devshell.packages = [ "pip" ];
+    })
+    (lib.filterAttrs (k: v: v.python.enable && v.python.packager == "pip") workspaces);
+
   python_setup = workspaces: lib.mapAttrs
     (name: cfg: {
       devshell.packages =
@@ -49,6 +60,7 @@ in
 {
   config._workspaces = lib.mkMerge [
     (poetry_setup config.workspaces)
+    (pip_setup config.workspaces)
     (python_setup config.workspaces)
   ];
 }

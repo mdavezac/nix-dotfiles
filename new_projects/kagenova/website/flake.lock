@@ -461,22 +461,6 @@
         "type": "github"
       }
     },
-    "nvim-dap-python": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1657265025,
-        "narHash": "sha256-E8JnKdju+gi5bVkGmxhTvG6BqCmi0Yu2wpba1Qj/TN8=",
-        "owner": "mfussenegger",
-        "repo": "nvim-dap-python",
-        "rev": "cc6732ab33a84b3a6b4300fcda5b2f837851b88e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mfussenegger",
-        "repo": "nvim-dap-python",
-        "type": "github"
-      }
-    },
     "nvim-lspconfig": {
       "flake": false,
       "locked": {
@@ -620,7 +604,6 @@
         "neovim": "neovim",
         "nixpkgs": "nixpkgs_4",
         "nvim-cmp": "nvim-cmp",
-        "nvim-dap-python": "nvim-dap-python",
         "nvim-lspconfig": "nvim-lspconfig",
         "nvim-notify": "nvim-notify",
         "nvim-spellsitter": "nvim-spellsitter",
@@ -633,8 +616,11 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1658143402,
-        "narHash": "sha256-n1m3gbF4XVeqQ+ulYsuVbBoLzpBRMhRWjp06mXJKrpU=",
+        "lastModified": 1657658386,
+        "narHash": "sha256-pC5UkKNhTj6q0CBA32wIoCPk2XrlAo3GP+T1KsO0JD0=",
+        "ref": "refs/heads/main",
+        "rev": "b81940f4a5f527876d9ca0cfadb558f2a86a5efa",
+        "revCount": 135,
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

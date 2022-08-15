@@ -52,9 +52,11 @@
       tap "homebrew/cask", "https://github.com/Homebrew/homebrew-cask/"
     '';
     brews = [
-      "dust"
       "node"
       "pam_reattach"
+      # for peerpower
+      "mongosh"
+      "xpdf"
     ];
     casks = [
       "kitty"
@@ -70,8 +72,9 @@
       "keepingyouawake"
       "epic-games"
       "twist"
-      # for twisto
+      # for peerpower
       "slack"
+      "openvpn-connect"
     ];
   };
 }

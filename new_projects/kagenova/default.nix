@@ -1,3 +1,3 @@
 {
-  imports = [ ./aws-marketplace ];
+  imports = [ ./aws-marketplace ./tensossht ./website ./peerpower ];
 }

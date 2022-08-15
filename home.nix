@@ -9,6 +9,7 @@
     pkgs.sd
     pkgs.lastpass-cli
     pkgs.cachix
+    pkgs.du-dust
   ];
 
   programs.home-manager.enable = true;

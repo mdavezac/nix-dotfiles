@@ -1,5 +1,5 @@
 rec {
-  description = "360Learning environment";
+  description = "Tensossht development environment";
   inputs = rec {
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
@@ -26,7 +26,7 @@ rec {
           dash.python = [ "tensorflow2" ];
           formatters.isort.exe = pkgs.lib.mkForce "isort";
           formatters.black.exe = pkgs.lib.mkForce "black";
-          layers.terminal.repl.favored.python = pkgs.lib.mkForce "require('iron.fts.python').ipython";
+          layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipython' }";
         };
       in
       {

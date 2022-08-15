@@ -87,7 +87,7 @@ in
 
   # website: {{{
   projects.kagenova.website = {
-    enable = true;
+    enable = false;
     repos.web = {
       url = "https://gitlab.com/kagenova/marketing/website.git";
       dest = ".";

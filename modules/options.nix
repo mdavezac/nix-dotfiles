@@ -122,11 +122,11 @@ let
         options.version = lib.mkOption {
           description = "Python version added in devshell";
           type = lib.types.str;
-          default = "3.10";
+          default = "";
         };
         options.packager = lib.mkOption {
           description = "Python packaging framework";
-          type = lib.types.enum [ "none" "poetry" ];
+          type = lib.types.enum [ "none" "poetry" "pip" ];
           default = "none";
         };
         options.subdirectory = lib.mkOption {
