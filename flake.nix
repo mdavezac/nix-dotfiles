@@ -31,8 +31,9 @@
 
     spacenix.url = "github:mdavezac/spacevim.nix";
   };
-  outputs = inputs@{ self, nixpkgs-stable, darwin, home-manager, flake-utils, ... }:
+  outputs = inputs@{ self, nixpkgs-stable, darwin, home-manager, flake-utils, spacenix, ... }:
     let
+      system = "x86_64-darwin";
       nixpkgsConfig = with inputs; {
         config = { allowUnfree = true; };
         overlays = [
@@ -56,7 +57,7 @@
     {
       darwinConfigurations = {
         macbook = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
+          system = system;
           inputs = inputs;
           modules = [
             home-manager.darwinModules.home-manager
@@ -101,18 +102,20 @@
       devShell.x86_64-darwin =
         let
           pkgs = import inputs.nixpkgs-stable {
-            system = "x86_64-darwin";
+            system = system;
             config = { allowUnfree = true; };
             overlays = [
               inputs.devshell.overlay
             ];
           };
+          nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
+          nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
         in
         pkgs.devshell.mkShell {
           name = "dotfiles";
           packages = [ pkgs.devshell.cli ];
 
-          devshell.packages = [ (inputs.spacenix.wrapper.x86_64-darwin configuration) ];
+          imports = [ nvim_mod ];
           commands = [
             {
               name = "build";
