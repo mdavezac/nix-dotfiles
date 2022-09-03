@@ -103,6 +103,11 @@ let
           type = lib.types.bool;
           default = true;
         };
+        options.zellij = lib.mkOption {
+          description = "Enable automatic zellij session";
+          type = lib.types.bool;
+          default = false;
+        };
         options.tmux = lib.mkOption {
           description = "Enable automatic tmux session";
           type = lib.types.bool;

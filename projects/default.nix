@@ -14,15 +14,26 @@
       set -e DIRENV_DIFF
       set -e DIRENV_DIR
       set -e DIRENV_WATCHES
+
       function autotmux --on-variable TMUX_SESSION_NAME
         if test "$TERM_PROGRAM" != "vscode" -a -z "$EMACS" -a -z "$INSIDE_EMACS"
           if test -n "$TMUX_SESSION_NAME" #only if set
-            if test -z $TMUX #not if in TMUX
+            if test -z $TMUX$ZELLIJ
               if tmux has-session -t $TMUX_SESSION_NAME
                 ${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux attach -t "$TMUX_SESSION_NAME"
               else
                 ${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux new-session -s "$TMUX_SESSION_NAME"
               end
+            end
+          end
+        end
+      end
+
+      function autozellij --on-variable AUTO_ZELLIJ_SESSION
+        if test -z $TMUX$ZELLIJ
+          if test "$TERM_PROGRAM" != "vscode" -a -z "$EMACS" -a -z "$INSIDE_EMACS"
+            if test -n "$AUTO_ZELLIJ_SESSION"
+              ${pkgs.direnv}/bin/direnv exec / ${pkgs.zellij}/bin/zellij attach -c "$AUTO_ZELLIJ_SESSION"
             end
           end
         end

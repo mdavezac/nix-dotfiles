@@ -22,6 +22,8 @@
     ./src/tmux.nix
     ./src/starship.nix
     ./src/kitty.nix
+    ./src/wezterm.nix
+    ./src/zellij.nix
     # ./src/vscode
     # ./src/kakoune
     # ./src/doom
@@ -30,18 +32,6 @@
   ];
   home.sessionVariables.EDITOR = "code";
   home.sessionVariables.JULIA_PROJECT = "@.";
-  home.file.".julia/config/startup.jl".text = ''
-    try
-      using Revise
-    catch e
-        @warn "Error initializing Revise" exception=(e, catch_backtrace())
-    end
-    try
-      using OhMyREPL
-    catch e
-        @warn "Error initializing OhMyREPL" exception=(e, catch_backtrace())
-    end
-  '';
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
   # This value determines the Home Manager release that your
