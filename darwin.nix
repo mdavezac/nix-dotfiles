@@ -52,8 +52,8 @@
       tap "homebrew/cask", "https://github.com/Homebrew/homebrew-cask/"
     '';
     brews = [
-      "node"
       "pam_reattach"
+      "juliaup"
       # for peerpower
       "mongosh"
       "xpdf"
@@ -67,7 +67,6 @@
       "disk-inventory-x"
       "virtualbox"
       "virtualbox-extension-pack"
-      "julia"
       "nvidia-geforce-now"
       "keepingyouawake"
       "epic-games"
