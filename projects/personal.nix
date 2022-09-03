@@ -62,7 +62,7 @@ in
 
   # julia: {{{
   projects.personal.julia = {
-    enable = true;
+    enable = false;
     repos.pylada = {
       url = "https://github.com/mdavezac/julia";
       dest = ".";

@@ -30,8 +30,8 @@ rec {
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
-          formatters.isort.enable = true;
-          formatters.black.enable = true;
+          formatters.isort.enable = pkgs.lib.mkForce false;
+          formatters.black.enable = pkgs.lib.mkForce false;
           init.vim = ''
             function PythonModuleName()
                 let relpath = fnamemodify(expand("%"), ":.:s?app/??")
