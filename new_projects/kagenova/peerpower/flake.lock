@@ -710,11 +710,12 @@
         "rainglow": "rainglow",
         "trouble-nvim": "trouble-nvim",
         "vim-diffview": "vim-diffview",
+        "vim-illuminate": "vim-illuminate",
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1659536829,
-        "narHash": "sha256-Cneevk5I9bwHJIW6y8bqX1ZCuQdMO0CHYCh4B5Fzn4k=",
+        "lastModified": 1659537778,
+        "narHash": "sha256-d+aRsFhsJirNYeSO+kOdYLBHsLPF54obaDEs/RlHBgU=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },
@@ -752,6 +753,22 @@
       "original": {
         "owner": "sindrets",
         "repo": "diffview.nvim",
+        "type": "github"
+      }
+    },
+    "vim-illuminate": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1662423154,
+        "narHash": "sha256-e0kLJEk437GeU9bbYVL5Rz4oeqy+k7bbW0fOBhr4CAY=",
+        "owner": "RRethy",
+        "repo": "vim-illuminate",
+        "rev": "1c8132dc81078fc1ec7a4a1492352b8f541ee84b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RRethy",
+        "repo": "vim-illuminate",
         "type": "github"
       }
     },

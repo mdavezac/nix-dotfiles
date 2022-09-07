@@ -30,8 +30,8 @@ rec {
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
-          formatters.isort.enable = pkgs.lib.mkForce false;
-          formatters.black.enable = pkgs.lib.mkForce false;
+          formatters.isort.enable = true;
+          formatters.black.enable = true;
           init.vim = ''
             function PythonModuleName()
                 let relpath = fnamemodify(expand("%"), ":.:s?app/??")
@@ -41,7 +41,7 @@ rec {
           which-key.bindings = [
             {
               key = "<leader>gd";
-              command = "<CMD>DiffviewOpen origin/master...HEAD<CR>";
+              command = "<CMD>DiffviewOpen origin/develop...HEAD<CR>";
               description = "Diff current branch";
             }
             {
