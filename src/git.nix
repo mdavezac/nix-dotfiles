@@ -12,6 +12,7 @@ in
       aliases = {
         co = "pr checkout";
         pv = "pr view -w";
+        st = "pr status";
         mypr = "pr list -S author:mdavezac";
       };
     };
