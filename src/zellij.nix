@@ -21,19 +21,42 @@
       };
       keybinds =
         let
-          tolocked = { action = [{ SwithToMode = "Locked"; }]; key = [{ Ctrl = "b"; }]; };
+          action = actions: key: { action = actions; key = key; };
+          action-char = actions: key: action actions [{ Char = key; }];
+          action-ctrl = actions: key: action actions [{ Ctrl = key; }];
+          to-mode = mode: key: action [{ SwitchToMode = mode; }] [{ Char = key; }];
+          lock = { SwitchToMode = "Locked"; };
+          tolocked = action [ lock ] [{ Ctrl = "b"; }];
         in
         {
-          locked = [{ action = [{ SwithToMode = "Normal"; }]; key = [{ Ctrl = "b"; }]; }];
-          normal = [ tolocked ];
-          resize = [ tolocked ];
-          pane = [ tolocked ];
-          move = [ tolocked ];
-          tab = [ tolocked ];
-          scroll = [ tolocked ];
-          search = [ tolocked ];
-          session = [ tolocked ];
-          tmux = [ tolocked ];
+          locked = [ (action [{ SwitchToMode = "Normal"; }] [{ Ctrl = "b"; }]) ];
+          normal = [
+            tolocked
+            (action-char [ "Quit" ] "q")
+            (to-mode "Session" "s")
+            (to-mode "Pane" "p")
+            (to-mode "Resize" "r")
+            (to-mode "Scroll" "S")
+            (to-mode "Tmux" "T")
+            (to-mode "Search" "?")
+            (to-mode "Tab" "t")
+            (action-char [{ NewPane = null; } lock] "n")
+            (action-char [{ NewTab = null; } lock] "N")
+            (action-char [{ MoveFocus = "Left"; } lock] "h")
+            (action-char [{ MoveFocus = "Right"; } lock] "l")
+            (action-char [{ MoveFocus = "Down"; } lock] "j")
+            (action-char [{ MoveFocus = "Up"; } lock] "k")
+            (action [{ MoveFocus = "Left"; }] [{ Char = "H"; } { Ctrl = "h"; }])
+            (action [{ MoveFocus = "Right"; }] [{ Char = "L"; } { Ctrl = "l"; }])
+            (action [{ MoveFocus = "Down"; }] [{ Char = "J"; } { Ctrl = "j"; }])
+            (action [{ MoveFocus = "Up"; }] [{ Char = "K"; } { Ctrl = "k"; }])
+            (action-char [{ NewPane = "Down"; } lock] "/")
+            (action-char [{ NewPane = "Left"; } lock] "<")
+            (action-char [{ NewPane = "Right"; } lock] ">")
+            (action-char [{ Resize = "Increase"; }] "+")
+            (action-char [{ Resize = "Decrease"; }] "-")
+            /* (action-char [{ ToggleFullScreen = null; } lock] "z") */
+          ];
         };
     };
   };

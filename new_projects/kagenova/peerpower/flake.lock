@@ -65,18 +65,6 @@
         "type": "github"
       }
     },
-    "detectron2": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-KRbOuypEbWVsZhcOp7JTIldbg1b75wDuBUSJ9Qrd1Tw=",
-        "type": "file",
-        "url": "https://github.com/facebookresearch/detectron2.git"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/facebookresearch/detectron2.git"
-      }
-    },
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -277,17 +265,16 @@
         "pypi-deps-db": "pypi-deps-db"
       },
       "locked": {
-        "lastModified": 1657089034,
-        "narHash": "sha256-qSjk1iOi14ijAOP6QuGfE3fvy08aVxsgus+ArwgiyuU=",
+        "lastModified": 1661359648,
+        "narHash": "sha256-BRz30Xg/g535oRJA3xEcXf0KM6GTJPugt2lgaom3D6g=",
         "owner": "DavHau",
         "repo": "mach-nix",
-        "rev": "51caf584f26acdfaa51bbf7ee1ffa365aea7bc64",
+        "rev": "6cd3929b1561c3eef68f5fc6a08b57cf95c41ec1",
         "type": "github"
       },
       "original": {
-        "owner": "DavHau",
-        "repo": "mach-nix",
-        "type": "github"
+        "id": "mach-nix",
+        "type": "indirect"
       }
     },
     "monochrome": {
@@ -351,22 +338,6 @@
       "original": {
         "owner": "nvim-neotest",
         "repo": "neotest",
-        "type": "github"
-      }
-    },
-    "neotest-plenary": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1658780636,
-        "narHash": "sha256-cCnPlCHL/LowfAZ9MC51/zbK/Qn5Nxw6uV+dLyu0FBc=",
-        "owner": "nvim-neotest",
-        "repo": "neotest-plenary",
-        "rev": "7c3656f4d74da2b17a407038cacafa0d411b396b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nvim-neotest",
-        "repo": "neotest-plenary",
         "type": "github"
       }
     },
@@ -635,6 +606,22 @@
         "type": "github"
       }
     },
+    "plenary-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1662196864,
+        "narHash": "sha256-qIfsQScKdwrVXUYry+RDjoMoKLuhlsw1GHOVoeOphfo=",
+        "owner": "nvim-lua",
+        "repo": "plenary.nvim",
+        "rev": "4b66054e75356ac0b909bbfee9c682e703f535c2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-lua",
+        "repo": "plenary.nvim",
+        "type": "github"
+      }
+    },
     "pypi-deps-db": {
       "flake": false,
       "locked": {
@@ -669,7 +656,6 @@
     },
     "root": {
       "inputs": {
-        "detectron2": "detectron2",
         "devshell": "devshell",
         "flake-utils": "flake-utils_2",
         "mach-nix": "mach-nix",
@@ -694,7 +680,6 @@
         "neon": "neon",
         "neorg": "neorg",
         "neotest": "neotest",
-        "neotest-plenary": "neotest-plenary",
         "neotest-python": "neotest-python",
         "neotest-vim-test": "neotest-vim-test",
         "neovim": "neovim",
@@ -707,6 +692,7 @@
         "nvim-telescope": "nvim-telescope",
         "nvim-treesitter-textsubjects": "nvim-treesitter-textsubjects",
         "octo": "octo",
+        "plenary-nvim": "plenary-nvim",
         "rainglow": "rainglow",
         "trouble-nvim": "trouble-nvim",
         "vim-diffview": "vim-diffview",
@@ -714,8 +700,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1659537778,
-        "narHash": "sha256-d+aRsFhsJirNYeSO+kOdYLBHsLPF54obaDEs/RlHBgU=",
+        "lastModified": 1662729335,
+        "narHash": "sha256-FdGby5zeFpNTnrnTgA/ZOedDvyaiViBALyUP++EQ4kw=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

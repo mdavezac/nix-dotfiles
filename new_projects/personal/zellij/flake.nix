@@ -25,7 +25,6 @@ rec {
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
-          dash.python = [ "tensorflow2" ];
           layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipython' }";
         };
       in

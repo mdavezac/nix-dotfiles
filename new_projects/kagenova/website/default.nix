@@ -21,6 +21,9 @@ in
         destination = ".";
       }
     ];
+    python.enable = true;
+    python.version = "3.7";
+    python.packager = "poetry";
     envrc = [
       ''
         export PRJ_DATA_DIR=$PWD/.local/devshell/data
@@ -35,7 +38,6 @@ in
         source_env .local/flake/.envrc
 
         export GEM_HOME=$PWD/.local/gem
-        layout python3
       ''
     ];
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''

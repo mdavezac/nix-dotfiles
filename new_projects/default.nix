@@ -1,3 +1,3 @@
 {
-  imports = [ ./kagenova ];
+  imports = [ ./kagenova ./personal ];
 }

@@ -20,7 +20,7 @@
         layers.git.github = false;
         languages.nix = true;
         languages.python = true;
-        treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
+        treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" "dockerfile" ];
         colorscheme = "zenbones";
         post.vim = ''
           autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete

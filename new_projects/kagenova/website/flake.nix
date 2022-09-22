@@ -18,7 +18,16 @@ rec {
           languages.markdown = true;
           languages.nix = true;
           languages.python = true;
-          treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" "css" "html" ];
+          treesitter-languages = [
+            "json"
+            "toml"
+            "yaml"
+            "bash"
+            "fish"
+            "css"
+            "html"
+            "dockerfile"
+          ];
           colorscheme = "zenbones";
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -37,7 +46,8 @@ rec {
           pkgs.devshell.mkShell {
             imports = [ nvim_mod ];
             commands = [
-              { package = pkgs.python38; }
+              { package = pkgs.python37; }
+              { package = pkgs.poetry; }
               { package = pkgs.google-cloud-sdk; }
               { package = pkgs.pre-commit; }
               { package = pkgs.ruby_2_7; }

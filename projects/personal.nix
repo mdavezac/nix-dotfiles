@@ -95,7 +95,7 @@ in
 
   # advent of code: {{{
   projects.personal.advent_of_code = {
-    enable = true;
+    enable = false;
     repos.advent_of_code = {
       url = "https://github.com/mdavezac/advent_of_code.git";
       dest = ".";
@@ -152,7 +152,7 @@ in
   # }}}
   # oni: {{{
   projects.personal.oni = {
-    enable = true;
+    enable = false;
     repos.cv = {
       url = "https://github.com/onivim/oni2";
       dest = ".";
@@ -186,7 +186,7 @@ in
   };
   # }}}
   projects.personal.nixpkgs = {
-    enable = true;
+    enable = false;
     extraEnvrc = ''
       source_env_if_exists $PWD/.local/nvim/envrc
       source_env_if_exists $PWD/.envrc.flake

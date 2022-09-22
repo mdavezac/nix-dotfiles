@@ -4,14 +4,9 @@ rec {
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
     spacenix.url = "/Users/mdavezac/personal/spacenix";
-    mach-nix.url = "github:DavHau/mach-nix";
-    detectron2 = {
-      url = "https://github.com/facebookresearch/detectron2.git";
-      flake = false;
-    };
   };
 
-  outputs = { self, flake-utils, devshell, nixpkgs, spacenix, mach-nix, detectron2 }:
+  outputs = { self, flake-utils, devshell, nixpkgs, spacenix, mach-nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -25,13 +20,14 @@ rec {
           languages.markdown = true;
           languages.nix = true;
           languages.python = true;
+          dash.python = [ "pandas" "numpy" ];
           treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
           colorscheme = "papercolor";
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
-          formatters.isort.enable = true;
-          formatters.black.enable = true;
+          formatters.isort.exe = pkgs.lib.mkForce "isort";
+          formatters.black.exe = pkgs.lib.mkForce "black";
           init.vim = ''
             function PythonModuleName()
                 let relpath = fnamemodify(expand("%"), ":.:s?app/??")
@@ -53,49 +49,6 @@ rec {
 
           layers.terminal.repl.favored.python = pkgs.lib.mkForce "require('iron.fts.python').ipython";
         };
-        env = mach-nix.lib."${system}".mkPython {
-          requirements = ''
-            matplotlib
-            Pillow
-            google-cloud-vision==0.34.0
-            pytesseract
-            scikit-image
-            numpy<1.23.0
-            pandas==1.3.0
-            flask==1.0.2
-            boto3
-            botocore
-            scipy==1.7.3
-            pytest
-            pytest-html
-            sentry-sdk[flask]==0.13.2
-            ipython[all]
-            pdbpp
-            seaborn
-            fastapi==0.66.0
-            mongoengine
-            python-Levenshtein
-            pandarallel==1.5.2
-            pythainlp[thai2rom]
-            python-crfsuite
-            uvicorn
-            fastapi
-            textdistance
-            sqlalchemy
-            pymysql
-            tqdm
-            layoutparser[paddledetection]
-            torchvision
-            pip
-            torch>=1.8
-            paddlepaddle
-          '';
-          python = "python38";
-          _.pyppeteer.postInstall = ''
-            rm $out/lib/python*/site-packages/LICENSE
-            rm $out/lib/python*/site-packages/README.md
-          '';
-        };
       in
       {
         devShells.default =
@@ -109,9 +62,10 @@ rec {
               { package = pkgs.awscli2; }
               { package = pkgs.aws-vault; }
               { package = pkgs.pass; }
+              { package = pkgs.poetry; }
+              { package = pkgs.pre-commit; }
+              { package = pkgs.python310; }
             ];
-            devshell.packages = [ env ];
-            env = [{ "name" = "VIRTUAL_ENV"; value = "${env}"; }];
           };
       });
 }

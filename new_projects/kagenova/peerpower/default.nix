@@ -4,34 +4,11 @@ let
     gitlab = "1085775-mdavezac@users.noreply.gitlab.com";
     github = "2745737+mdavezac@users.noreply.github.com";
   };
-in
-{
-  config.workspaces."peerpower" = {
+  config = {
     enable = true;
-    root = "kagenova";
-    repos = [
-      {
-        url = "github:peerpower/risk_ocr_engine.git";
-        settings.user.email = emails.github;
-        exclude = [
-          "/.envrc"
-          "/.local/"
-          "/.direnv/"
-          "/.dockerignore"
-          "/pyproject.toml"
-        ];
-        destination = ".";
-      }
-      {
-        url = "github:peerpower/risk_bank_statement_analysis_service.git";
-        settings.user.email = emails.github;
-        exclude = [ "/.envrc" "/.local/" "/.direnv/" "/.dockerignore" "/pyproject.toml" "/scratch.py" ];
-        destination = "version2";
-      }
-    ];
-    python.enable = false;
+    python.enable = true;
     python.version = "3.10";
-    python.packager = "pip";
+    python.packager = "poetry";
     envrc = [
       ''
         export PRJ_DATA_DIR=$PWD/.local/devshell/data
@@ -44,7 +21,7 @@ in
         mkdir -p $(dirname $AWS_CONFIG_FILE)
         mkdir -p $PRJ_DATA_DIR
         mkdir -p $PRJ_ROOT
-        path_add PYTHONPATH $PWD/app $PWD/version2/app # $PWD/.local/pip
+        path_add PYTHONPATH $PWD/app $PWD/version2/app
 
         [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
         source_env .local/flake/.envrc
@@ -55,22 +32,38 @@ in
       %autoreload 2
 
       import numpy as np
+      import pandas as pd
     '';
 
     file.".local/aws/config".text = ''
       [profile peerpower-mayeul]
       region = "ap-southeast-1"
     '';
-    file.".dockerignore".text = ''
-      *
-      !/app
-      !/db_snapshot_json
-      !requirements.txt
-      !/test
-    '';
-    file."pyproject.toml".text = ''
-      [tool.isort]
-      profile = "black"
-    '';
+  };
+in
+{
+  config.workspaces.ocr = config // {
+    root = "kagenova/peerpower";
+    repos = [
+      {
+        url = "github:peerpower/risk_ocr_engine.git";
+        settings.user.email = emails.github;
+        exclude = [
+          "/.envrc"
+          "/.local/"
+          "/.direnv/"
+        ];
+      }
+    ];
+  };
+  config.workspaces.bsa = config // {
+    root = "kagenova/peerpower";
+    repos = [
+      {
+        url = "github:peerpower/risk_bank_statement_analysis_service.git";
+        settings.user.email = emails.github;
+        exclude = [ "/.envrc" "/.local/" "/.direnv/" ];
+      }
+    ];
   };
 }

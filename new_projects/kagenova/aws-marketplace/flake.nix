@@ -27,6 +27,13 @@ rec {
           formatters.isort.exe = pkgs.lib.mkForce "isort";
           formatters.black.exe = pkgs.lib.mkForce "black";
           layers.terminal.repl.favored.python = pkgs.lib.mkForce "require('iron.fts.python').ipython";
+          which-key.bindings = [
+            {
+              key = "<leader>tb";
+              command = "<CMD>if &background == 'light' | set background=dark | else | set background=light | end <CR>";
+              description = "Background";
+            }
+          ];
         };
       in
       {

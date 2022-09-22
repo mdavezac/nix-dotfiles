@@ -7,7 +7,7 @@
 
   services = {
     nix-daemon.enable = true;
-    lorri.enable = true;
+    lorri.enable = false;
   };
 
   # Make fingerprint sudo work in terminal and in tmux
