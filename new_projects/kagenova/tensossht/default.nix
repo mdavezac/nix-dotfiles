@@ -11,7 +11,7 @@ in
     root = "kagenova";
     repos = [
       {
-        url = "gitlab:kagenova/kagelearn/development/tensossht.git";
+        url = "gitlab:kagenova/copernicai/tensossht.git";
         settings.user.email = emails.gitlab;
         exclude = [ "/.local" ];
         destination = ".";

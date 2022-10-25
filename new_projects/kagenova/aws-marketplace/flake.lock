@@ -635,10 +635,7 @@
       },
       "locked": {
         "lastModified": 1662729335,
-        "narHash": "sha256-d6leSekDZV4zbQRiKYtE3NGqRflRZWKR1FP52yzP4YE=",
-        "ref": "refs/heads/main",
-        "rev": "04d6970a88320a55cd0bfad71dc043d19012f136",
-        "revCount": 142,
+        "narHash": "sha256-FdGby5zeFpNTnrnTgA/ZOedDvyaiViBALyUP++EQ4kw=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

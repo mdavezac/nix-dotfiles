@@ -33,6 +33,8 @@ rec {
                 let relpath = fnamemodify(expand("%"), ":.:s?app/??")
                 return substitute(substitute(relpath, ".py", "", ""), "\/", ".", "g")
             endfunction
+
+            au BufRead,BufNewFile *.jsonl  set filetype=json
           '';
           which-key.bindings = [
             {
@@ -65,6 +67,7 @@ rec {
               { package = pkgs.poetry; }
               { package = pkgs.pre-commit; }
               { package = pkgs.python310; }
+              { package = pkgs.google-cloud-sdk; }
             ];
           };
       });

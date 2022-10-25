@@ -700,8 +700,11 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1662729335,
-        "narHash": "sha256-FdGby5zeFpNTnrnTgA/ZOedDvyaiViBALyUP++EQ4kw=",
+        "lastModified": 1666683789,
+        "narHash": "sha256-wFs7t9iQ+Sx+AegPnyyvuQ7TzuMEhTrp/1PH3ShDWTQ=",
+        "ref": "refs/heads/main",
+        "rev": "b500349b6d6e6e1b7982ab31b61c79c7f80fea4a",
+        "revCount": 144,
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

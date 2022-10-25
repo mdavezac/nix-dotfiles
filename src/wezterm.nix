@@ -8,7 +8,7 @@
         font_size = 14.0,
         color_scheme = "Dark Tooth",
         hide_tab_bar_if_only_one_tab = true,
-        default_prog = { "{pkgs.fish}/bin/fish", "--login" },
+        default_prog = { "${pkgs.fish}/bin/fish", "--login" },
       }
     '';
   };

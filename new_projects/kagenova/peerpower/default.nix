@@ -25,15 +25,11 @@ let
 
         [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
         source_env .local/flake/.envrc
+
+        export CLOUDSDK_CONFIG=$PWD/.local/gcloud
+        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/.local/gcloud/risk-ocr.json
       ''
     ];
-    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
-      %load_ext autoreload
-      %autoreload 2
-
-      import numpy as np
-      import pandas as pd
-    '';
 
     file.".local/aws/config".text = ''
       [profile peerpower-mayeul]
@@ -55,6 +51,29 @@ in
         ];
       }
     ];
+
+    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
+      %load_ext autoreload
+      %autoreload 2
+
+      import numpy as np
+      import pandas as pd
+      import re
+      from dataclasses import replace
+      from pathlib import Path
+      from textwrap import dedent
+      from google.cloud import vision
+      try:
+        from backend.testing.annotations import *
+        from backend.annotations import *
+        from backend.model.annotations import *
+        from backend.annotations.utils import vertex_boundaries
+      except:
+        pass
+
+      data_dir = Path("test/data")
+      rng = np.random.default_rng()
+    '';
   };
   config.workspaces.bsa = config // {
     root = "kagenova/peerpower";
@@ -65,5 +84,15 @@ in
         exclude = [ "/.envrc" "/.local/" "/.direnv/" ];
       }
     ];
+    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
+      %load_ext autoreload
+      %autoreload 2
+
+      import numpy as np
+      import pandas as pd
+      from textwrap import dedent
+      from pathlib import Path
+      rng = np.random.default_rng()
+    '';
   };
 }

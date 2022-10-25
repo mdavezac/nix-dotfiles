@@ -56,7 +56,8 @@
       "juliaup"
       # for peerpower
       "mongosh"
-      "xpdf"
+      "poppler"
+      "podman-compose"
     ];
     casks = [
       "kitty"
@@ -74,6 +75,7 @@
       # for peerpower
       "slack"
       "openvpn-connect"
+      "podman-desktop"
     ];
   };
 }
