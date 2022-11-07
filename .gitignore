@@ -1,6 +1,5 @@
-.vscode/
-.direnv/
-.local/
-neovim/
-machine.nix
-result
+/.vscode/
+/.direnv/
+/.local/
+/machine.nix
+/result/

@@ -58,6 +58,10 @@ in
 
       import numpy as np
       import tensorflow as tf
+      import torch
+      from pathlib import Path
+      from PIL import Image
+      from io import BytesIO
     '';
   };
 }

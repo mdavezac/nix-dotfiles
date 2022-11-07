@@ -1,3 +1,3 @@
 {
-  imports = [ ./zellij ];
+  imports = [ ./zellij ./neovim ];
 }
