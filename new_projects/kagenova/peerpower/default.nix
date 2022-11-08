@@ -31,10 +31,6 @@ let
       ''
     ];
 
-    file.".local/aws/config".text = ''
-      [profile peerpower-mayeul]
-      region = "ap-southeast-1"
-    '';
   };
 in
 {
@@ -51,6 +47,11 @@ in
         ];
       }
     ];
+
+    file.".local/aws/config".text = ''
+      [profile peerpower-mayeul]
+      region = "ap-southeast-1"
+    '';
 
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''
       %load_ext autoreload
