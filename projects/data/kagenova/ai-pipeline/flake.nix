@@ -34,30 +34,13 @@
     {
       devShell.${system} =
         let
-          nvim = inputs.spacenix.wrapper.${system} configuration;
-          vicmd = ''
-            rpc=$PRJ_DATA_DIR/nvim.rpc
-            [ -e $rpc ] && ${pkgs.neovim-remote}/bin/nvr --servername $rpc -s $@ || ${nvim}/bin/nvim $@
-          '';
-          vi_args = [
-            "${pkgs.neovim-remote}/bin/nvr"
-            "--servername"
-            "$PRJ_DATA_DIR/nvim.rpc"
-            "-cc split"
-            "--remote-wait"
-            "-s"
-            "$@"
-          ];
+            nvim_pkg = inputs.spacenix.lib."${system}".spacenix-wrapper configuration;
+            nvim_mod = inputs.spacenix.modules."${system}".devshell nvim_pkg;
         in
         pkgs.devshell.mkShell {
           devshell.name = "Spacenix";
-          devshell.packages = [ nvim ];
           devshell.motd = "";
-          commands = builtins.map (x: { name = x; command = vicmd; }) [ "vim" "vi" ];
-          env = [
-            { name = "EDITOR"; value = builtins.concatStringsSep " " vi_args; }
-            { name = "NVIM_LISTEN_ADDRESS"; eval = "$PRJ_DATA_DIR/nvim.rpc"; }
-          ];
+          imports = [ nvim_mod ];
         };
     };
 }

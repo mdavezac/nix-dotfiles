@@ -28,6 +28,14 @@ rec {
           '';
           formatters.isort.exe = pkgs.lib.mkForce "isort";
           formatters.black.exe = pkgs.lib.mkForce "black";
+          /* lsp-instances.pyright.setup_location = "navigator"; */
+          /* init.lua = '' */
+          /*   require'navigator'.setup({ */
+          /*     lsp={ */
+          /*      pyright={cmd={"${pkgs.nodePackages.pyright}/bin/pyright-langserver", "--stdio" }} */
+          /*     } */
+          /*   }) */
+          /* ''; */
           init.vim = ''
             function PythonModuleName()
                 let relpath = fnamemodify(expand("%"), ":.:s?app/??")
@@ -59,7 +67,15 @@ rec {
             nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
           in
           pkgs.devshell.mkShell {
-            imports = [ nvim_mod ];
+            imports = [
+              nvim_mod
+              (import "${devshell}/extra/language/c.nix")
+            ];
+            language.c.libraries = [ "openssl.out" ];
+            env = [
+              { name = "LDFLAGS"; eval = "-L$DEVSHELL_DIR/lib"; }
+              { name = "DYLD_FALLBACK_LIBRARY_PATH"; prefix = "$DEVSHELL_DIR/lib"; }
+            ];
             commands = [
               { package = pkgs.awscli2; }
               { package = pkgs.aws-vault; }
@@ -68,6 +84,9 @@ rec {
               { package = pkgs.pre-commit; }
               { package = pkgs.python310; }
               { package = pkgs.google-cloud-sdk; }
+              { package = pkgs.pandoc; }
+              { package = pkgs.texlive.combined.scheme-full; }
+              { package = pkgs.postgresql; }
             ];
           };
       });

@@ -22,6 +22,7 @@ rec {
           languages.rust = true;
           treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
           colorscheme = "zenbones";
+          formatters.rustfmt.args = pkgs.lib.mkForce ["--edition" "2021"] ;
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';

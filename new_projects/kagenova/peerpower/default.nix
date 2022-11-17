@@ -26,6 +26,11 @@ let
         [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
         source_env .local/flake/.envrc
 
+        export PGUSER=mdavezac
+        export PGDATA=$PWD/.local/psql/data
+        export PGHOST=$PWD/.local/psql/sockets
+
+
         export CLOUDSDK_CONFIG=$PWD/.local/gcloud
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/.local/gcloud/risk-ocr.json
       ''
@@ -65,10 +70,10 @@ in
       from textwrap import dedent
       from google.cloud import vision
       try:
-        from backend.testing.annotations import *
-        from backend.annotations import *
-        from backend.model.annotations import *
-        from backend.annotations.utils import vertex_boundaries
+        from rocre.backend.testing.annotations import *
+        from rocre.backend.annotations import *
+        from rocre.backend.model.annotations import *
+        from rocre.backend.annotations.utils import vertex_boundaries
       except:
         pass
 

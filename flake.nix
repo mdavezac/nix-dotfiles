@@ -113,7 +113,7 @@
         in
         pkgs.devshell.mkShell {
           name = "dotfiles";
-          packages = [ pkgs.devshell.cli ];
+          packages = [ pkgs.devshell.cli pkgs.pre-commit ];
 
           imports = [ nvim_mod ];
           commands = [
