@@ -696,12 +696,16 @@
         "rainglow": "rainglow",
         "trouble-nvim": "trouble-nvim",
         "vim-diffview": "vim-diffview",
+        "vim-hydra": "vim-hydra",
         "vim-illuminate": "vim-illuminate",
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1668520875,
-        "narHash": "sha256-BAOAUBqAmD7jqnFwnlbOkdd39VRiFE2WxPgxku7OTgo=",
+        "lastModified": 1669038730,
+        "narHash": "sha256-8IbCTqsPiI40z0xKEQeiye2Pl7Km8MLX4IYVkgiv6Q0=",
+        "ref": "bf12230e722a2904ac301f2d1eca195ac4c8b29b",
+        "rev": "bf12230e722a2904ac301f2d1eca195ac4c8b29b",
+        "revCount": 149,
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },
@@ -739,6 +743,22 @@
       "original": {
         "owner": "sindrets",
         "repo": "diffview.nvim",
+        "type": "github"
+      }
+    },
+    "vim-hydra": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1668845907,
+        "narHash": "sha256-ssniRNuDadgfMMKjTzF4wUhfbWdOrrwNGjJUTTgdPX4=",
+        "owner": "anuvyklack",
+        "repo": "hydra.nvim",
+        "rev": "96119af8ebaf0f55567108638c662784d612eb97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anuvyklack",
+        "repo": "hydra.nvim",
         "type": "github"
       }
     },

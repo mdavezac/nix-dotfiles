@@ -26,8 +26,14 @@ rec {
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
+          telescope-theme = "ivy";
           formatters.isort.exe = pkgs.lib.mkForce "isort";
           formatters.black.exe = pkgs.lib.mkForce "black";
+          layers.terminal.repl.repl-open-cmd = ''
+            require('iron.view').split.vertical.botright(
+                "40%", { number = false, relativenumber = false }
+            )
+          '';
           /* lsp-instances.pyright.setup_location = "navigator"; */
           /* init.lua = '' */
           /*   require'navigator'.setup({ */
