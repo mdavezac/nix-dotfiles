@@ -606,6 +606,22 @@
         "type": "github"
       }
     },
+    "oh-lucy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667868561,
+        "narHash": "sha256-a6cMPZjeVomkUJM7rgXu9lh0Evzomu0cJofDMdTK3ok=",
+        "owner": "Yazeed1s",
+        "repo": "oh-lucy.nvim",
+        "rev": "fbdabf3533636da10e1efe4f2e15242e982a6a31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Yazeed1s",
+        "repo": "oh-lucy.nvim",
+        "type": "github"
+      }
+    },
     "plenary-nvim": {
       "flake": false,
       "locked": {
@@ -692,6 +708,7 @@
         "nvim-telescope": "nvim-telescope",
         "nvim-treesitter-textsubjects": "nvim-treesitter-textsubjects",
         "octo": "octo",
+        "oh-lucy": "oh-lucy",
         "plenary-nvim": "plenary-nvim",
         "rainglow": "rainglow",
         "trouble-nvim": "trouble-nvim",
@@ -701,11 +718,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1669038730,
-        "narHash": "sha256-8IbCTqsPiI40z0xKEQeiye2Pl7Km8MLX4IYVkgiv6Q0=",
-        "ref": "bf12230e722a2904ac301f2d1eca195ac4c8b29b",
-        "rev": "bf12230e722a2904ac301f2d1eca195ac4c8b29b",
-        "revCount": 149,
+        "lastModified": 1669389444,
+        "narHash": "sha256-Kypz6LEhVgbZrzQs8LEh6TyrOfzXZzbQdvI/Rbf0Fw4=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

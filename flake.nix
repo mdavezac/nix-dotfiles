@@ -47,12 +47,6 @@
             })
         ];
       };
-      configuration = {
-        nvim = {
-          languages.nix = true;
-          colorscheme = "neon";
-        };
-      };
     in
     {
       darwinConfigurations = {
@@ -108,14 +102,16 @@
               inputs.devshell.overlay
             ];
           };
-          nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
-          nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
         in
         pkgs.devshell.mkShell {
           name = "dotfiles";
+          imports = [ spacenix.modules."${system}".prepackaged spacenix.modules.devshell ];
           packages = [ pkgs.devshell.cli pkgs.pre-commit ];
+          spacenix = {
+            languages.nix = true;
+            colorscheme = "neon";
+          };
 
-          imports = [ nvim_mod ];
           commands = [
             {
               name = "build";

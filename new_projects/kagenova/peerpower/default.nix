@@ -23,7 +23,7 @@ let
         mkdir -p $PRJ_ROOT
         path_add PYTHONPATH $PWD/app $PWD/version2/app
 
-        [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
+        [ -e .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
         source_env .local/flake/.envrc
 
         export PGUSER=mdavezac
@@ -49,6 +49,7 @@ in
           "/.envrc"
           "/.local/"
           "/.direnv/"
+          "/devenv"
         ];
       }
     ];
@@ -87,7 +88,7 @@ in
       {
         url = "github:peerpower/risk_bank_statement_analysis_service.git";
         settings.user.email = emails.github;
-        exclude = [ "/.envrc" "/.local/" "/.direnv/" ];
+        exclude = [ "/.envrc" "/.local/" "/.direnv/" "/devenv" ];
       }
     ];
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''
@@ -99,6 +100,15 @@ in
       from textwrap import dedent
       from pathlib import Path
       rng = np.random.default_rng()
+
+      try:
+        from app.grammar import *
+        from app.grammar import helpers as help
+        from app.grammar.kbank import helpers as khelp
+      except:
+        pass
+      min_partial_match = 15 
+      error_rate = 0.1
     '';
   };
 }

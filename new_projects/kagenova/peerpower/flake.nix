@@ -6,45 +6,53 @@ rec {
     spacenix.url = "/Users/mdavezac/personal/spacenix";
   };
 
-  outputs = { self, flake-utils, devshell, nixpkgs, spacenix, mach-nix }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ devshell.overlay ];
-        };
-        configuration.nvim = {
+  outputs = {
+    self,
+    flake-utils,
+    devshell,
+    nixpkgs,
+    spacenix,
+    mach-nix,
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [devshell.overlay];
+      };
+    in {
+      devShells.default = pkgs.devshell.mkShell {
+        imports = [
+          (import "${devshell}/extra/language/c.nix")
+          spacenix.modules.${system}.prepackaged
+          spacenix.modules.devshell
+        ];
+        spacenix = {
           layers.git.github = true;
           layers.debugger.enable = true;
           layers.neorg.enable = false;
           languages.markdown = true;
           languages.nix = true;
           languages.python = true;
-          dash.python = [ "pandas" "numpy" ];
-          treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
-          colorscheme = "papercolor";
+          dash.python = ["pandas" "numpy"];
+          treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
+          colorscheme = "oh-lucy";
+          cursorline = true;
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
           '';
           telescope-theme = "ivy";
-          formatters.isort.exe = pkgs.lib.mkForce "isort";
-          formatters.black.exe = pkgs.lib.mkForce "black";
+          formatters.isort.exe = "isort";
+          formatters.black.exe = "black";
+          formatters.nixpkgs-fmt.enable = false;
+          formatters.alejandra.enable = true;
           layers.terminal.repl.repl-open-cmd = ''
             require('iron.view').split.vertical.botright(
                 "40%", { number = false, relativenumber = false }
             )
           '';
-          /* lsp-instances.pyright.setup_location = "navigator"; */
-          /* init.lua = '' */
-          /*   require'navigator'.setup({ */
-          /*     lsp={ */
-          /*      pyright={cmd={"${pkgs.nodePackages.pyright}/bin/pyright-langserver", "--stdio" }} */
-          /*     } */
-          /*   }) */
-          /* ''; */
           init.vim = ''
             function PythonModuleName()
-                let relpath = fnamemodify(expand("%"), ":.:s?app/??")
+                let relpath = fnamemodify(expand("%"), ":.:s")
                 return substitute(substitute(relpath, ".py", "", ""), "\/", ".", "g")
             endfunction
 
@@ -63,37 +71,31 @@ rec {
             }
           ];
 
-          layers.terminal.repl.favored.python = pkgs.lib.mkForce "require('iron.fts.python').ipython";
+          layers.terminal.repl.repls.python = "require('iron.fts.python').ipython";
         };
-      in
-      {
-        devShells.default =
-          let
-            nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
-            nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
-          in
-          pkgs.devshell.mkShell {
-            imports = [
-              nvim_mod
-              (import "${devshell}/extra/language/c.nix")
-            ];
-            language.c.libraries = [ "openssl.out" ];
-            env = [
-              { name = "LDFLAGS"; eval = "-L$DEVSHELL_DIR/lib"; }
-              { name = "DYLD_FALLBACK_LIBRARY_PATH"; prefix = "$DEVSHELL_DIR/lib"; }
-            ];
-            commands = [
-              { package = pkgs.awscli2; }
-              { package = pkgs.aws-vault; }
-              { package = pkgs.pass; }
-              { package = pkgs.poetry; }
-              { package = pkgs.pre-commit; }
-              { package = pkgs.python310; }
-              { package = pkgs.google-cloud-sdk; }
-              { package = pkgs.pandoc; }
-              { package = pkgs.texlive.combined.scheme-full; }
-              { package = pkgs.postgresql; }
-            ];
-          };
-      });
+        language.c.libraries = ["openssl.out"];
+        env = [
+          {
+            name = "LDFLAGS";
+            eval = "-L$DEVSHELL_DIR/lib";
+          }
+          {
+            name = "DYLD_FALLBACK_LIBRARY_PATH";
+            prefix = "$DEVSHELL_DIR/lib";
+          }
+        ];
+        commands = [
+          {package = pkgs.awscli2;}
+          {package = pkgs.aws-vault;}
+          {package = pkgs.pass;}
+          {package = pkgs.poetry;}
+          {package = pkgs.pre-commit;}
+          {package = pkgs.python310;}
+          {package = pkgs.google-cloud-sdk;}
+          {package = pkgs.pandoc;}
+          {package = pkgs.texlive.combined.scheme-full;}
+          {package = pkgs.postgresql;}
+        ];
+      };
+    });
 }
