@@ -1,5 +1,15 @@
 { config, lib, ... }:
 let
+  email_options = {
+    github = lib.mkOption {
+      type = lib.types.str;
+      description = "Email for github repos";
+    };
+    gitlab = lib.mkOption {
+      type = lib.types.str;
+      description = "Email for gitlab repos";
+    };
+  };
   git_options = {
     url = lib.mkOption {
       type = lib.types.str;
@@ -215,6 +225,14 @@ in
     description = "Each attribute is a different project.";
     default = { };
   };
+  options.emails = lib.mkOption {
+    type = lib.types.submodule {
+      options = email_options;
+    };
+    description = "Emails for github, gitlab and others.";
+    default = { };
+  };
+
   options._workspaces = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule {
       options = internal_options;

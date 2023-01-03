@@ -1,10 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  emails = {
-    gitlab = "1085775-mdavezac@users.noreply.gitlab.com";
-    github = "2745737+mdavezac@users.noreply.github.com";
-  };
-  config = {
+  projconf = {
     enable = true;
     python.enable = true;
     python.version = "3.10";
@@ -21,7 +17,6 @@ let
         mkdir -p $(dirname $AWS_CONFIG_FILE)
         mkdir -p $PRJ_DATA_DIR
         mkdir -p $PRJ_ROOT
-        path_add PYTHONPATH $PWD/app $PWD/version2/app
 
         [ -e .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower .local/flake
         source_env .local/flake/.envrc
@@ -39,20 +34,40 @@ let
   };
 in
 {
-  config.workspaces.ocr = config // {
+  config.workspaces.ocr = projconf // {
     root = "kagenova/peerpower";
     repos = [
       {
         url = "github:peerpower/risk_ocr_engine.git";
-        settings.user.email = emails.github;
+        settings.user.email = config.emails.github;
         exclude = [
           "/.envrc"
           "/.local/"
           "/.direnv/"
           "/devenv"
+          ".devenv"
+          ".devenv.local.nix"
         ];
       }
     ];
+    /* envrc = [ */
+    /*   '' */
+    /*     export IPYTHONDIR=$PWD/.local/ipython/ */
+    /*     export AWS_CONFIG_FILE=$PWD/.local/aws/config */
+    /*     export AWS_SHARED_CREDENTIALS_FILE=$PWD/.local/aws/credentials */
+    /*     export PASSWORD_STORE_DIR=$PWD/.local/passwords */
+
+    /*     mkdir -p $(dirname $AWS_CONFIG_FILE) */
+
+    /*     [ -e devenv ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower/devenv devenv */
+
+    /*     watch_file devenv/devenv.nix */
+    /*     watch_file devenv/devenv.yaml */
+    /*     watch_file devenv/devenv.lock */
+    /*     export PROJECT_ROOT_DIR=$PWD */
+    /*     cd devenv; eval "$(devenv print-dev-env devenv/)"; cd $PROJECT_ROOT_DIR */
+    /*   '' */
+    /* ]; */
 
     file.".local/aws/config".text = ''
       [profile peerpower-mayeul]
@@ -82,13 +97,22 @@ in
       rng = np.random.default_rng()
     '';
   };
-  config.workspaces.bsa = config // {
+  config.workspaces.bsa = projconf // {
     root = "kagenova/peerpower";
     repos = [
       {
         url = "github:peerpower/risk_bank_statement_analysis_service.git";
-        settings.user.email = emails.github;
-        exclude = [ "/.envrc" "/.local/" "/.direnv/" "/devenv" ];
+        settings.user.email = config.emails.github;
+        exclude = [
+          "/.envrc"
+          "/.local/"
+          "/.direnv/"
+          "/devenv"
+          "note.md"
+          "scratch.py"
+          "script.py"
+          "tests/data/"
+        ];
       }
     ];
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''
@@ -99,14 +123,20 @@ in
       import pandas as pd
       from textwrap import dedent
       from pathlib import Path
+      from pandarallel import pandarallel
+
+      pandarallel.initialize(nb_workers=1)
+
       rng = np.random.default_rng()
 
       try:
         from app.grammar import *
         from app.grammar import helpers as help
         from app.grammar.kbank import helpers as khelp
+        from app.services.transaction_description_extractor_kbank import extract_from_kbank
       except:
         pass
+
       min_partial_match = 15 
       error_rate = 0.1
     '';

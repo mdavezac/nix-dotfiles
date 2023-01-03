@@ -12,6 +12,7 @@ rec {
     devshell,
     nixpkgs,
     spacenix,
+    mach-nix,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
@@ -53,7 +54,7 @@ rec {
           languages.python = true;
           dash.python = ["pandas" "numpy"];
           treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
-          colorscheme = "oh-lucy";
+          colorscheme = "carbonight";
           cursorline = true;
           post.vim = ''
             autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -68,30 +69,8 @@ rec {
                 "50%", { number = false, relativenumber = false }
             )
           '';
-          init.vim = ''
-            function PythonModuleName()
-                let relpath = fnamemodify(expand("%"), ":.:s")
-                return substitute(substitute(relpath, ".py", "", ""), "\/", ".", "g")
-            endfunction
-
-            au BufRead,BufNewFile *.jsonl  set filetype=json
-          '';
-          which-key.bindings = [
-            {
-              key = "<leader>gd";
-              command = "<CMD>DiffviewOpen origin/develop...HEAD<CR>";
-              description = "Diff current branch";
-            }
-            {
-              key = "<leader>fm";
-              command = "<CMD>let @\\\" = PythonModuleName()<CR>";
-              description = "Filename as python module";
-            }
-          ];
-
           layers.terminal.repl.repls.python = "require('iron.fts.python').ipython";
         };
-        language.c.libraries = ["openssl.out"];
         env = [
           {
             name = "LDFLAGS";
@@ -103,17 +82,12 @@ rec {
           }
         ];
         commands = [
-          {package = pkgs.awscli2;}
-          {package = pkgs.aws-vault;}
-          {package = pkgs.pass;}
-          {package = pkgs.poetry;}
-          {package = pkgs.pre-commit;}
-          {package = pkgs.python310;}
-          {package = pkgs.google-cloud-sdk;}
-          {package = pkgs.pandoc;}
-          {package = pkgs.texlive.combined.scheme-full;}
-          {package = pkgs.postgresql;}
-          {package = pkgs.mysql;}
+          {package = pkgs.cmake;}
+          {package = pkgs.ninja;}
+          {package = pkgs.curl;}
+          {package = pkgs.doxygen;}
+          {package = pkgs.black;}
+          {package = pkgs.python38;}
         ];
       };
     });

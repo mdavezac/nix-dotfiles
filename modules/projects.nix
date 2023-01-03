@@ -7,5 +7,6 @@
     ./envrc.nix
     ./python.nix
     ./fish.nix
+    ./emails.nix
   ];
 }
