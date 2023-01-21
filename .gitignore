@@ -2,4 +2,5 @@
 /.direnv/
 /.local/
 /machine.nix
-/result/
+result
+.devenv/

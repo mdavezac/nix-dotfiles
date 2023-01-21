@@ -1,40 +1,99 @@
-rec {
-  description = "Tensossht development environment";
-  inputs = rec {
-    flake-utils.url = "github:numtide/flake-utils";
-    devshell.url = "github:numtide/devshell";
-    spacenix.url = "/Users/mdavezac/personal/spacenix";
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    devenv.url = "github:cachix/devenv";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    spacenix.url = "github:mdavezac/spacevim.nix"; # /Users/mdavezac/personal/spacenix";
   };
 
-  outputs = { self, flake-utils, devshell, nixpkgs, spacenix }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    spacenix,
+    rust-overlay,
+    ...
+  } @ inputs: let
+    systems = ["x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
+    forAllSystems = f:
+      builtins.listToAttrs (map
+        (name: {
+          inherit name;
+          value = f name;
+        })
+        systems);
+
+    env = pkgs: let
+      rust-bin = pkgs.rust-bin.stable."1.63.0".default.override {
+        extensions = ["rustfmt" "clippy" "rust-analysis"];
+        targets = ["x86_64-apple-darwin" "wasm32-wasi" "x86_64-unknown-linux-musl"];
+      };
+    in {
+      packages = [
+        pkgs.darwin.apple_sdk.frameworks.Security
+        pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+        pkgs.darwin.apple_sdk.frameworks.CoreServices
+        pkgs.darwin.apple_sdk.frameworks.DiskArbitration
+        pkgs.darwin.apple_sdk.frameworks.IOKit
+        pkgs.darwin.apple_sdk.frameworks.Foundation
+        pkgs.rustup
+        pkgs.binaryen
+        pkgs.mandown
+      ];
+
+      languages.rust.enable = false;
+      languages.rust.packages.rustc = rust-bin;
+      languages.rust.packages.cargo = rust-bin;
+
+      spacenix = {
+        layers.neorg.enable = false;
+        layers.completion.sources.other = [
+          {
+            name = "buffer";
+            group_index = 3;
+            priority = 100;
+          }
+          {
+            name = "path";
+            group_index = 2;
+            priority = 50;
+          }
+          {
+            name = "emoji";
+            group_index = 2;
+            priority = 50;
+          }
+        ];
+        layers.completion.sources."/" = [{name = "buffer";}];
+        layers.completion.sources.":" = [{name = "cmdline";}];
+        languages.markdown = true;
+        languages.nix = true;
+        languages.rust = false;
+        treesitter-languages = ["json" "toml" "yaml" "bash" "fish" "latex"];
+        colorscheme = "catppuccin-mocha";
+        cursorline = true;
+        telescope-theme = "ivy";
+        formatters.nixpkgs-fmt.enable = false;
+        formatters.alejandra.enable = true;
+        formatters.rustfmt.args = pkgs.lib.mkForce ["--edition" "2021"];
+      };
+    };
+  in {
+    devShells =
+      forAllSystems
+      (system: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ devshell.overlay ];
+          overlays = [(import rust-overlay)];
         };
-        configuration.nvim = {
-          layers.git.github = false;
-          languages.markdown = true;
-          languages.nix = true;
-          formatters.nixpkgs-fmt.enable = pkgs.lib.mkForce false;
-          languages.python = false;
-          languages.rust = true;
-          treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
-          colorscheme = "zenbones";
-          formatters.rustfmt.args = pkgs.lib.mkForce ["--edition" "2021"] ;
-          post.vim = ''
-            autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-          '';
-          layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipython' }";
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            spacenix.modules.${system}.prepackaged
+            (env pkgs)
+          ];
         };
-      in
-      {
-        devShells.default =
-          let
-            nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
-            nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
-          in
-          pkgs.devshell.mkShell { imports = [ nvim_mod ]; motd = ""; };
       });
+  };
 }

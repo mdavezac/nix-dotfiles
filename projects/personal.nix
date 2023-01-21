@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 let
   mkProject = import ./lib/project.nix "personal";
   emails = import ./lib/emails.nix;
@@ -85,7 +89,7 @@ in
     '';
     nixshell.text = ''
       buildInputs = [
-        gfortran 
+        gfortran
       ] ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [
         Cocoa CoreServices
       ]);
@@ -102,8 +106,7 @@ in
       settings = {
         user.email = emails.github;
         "remote \"gitlab\"" = {
-          url =
-            "https://gitlab.com/kagenova/internal/tools-practice/advent-of-code-2020.git";
+          url = "https://gitlab.com/kagenova/internal/tools-practice/advent-of-code-2020.git";
           fetch = "+refs/heads/*:refs/remotes/gitlab/*";
         };
       };
@@ -133,13 +136,12 @@ in
       "rust.show_hover_context" = true;
       "rust-client.disableRustup" = true;
     };
-
   };
   # }}}
 
   # cv: {{{
   projects.personal.cv = {
-    enable = true;
+    enable = false;
     repos.cv = {
       url = "https://gitlab.com/mdavezac/cv.git";
       dest = ".";
@@ -176,8 +178,8 @@ in
       rmdir spacevim.nix
       git config --local user.name "Mayeul d'Avezac"
       git config --local user.email "${emails.github}"
-      echo ".setup.fish" >.git/info/exclude 
-      echo ".envrc.extra" >>.git/info/exclude 
+      echo ".setup.fish" >.git/info/exclude
+      echo ".envrc.extra" >>.git/info/exclude
     '';
     file.".envrc.extra".text = ''
       export fish_history="personalneovim"
@@ -200,10 +202,10 @@ in
       end
       git config --local user.name "Mayeul d'Avezac"
       git config --local user.email "${emails.github}"
-      echo ".setup.fish" >.git/info/exclude 
-      echo ".local" >>.git/info/exclude 
-      echo ".envrc" >> .git/info/exclude 
-      echo ".envrc.extra" >>.git/info/exclude 
+      echo ".setup.fish" >.git/info/exclude
+      echo ".local" >>.git/info/exclude
+      echo ".envrc" >> .git/info/exclude
+      echo ".envrc.extra" >>.git/info/exclude
     '';
   };
 }

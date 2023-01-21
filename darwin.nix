@@ -1,4 +1,9 @@
-{ pkgs, lib, options, config, ... }: {
+{ pkgs
+, lib
+, options
+, config
+, ...
+}: {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
@@ -67,7 +72,9 @@
       "docker"
       "disk-inventory-x"
       "virtualbox"
-      "virtualbox-extension-pack"
+      /*
+        "virtualbox-extension-pack"
+      */
       "nvidia-geforce-now"
       "keepingyouawake"
       "epic-games"
@@ -76,6 +83,7 @@
       "slack"
       "openvpn-connect"
       "podman-desktop"
+      "notion"
     ];
   };
 }

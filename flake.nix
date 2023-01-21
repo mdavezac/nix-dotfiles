@@ -109,6 +109,7 @@
           packages = [ pkgs.devshell.cli pkgs.pre-commit ];
           spacenix = {
             languages.nix = true;
+            formatters.alejandra.enable = true;
             colorscheme = "neon";
           };
 

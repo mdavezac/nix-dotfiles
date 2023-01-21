@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 let
   emails.github = "2745737+mdavezac@users.noreply.github.com";
 in
@@ -10,7 +14,7 @@ in
       {
         url = "github:mdavezac/zellij";
         settings.user.email = emails.github;
-        exclude = [ "/.local" ];
+        exclude = [ "/.local" "/.envrc" ];
         destination = ".";
       }
     ];
@@ -27,8 +31,6 @@ in
 
         [ -e  .local/nvim ] || ln -s ~/personal/dotfiles/new_projects/personal/zellij .local/nvim
         source_env .local/nvim/.envrc
-
-        use flake
       ''
     ];
   };
