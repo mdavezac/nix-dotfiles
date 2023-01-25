@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }: {
   config.workspaces.copernicai = {
     enable = true;
@@ -10,7 +11,7 @@
       {
         url = "gitlab:kagenova/kagelearn/development/copernicai.git";
         settings.user.email = config.emails.gitlab;
-        exclude = [ "/.local" ];
+        exclude = ["/.local" "/.envrc" "/.devenv/" "/dist/"];
         destination = ".";
       }
     ];
@@ -19,10 +20,11 @@
     python.packager = "poetry";
     envrc = [
       ''
-        [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/copernicai .local/flake
-        source_env .local/flake/.envrc
+        flakedir=~/personal/dotfiles/new_projects/kagenova/copernicai
+        [ -e  .local/flake ] || ln -s $flakedir .local/flake
+        use flake $flakedir
 
-        source_env_if_exists $PWD/.envrc.flake
+        export IPYTHONDIR=$PWD/.local/ipython/
       ''
     ];
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''

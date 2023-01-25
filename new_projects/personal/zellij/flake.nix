@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     devenv.url = "github:cachix/devenv";
     rust-overlay.url = "github:oxalica/rust-overlay";
-    spacenix.url = "github:mdavezac/spacevim.nix"; # /Users/mdavezac/personal/spacenix";
+    spacenix.url = "/Users/mdavezac/personal/spacenix";
   };
 
   outputs = {
@@ -44,6 +44,13 @@
       languages.rust.enable = false;
       languages.rust.packages.rustc = rust-bin;
       languages.rust.packages.cargo = rust-bin;
+      env.GIT_EDITOR = "vi";
+      scripts.vi.exec = ''
+        [ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@
+      '';
+      scripts.vim.exec = ''
+        [ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@
+      '';
 
       spacenix = {
         layers.neorg.enable = false;
@@ -68,7 +75,7 @@
         layers.completion.sources.":" = [{name = "cmdline";}];
         languages.markdown = true;
         languages.nix = true;
-        languages.rust = false;
+        languages.rust = true;
         treesitter-languages = ["json" "toml" "yaml" "bash" "fish" "latex"];
         colorscheme = "catppuccin-mocha";
         cursorline = true;

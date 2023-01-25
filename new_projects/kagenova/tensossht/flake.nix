@@ -6,35 +6,65 @@ rec {
     spacenix.url = "/Users/mdavezac/personal/spacenix";
   };
 
-  outputs = { self, flake-utils, devshell, nixpkgs, spacenix }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ devshell.overlay ];
-        };
-        configuration.nvim = {
-          layers.git.github = false;
-          languages.markdown = true;
-          languages.nix = true;
-          languages.python = true;
-          treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
-          colorscheme = "zenbones";
-          post.vim = ''
-            autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-          '';
-          dash.python = [ "tensorflow2" ];
-          formatters.isort.exe = pkgs.lib.mkForce "isort";
-          formatters.black.exe = pkgs.lib.mkForce "black";
-          layers.terminal.repl.favored.python = pkgs.lib.mkForce "{ command = 'ipython' }";
-        };
-      in
-      {
-        devShells.default =
-          let
-            nvim_pkg = spacenix.lib."${system}".spacenix-wrapper configuration;
-            nvim_mod = spacenix.modules."${system}".devshell nvim_pkg;
-          in
-          pkgs.devshell.mkShell { imports = [ nvim_mod ]; motd = ""; };
-      });
+  outputs = {
+    self,
+    flake-utils,
+    devshell,
+    nixpkgs,
+    spacenix,
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [devshell.overlay];
+      };
+      spacevim = {
+        layers.git.github = false;
+        languages.markdown = true;
+        languages.nix = true;
+        languages.python = true;
+        treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
+        colorscheme = "zenbones";
+        post.vim = ''
+          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+        '';
+        dash.python = ["tensorflow2"];
+        formatters.isort.exe = "isort";
+        formatters.black.exe = "black";
+        formatters.nixpkgs-fmt.enable = false;
+        formatters.alejandra.enable = true;
+        layers.terminal.repl.repls.python = "require('iron.fts.python').ipython";
+        layers.terminal.repl.repl-open-cmd = ''
+          require('iron.view').split.vertical.botright(
+            "50%", { number = false, relativenumber = false }
+          )
+        '';
+        layers.completion.sources.other = [
+          {
+            name = "buffer";
+            group_index = 3;
+            priority = 100;
+          }
+          {
+            name = "path";
+            group_index = 2;
+            priority = 50;
+          }
+          {
+            name = "emoji";
+            group_index = 2;
+            priority = 50;
+          }
+        ];
+        layers.completion.sources."/" = [{name = "buffer";}];
+        layers.completion.sources.":" = [{name = "cmdline";}];
+        telescope-theme = "ivy";
+      };
+    in {
+      devShells.default = pkgs.devshell.mkShell {
+        imports = [spacenix.modules.${system}.prepackaged];
+        motd = "";
+        spacenix = spacevim;
+      };
+    });
 }

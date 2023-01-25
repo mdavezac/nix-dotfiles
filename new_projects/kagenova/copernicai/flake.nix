@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     devenv.url = "github:cachix/devenv";
-    spacenix.url = "github:mdavezac/spacevim.nix"; # /Users/mdavezac/personal/spacenix";
+    spacenix.url = "/Users/mdavezac/personal/spacenix";
   };
 
   outputs =
@@ -23,20 +23,30 @@
           systems);
 
       env = pkgs: {
+        languages.python.enable = true;
+        languages.python.package = pkgs.python38;
+        packages = [ pkgs.poetry pkgs.pandoc ];
+        env.GIT_EDITOR = "vi";
+        scripts.vi.exec = ''
+          [ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@
+        '';
+        scripts.vim.exec = ''
+          [ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@
+        '';
         spacenix = {
-          layers.git.github = false;
-          languages.markdown = true;
-          languages.nix = true;
           languages.python = true;
-          layers.neorg.enable = false;
-          treesitter-languages = [ "json" "toml" "yaml" "bash" "fish" ];
-          colorscheme = "zenbones";
-          dash.python = [ "tensorflow2" ];
-          formatters.isort.exe = pkgs.lib.mkForce "isort";
-          formatters.black.exe = pkgs.lib.mkForce "black";
-          formatters.nixpkgs-fmt.enable = false;
-          formatters.alejandra.enable = true;
-          layers.terminal.repl.repls.python = "require('iron.fts.python').ipython";
+          languages.nix = true;
+          languages.markdown = true;
+          colorscheme = "monochrome";
+          layers.pimp.notify = false;
+          layers.neorg.workspaces = [
+            {
+              name = "neorg";
+              path = "~/neorg/";
+              key = "n";
+            }
+          ];
+          layers.neorg.gtd = "neorg";
           layers.completion.sources.other = [
             {
               name = "buffer";
@@ -56,7 +66,47 @@
           ];
           layers.completion.sources."/" = [{ name = "buffer"; }];
           layers.completion.sources.":" = [{ name = "cmdline"; }];
-          telescope-theme = "ivy";
+          # languages.python = true;
+          # languages.nix = true;
+          # languages.markdown = true;
+          # colorscheme = "oh-lucy";
+          # layers.pimp.notify = true;
+          # layers.git.github = false;
+          # layers.neorg.enable = true;
+          # layers.completion.sources.other = [
+          #   {
+          #     name = "buffer";
+          #     group_index = 3;
+          #     priority = 100;
+          #   }
+          #   {
+          #     name = "path";
+          #     group_index = 2;
+          #     priority = 50;
+          #   }
+          #   {
+          #     name = "emoji";
+          #     group_index = 2;
+          #     priority = 50;
+          #   }
+          # ];
+          # layers.completion.sources."/" = [{name = "buffer";}];
+          # layers.completion.sources.":" = [{name = "cmdline";}];
+
+          # formatters.nixpkgs-fmt.enable = false;
+          # formatters.alejandra.enable = true;
+          # formatters.isort.exe = "isort";
+          # formatters.black.exe = "black";
+
+          # treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
+          # dash.python = ["tensorflow2"];
+          # layers.terminal.repl.repls.python = "require('iron.fts.python').ipython";
+          #        layers.terminal.repl.repl-open-cmd = ''
+          #          require('iron.view').split.vertical.botright(
+          #            "50%", { number = false, relativenumber = false }
+          #          )
+          #        '';
+          #        telescope-theme = "ivy";
         };
       };
     in
