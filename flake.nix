@@ -2,7 +2,7 @@
   description = "My dotfiles";
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -113,8 +113,6 @@
         packages = [pkgs.devshell.cli pkgs.pre-commit];
         spacenix = {
           languages.nix = true;
-          formatters.nixpkgs-fmt.enable = false;
-          formatters.alejandra.enable = true;
           colorscheme = "neon";
         };
 

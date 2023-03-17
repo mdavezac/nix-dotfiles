@@ -22,6 +22,8 @@
       ''
         flakedir=~/personal/dotfiles/new_projects/kagenova/copernicai
         [ -e  .local/flake ] || ln -s $flakedir .local/flake
+        watch_file $flakedir/flake.nix
+        watch_file $flakedir/flake.lock
         use flake $flakedir
 
         export IPYTHONDIR=$PWD/.local/ipython/

@@ -1,6 +1,7 @@
 rec {
   description = "Tensossht development environment";
   inputs = rec {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
     spacenix.url = "/Users/mdavezac/personal/spacenix";
@@ -25,9 +26,6 @@ rec {
         languages.python = true;
         treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
         colorscheme = "zenbones";
-        post.vim = ''
-          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-        '';
         dash.python = ["tensorflow2"];
         formatters.isort.exe = "isort";
         formatters.black.exe = "black";
@@ -65,6 +63,16 @@ rec {
         imports = [spacenix.modules.${system}.prepackaged];
         motd = "";
         spacenix = spacevim;
+        commands = [
+          {
+            name = "vi";
+            command = ''[ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@'';
+          }
+          {
+            name = "vim";
+            command = ''[ -n "$NVIM" ] && nvim --server $NVIM --remote $@ || exec nvim $@'';
+          }
+        ];
       };
     });
 }

@@ -1,13 +1,15 @@
-{ pkgs
-, lib
-, options
-, config
-, ...
+{
+  pkgs,
+  lib,
+  options,
+  config,
+  ...
 }: {
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
-    trustedUsers = [ "@admin" ];
+    settings.trusted-users = ["@admin"];
+    configureBuildUsers = true;
   };
 
   services = {
@@ -42,16 +44,15 @@
     trackpad.Clicking = true;
   };
 
-  users.nix.configureBuildUsers = true;
-
   fonts = {
     fontDir.enable = false;
-    fonts = [ pkgs.nerdfonts ];
+    fonts = [pkgs.nerdfonts];
   };
 
   homebrew = {
     enable = true;
-    cleanup = "zap";
+    onActivation.cleanup = "zap";
+    onActivation.upgrade = true;
     extraConfig = ''
       tap "fabianishere/personal", "https://github.com/fabianishere/homebrew-personal"
       tap "homebrew/cask", "https://github.com/Homebrew/homebrew-cask/"
@@ -72,9 +73,7 @@
       "docker"
       "disk-inventory-x"
       "virtualbox"
-      /*
-        "virtualbox-extension-pack"
-      */
+      # "virtualbox-extension-pack"
       "nvidia-geforce-now"
       "keepingyouawake"
       "epic-games"

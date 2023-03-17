@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   home.packages = [
     pkgs.cacert
     pkgs.any-nix-shell
@@ -32,6 +37,7 @@
   ];
   home.sessionVariables.EDITOR = "code";
   home.sessionVariables.JULIA_PROJECT = "@.";
+  home.sessionVariables.DIRENV_LOG_FORMAT = "";
   home.file.".pdbrc.py".source = ./files/pdbrc.py;
 
   # This value determines the Home Manager release that your

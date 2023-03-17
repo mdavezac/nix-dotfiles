@@ -1,14 +1,18 @@
-{ config, pkgs, lib, ... }: {
-  require = [ ./kagenova ./personal.nix ./retired.nix ];
-  home.packages = [ pkgs.lorri pkgs.niv ];
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  require = [./kagenova ./personal.nix ./retired.nix];
+  home.packages = [pkgs.lorri pkgs.niv];
   programs.direnv = {
     enable = true;
     nix-direnv.enable = false;
   };
 
   programs.fish = {
-    shellAliases.tmux =
-      "${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux";
+    shellAliases.tmux = "${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux";
     interactiveShellInit = ''
       ${pkgs.direnv}/bin/direnv hook fish | source
       set -e DIRENV_DIFF
@@ -40,9 +44,6 @@
       end
     '';
   };
-
-  home.sessionVariables.EDITOR = "nvim";
-  home.sessionVariables.DIRENV_LOG_FORMAT = "";
 
   home.file.".config/direnv/lib/cloner.sh".text = ''
     function cloner () {
@@ -106,7 +107,7 @@
         if [[ ! -f pyproject.toml ]]; then
           log_error 'No pyproject.toml found. Use `poetry new` or `poetry init` to create one first.'
           exit 2
-        fi 
+        fi
 
         if ! command -v poetry >& /dev/null ; then
           echo "Could not find poetry"

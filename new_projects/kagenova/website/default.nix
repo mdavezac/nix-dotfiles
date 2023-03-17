@@ -1,18 +1,16 @@
-{ config, lib, pkgs, ... }:
-let
-  emails = {
-    gitlab = "1085775-mdavezac@users.noreply.gitlab.com";
-    github = "2745737+mdavezac@users.noreply.github.com";
-  };
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   config.workspaces."website" = {
     enable = true;
     root = "kagenova";
     repos = [
       {
         url = "gitlab:kagenova/marketing/website.git";
-        settings.user.email = emails.gitlab;
+        settings.user.email = config.emails.gitlab;
         exclude = [
           "/.envrc"
           "/.local"
@@ -29,12 +27,14 @@ in
         export PRJ_DATA_DIR=$PWD/.local/devshell/data
         export PRJ_ROOT=$PWD/.local/devshell
         export IPYTHONDIR=$PWD/.local/ipython/
-        export TFHUB_CACHE_DIR=$PWD/.local/cache/tfhub
+        export PULUMI_HOME=$PWD/.local/pulumi
 
         mkdir -p $PRJ_DATA_DIR
         mkdir -p $PRJ_ROOT
 
-        [ -e  .local/nvim ] || ln -s ~/personal/dotfiles/new_projects/kagenova/website .local/flake
+        use flake .
+
+        [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/website .local/flake
         source_env .local/flake/.envrc
 
         export GEM_HOME=$PWD/.local/gem

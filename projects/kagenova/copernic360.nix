@@ -1,8 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   mkProject = import ../lib/project.nix "kagenova";
   emails = import ../lib/emails.nix;
-  utils = (pkgs.callPackage (import ../lib/utils.nix) { });
+  utils = pkgs.callPackage (import ../lib/utils.nix) {};
   starsets = {
     nix_shell.disabled = true;
     package.disabled = true;
@@ -21,8 +25,7 @@ let
       symbol = "🅰 ";
     };
   };
-in
-{
+in {
   imports = (
     builtins.map mkProject [
       "copernic360"
@@ -33,8 +36,7 @@ in
   projects.kagenova.copernic360 = {
     enable = false;
     repos.copernic360 = {
-      url =
-        "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
+      url = "https://gitlab.com/kagenova/kagemove/development/kagemove-webapi.git";
       dest = ".";
       settings.user.email = emails.gitlab;
       ignore = ''
@@ -56,8 +58,8 @@ in
     '';
     file."copernic360.code-workspace".source = utils.toPrettyJSON {
       folders = [
-        { path = "."; }
-        { path = "../ai-pipeline"; }
+        {path = ".";}
+        {path = "../ai-pipeline";}
       ];
       settings = {
         "python.venvPath" = "\${workspaceFolder}/.local/venvs";
@@ -65,19 +67,19 @@ in
     };
   };
 
-  home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI { } {
+  home.file.".config/gcloud/configurations/config_copernic360-development".text = lib.generators.toINI {} {
     core = {
       account = "pulumi-deployment@spatial360-development.iam.gserviceaccount.com";
       project = "spatial360-development";
     };
   };
-  home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI { } {
+  home.file.".config/gcloud/configurations/config_copernic360-staging".text = lib.generators.toINI {} {
     core = {
       account = "pulumi-deployment@spatial360-staging.iam.gserviceaccount.com";
       project = "spatial360-staging";
     };
   };
-  home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI { } {
+  home.file.".config/gcloud/configurations/config_copernic360-production".text = lib.generators.toINI {} {
     core = {
       account = "pulumi-deployment@spatial360-production.iam.gserviceaccount.com";
       project = "spatial360-production";
@@ -86,10 +88,9 @@ in
 
   # ai-pipeline: {{{
   projects.kagenova.ai-pipeline = {
-    enable = true;
+    enable = false;
     repos.pipeline = {
-      url =
-        "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
+      url = "https://gitlab.com/kagenova/kagemove/development/data-pipeline.git";
       dest = ".";
       settings.user.email = emails.gitlab;
       ignore = ''
@@ -116,7 +117,7 @@ in
     '';
     file."ai-pipeline.code-workspace".source = utils.toPrettyJSON {
       folders = [
-        { path = "."; }
+        {path = ".";}
       ];
       settings = {
         "python.venvPath" = "\${workspaceFolder}/.local/venvs";

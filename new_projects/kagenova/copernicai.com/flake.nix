@@ -24,9 +24,7 @@ rec {
         languages.nix = true;
         languages.python = true;
         treesitter-languages = ["json" "toml" "yaml" "bash" "fish" "css" "html" "dockerfile"];
-        colorscheme = "zenbones";
-        formatters.isort.exe = "isort";
-        formatters.black.exe = "black";
+        colorscheme = "bluloco";
       };
     in {
       devShells.default = pkgs.devshell.mkShell {

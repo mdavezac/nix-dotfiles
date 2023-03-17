@@ -7,5 +7,7 @@
     ./packaging
     ./sparse-dense-tests
     ./copernicai
+    ./ai-pipeline
+    ./copernicai.com
   ];
 }

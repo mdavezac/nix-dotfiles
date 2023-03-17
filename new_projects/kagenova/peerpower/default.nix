@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   projconf = {
     enable = true;
     python.enable = true;
@@ -30,115 +34,100 @@ let
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/.local/gcloud/risk-ocr.json
       ''
     ];
-
   };
-in
-{
-  config.workspaces.ocr = projconf // {
-    root = "kagenova/peerpower";
-    repos = [
-      {
-        url = "github:peerpower/risk_ocr_engine.git";
-        settings.user.email = config.emails.github;
-        exclude = [
-          "/.envrc"
-          "/.local/"
-          "/.direnv/"
-          "/devenv"
-          ".devenv"
-          ".devenv.local.nix"
-        ];
-      }
-    ];
-    /* envrc = [ */
-    /*   '' */
-    /*     export IPYTHONDIR=$PWD/.local/ipython/ */
-    /*     export AWS_CONFIG_FILE=$PWD/.local/aws/config */
-    /*     export AWS_SHARED_CREDENTIALS_FILE=$PWD/.local/aws/credentials */
-    /*     export PASSWORD_STORE_DIR=$PWD/.local/passwords */
+in {
+  config.workspaces.ocr =
+    projconf
+    // {
+      root = "kagenova/peerpower";
+      repos = [
+        {
+          url = "github:peerpower/risk_ocr_engine.git";
+          settings.user.email = config.emails.github;
+          exclude = [
+            "/.envrc"
+            "/.local/"
+            "/.direnv/"
+            "/devenv"
+            ".devenv"
+            ".devenv.local.nix"
+          ];
+        }
+      ];
 
-    /*     mkdir -p $(dirname $AWS_CONFIG_FILE) */
+      file.".local/aws/config".text = ''
+        [profile peerpower-mayeul]
+        region = "ap-southeast-1"
+      '';
 
-    /*     [ -e devenv ] || ln -s ~/personal/dotfiles/new_projects/kagenova/peerpower/devenv devenv */
+      file.".local/ipython/profile_default/startup/startup.ipy".text = ''
+        %load_ext autoreload
+        %autoreload 2
 
-    /*     watch_file devenv/devenv.nix */
-    /*     watch_file devenv/devenv.yaml */
-    /*     watch_file devenv/devenv.lock */
-    /*     export PROJECT_ROOT_DIR=$PWD */
-    /*     cd devenv; eval "$(devenv print-dev-env devenv/)"; cd $PROJECT_ROOT_DIR */
-    /*   '' */
-    /* ]; */
+        import numpy as np
+        import pandas as pd
+        import re
+        from dataclasses import replace
+        from pathlib import Path
+        from textwrap import dedent
+        from google.cloud import vision
+        try:
+          from rocre.backend.testing.annotations import *
+          from rocre.backend.annotations import *
+          from rocre.backend.model.annotations import *
+          from rocre.backend.annotations.utils import vertex_boundaries
+        except:
+          pass
 
-    file.".local/aws/config".text = ''
-      [profile peerpower-mayeul]
-      region = "ap-southeast-1"
-    '';
+        data_dir = Path("test/data")
+        rng = np.random.default_rng()
+      '';
+    };
+  config.workspaces.bsa =
+    projconf
+    // {
+      root = "kagenova/peerpower";
+      repos = [
+        {
+          url = "github:peerpower/risk_bank_statement_analysis_service.git";
+          settings.user.email = config.emails.github;
+          exclude = [
+            "/.envrc"
+            "/.local/"
+            "/.direnv/"
+            "/devenv"
+            "note.md"
+            "scratch.py"
+            "script.py"
+            "tests/data/"
+            "/*.csv"
+          ];
+        }
+      ];
+      file.".local/ipython/profile_default/startup/startup.ipy".text = ''
+        %load_ext autoreload
+        %autoreload 2
 
-    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
-      %load_ext autoreload
-      %autoreload 2
+        import numpy as np
+        import pandas as pd
+        from textwrap import dedent
+        from pathlib import Path
+        from pandarallel import pandarallel
 
-      import numpy as np
-      import pandas as pd
-      import re
-      from dataclasses import replace
-      from pathlib import Path
-      from textwrap import dedent
-      from google.cloud import vision
-      try:
-        from rocre.backend.testing.annotations import *
-        from rocre.backend.annotations import *
-        from rocre.backend.model.annotations import *
-        from rocre.backend.annotations.utils import vertex_boundaries
-      except:
-        pass
+        pandarallel.initialize(nb_workers=1)
 
-      data_dir = Path("test/data")
-      rng = np.random.default_rng()
-    '';
-  };
-  config.workspaces.bsa = projconf // {
-    root = "kagenova/peerpower";
-    repos = [
-      {
-        url = "github:peerpower/risk_bank_statement_analysis_service.git";
-        settings.user.email = config.emails.github;
-        exclude = [
-          "/.envrc"
-          "/.local/"
-          "/.direnv/"
-          "/devenv"
-          "note.md"
-          "scratch.py"
-          "script.py"
-          "tests/data/"
-        ];
-      }
-    ];
-    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
-      %load_ext autoreload
-      %autoreload 2
+        rng = np.random.default_rng()
 
-      import numpy as np
-      import pandas as pd
-      from textwrap import dedent
-      from pathlib import Path
-      from pandarallel import pandarallel
+        try:
+          from app.grammar import *
+          from app.grammar import helpers as help
+          from app.grammar.kbank import helpers as khelp
+          from app.services.transaction_description_extractor_kbank import extract_from_kbank
+        except:
+          pass
 
-      pandarallel.initialize(nb_workers=1)
-
-      rng = np.random.default_rng()
-
-      try:
-        from app.grammar import *
-        from app.grammar import helpers as help
-        from app.grammar.kbank import helpers as khelp
-        from app.services.transaction_description_extractor_kbank import extract_from_kbank
-      except:
-        pass
-
-      min_partial_match = 15 
-      error_rate = 0.1
-    '';
-  };
+        min_partial_match = 15
+        error_rate = 0.1
+      '';
+    };
 }

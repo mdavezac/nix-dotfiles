@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "bluloco": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677497364,
+        "narHash": "sha256-fE0F+zNWKgvirz68cnwOW4HpvAnbQ+F1f4hYZtQIVdA=",
+        "owner": "uloco",
+        "repo": "bluloco.nvim",
+        "rev": "ee349b5a1ad19111d4153fa88b75f65ef3a1e8a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uloco",
+        "repo": "bluloco.nvim",
+        "type": "github"
+      }
+    },
     "catpuccino": {
       "flake": false,
       "locked": {
@@ -254,6 +270,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flatten-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1678734980,
+        "narHash": "sha256-ojK9jKtdB7lt+2P2pZ18xGHA1b56oL2PzjEn/z4B+ZI=",
+        "owner": "willothy",
+        "repo": "flatten.nvim",
+        "rev": "25b9aec2a4fad5d3d297e8a72aeed8de95a5e17a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "willothy",
+        "repo": "flatten.nvim",
         "type": "github"
       }
     },
@@ -948,12 +980,14 @@
     "spacevim": {
       "inputs": {
         "aniseed": "aniseed",
+        "bluloco": "bluloco",
         "catpuccino": "catpuccino",
         "cmp-cmdline": "cmp-cmdline",
         "dash-nvim": "dash-nvim",
         "devshell": "devshell_2",
         "dressing": "dressing",
         "flake-utils": "flake-utils_4",
+        "flatten-nvim": "flatten-nvim",
         "guihua": "guihua",
         "haskell-tools-nvim": "haskell-tools-nvim",
         "iron-nvim": "iron-nvim",
@@ -989,8 +1023,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1676729257,
-        "narHash": "sha256-hNQU3LTarx3xPvJEigs0OzaJNrT4eo8q3q/I+DDEJK4=",
+        "lastModified": 1678804945,
+        "narHash": "sha256-Y2hqxrlODeYn5DWohQPPS7Hy8ObZ7iLx9rV/TgL0Og4=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

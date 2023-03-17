@@ -1,11 +1,16 @@
-{ config, pkgs, lib, ... }: {
-  home.packages = [ pkgs.fd pkgs.ripgrep ];
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  home.packages = [pkgs.fd pkgs.ripgrep];
 
   programs.skim = {
     enable = true;
     defaultCommand = "${pkgs.fd}/bin/fd --type f";
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type f";
-    fileWidgetOptions = [ "--preview '${pkgs.bat}/bin/bat --color=always {}'" ];
+    fileWidgetOptions = ["--preview '${pkgs.bat}/bin/bat --color=always {}'"];
   };
   programs.fish = {
     interactiveShellInit = ''
@@ -26,16 +31,18 @@
 
   programs.bat = {
     enable = true;
-    config = { theme = "TwoDark"; };
+    config = {theme = "TwoDark";};
   };
 
   programs.broot = {
     enable = true;
     enableFishIntegration = true;
-    verbs = [{
-      invocation = "edit";
-      shortcut = "e";
-      execution = "nvim {file}";
-    }];
+    settings.verbs = [
+      {
+        invocation = "edit";
+        shortcut = "e";
+        execution = "nvim {file}";
+      }
+    ];
   };
 }

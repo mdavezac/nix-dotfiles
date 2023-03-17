@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -15,19 +20,19 @@
       fish_add_path $HOME/.nix-profile/bin
       fish_add_path /run/current-system/sw/bin/
       ${pkgs.python3Packages.pip}/bin/pip completion --fish | source
-      fenv source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
       source /Applications/Docker.app/Contents/Resources/etc/docker-compose.fish-completion
       source /Applications/Docker.app/Contents/Resources/etc/docker.fish-completion
     '';
     functions.__fish_describe_command = "";
-    plugins = [{
-      name = "fish-foreign-env";
-      src = pkgs.foreign-fish;
-    }];
+    plugins = [
+      {
+        name = "fish-foreign-env";
+        src = pkgs.foreign-fish;
+      }
+    ];
   };
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
   };
-  programs.command-not-found.enable = false;
 }

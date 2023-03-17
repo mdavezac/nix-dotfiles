@@ -1,19 +1,17 @@
-rec {
-  description = "Astro-informatics dev";
-  inputs = rec {
+{
+  inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
+    flake-utils.url = "github:numtide/flake-utils";
     spacevim-nix.url = "/Users/mdavezac/personal/spacenix";
   };
 
   outputs = {
     self,
-    flake-utils,
-    devshell,
     nixpkgs,
+    devshell,
+    flake-utils,
     spacevim-nix,
-    mach-nix,
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
@@ -21,8 +19,7 @@ rec {
         overlays = [devshell.overlays.default];
       };
       spacenix = {
-        layers.git.github = true;
-        layers.debugger.enable = true;
+        layers.neorg.enable = false;
         layers.completion.sources.other = [
           {
             name = "buffer";
@@ -44,29 +41,18 @@ rec {
         layers.completion.sources.":" = [{name = "cmdline";}];
         languages.markdown = true;
         languages.nix = true;
-        languages.python = true;
-        dash.python = ["pandas" "numpy"];
-        treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
-        colorscheme = "carbonight";
+        languages.cpp = true;
+        languages.cmake = true;
+        languages.rust = false;
+        colorscheme = "bluloco";
         cursorline = true;
-        post.vim = ''
-          autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-        '';
         telescope-theme = "ivy";
       };
     in {
       devShells.default = pkgs.devshell.mkShell {
         inherit spacenix;
-        imports = [
-          spacevim-nix.modules.${system}.prepackaged
-          spacevim-nix.modules.devshell
-        ];
-        commands = [
-          {package = pkgs.cmake;}
-          {package = pkgs.doxygen;}
-          {package = pkgs.black;}
-          {package = pkgs.python38;}
-        ];
+        imports = [spacevim-nix.modules.${system}.prepackaged spacevim-nix.modules.devshell];
+        motd = "";
       };
     });
 }

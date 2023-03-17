@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   config.workspaces.astro-informatics = {
     enable = true;
     root = "kagenova";
@@ -11,6 +16,16 @@
       {
         url = "github:mdavezac/conan-center-index.git";
         destination = "conan-center-index";
+        settings.user.email = config.emails.github;
+      }
+      {
+        url = "https://github.com/astro-informatics/so3.git";
+        destination = "so3";
+        settings.user.email = config.emails.github;
+      }
+      {
+        url = "https://github.com/astro-informatics/s2let.git";
+        destination = "s2let";
         settings.user.email = config.emails.github;
       }
     ];
@@ -28,6 +43,8 @@
 
         [ -e .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/packaging .local/flake
         source_env .local/flake/.envrc
+
+        export CONAN_HOME=$PWD/.local/conan2
       ''
     ];
     file.".local/ipython/profile_default/startup/startup.ipy".text = ''
