@@ -54,16 +54,11 @@ rec {
           languages.python = true;
           dash.python = ["pandas" "numpy"];
           treesitter-languages = ["json" "toml" "yaml" "bash" "fish"];
-          colorscheme = "oh-lucy";
+          colorscheme = "bluloco";
           cursorline = true;
-          post.vim = ''
-            autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
-          '';
           telescope-theme = "ivy";
           formatters.isort.exe = "isort";
           formatters.black.exe = "black";
-          formatters.nixpkgs-fmt.enable = false;
-          formatters.alejandra.enable = true;
           layers.terminal.repl.repl-open-cmd = ''
             require('iron.view').split.vertical.botright(
                 "50%", { number = false, relativenumber = false }

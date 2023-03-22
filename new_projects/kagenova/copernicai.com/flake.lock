@@ -273,22 +273,6 @@
         "type": "github"
       }
     },
-    "flatten-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1678734980,
-        "narHash": "sha256-ojK9jKtdB7lt+2P2pZ18xGHA1b56oL2PzjEn/z4B+ZI=",
-        "owner": "willothy",
-        "repo": "flatten.nvim",
-        "rev": "25b9aec2a4fad5d3d297e8a72aeed8de95a5e17a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "willothy",
-        "repo": "flatten.nvim",
-        "type": "github"
-      }
-    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -368,6 +352,22 @@
       "original": {
         "owner": "hkupty",
         "repo": "iron.nvim",
+        "type": "github"
+      }
+    },
+    "just-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680642354,
+        "narHash": "sha256-E30zBd08CXl/s3HyU8qfLxr41fvsb8YjDTwThK4Eqrk=",
+        "owner": "NoahTheDuke",
+        "repo": "vim-just",
+        "rev": "50ebe13912945005699b0e9020f6967a2da4302a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NoahTheDuke",
+        "repo": "vim-just",
         "type": "github"
       }
     },
@@ -973,6 +973,7 @@
       "inputs": {
         "devshell": "devshell",
         "flake-utils": "flake-utils_2",
+        "just-vim": "just-vim",
         "nixpkgs": "nixpkgs_2",
         "spacevim": "spacevim"
       }
@@ -987,7 +988,6 @@
         "devshell": "devshell_2",
         "dressing": "dressing",
         "flake-utils": "flake-utils_4",
-        "flatten-nvim": "flatten-nvim",
         "guihua": "guihua",
         "haskell-tools-nvim": "haskell-tools-nvim",
         "iron-nvim": "iron-nvim",
@@ -1023,8 +1023,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1678804945,
-        "narHash": "sha256-Y2hqxrlODeYn5DWohQPPS7Hy8ObZ7iLx9rV/TgL0Og4=",
+        "lastModified": 1678975654,
+        "narHash": "sha256-56+xYkDPUknumO2+LSnh6yyfnoMF5IP49DYRBjCUEb4=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

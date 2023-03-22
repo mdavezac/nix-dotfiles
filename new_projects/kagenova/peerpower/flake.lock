@@ -106,11 +106,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1671489820,
-        "narHash": "sha256-qoei5HDJ8psd1YUPD7DhbHdhLIT9L2nadscp4Qk37uk=",
+        "lastModified": 1678957337,
+        "narHash": "sha256-Gw4nVbuKRdTwPngeOZQOzH/IFowmz4LryMPDiJN/ah4=",
         "owner": "numtide",
         "repo": "devshell",
-        "rev": "5aa3a8039c68b4bf869327446590f4cdf90bb634",
+        "rev": "3e0e60ab37cd0bf7ab59888f5c32499d851edb47",
         "type": "github"
       },
       "original": {
@@ -270,22 +270,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flatten-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1678878915,
-        "narHash": "sha256-hpQWJaUSFj2vGKmGl0czIDk7t+h765z9oPRlgzdJp/I=",
-        "owner": "willothy",
-        "repo": "flatten.nvim",
-        "rev": "3ff516ed0f9a572ae630ae7b8fed519f54a90b86",
-        "type": "github"
-      },
-      "original": {
-        "owner": "willothy",
-        "repo": "flatten.nvim",
         "type": "github"
       }
     },
@@ -691,11 +675,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1643381941,
-        "narHash": "sha256-pHTwvnN4tTsEKkWlXQ8JMY423epos8wUOhthpwJjtpc=",
+        "lastModified": 1677383253,
+        "narHash": "sha256-UfpzWfSxkfXHnb4boXZNaKsAcUrZT9Hw+tao1oZxd08=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5efc8ca954272c4376ac929f4c5ffefcc20551d5",
+        "rev": "9952d6bc395f5841262b006fbace8dd7e143b634",
         "type": "github"
       },
       "original": {
@@ -989,7 +973,6 @@
         "devshell": "devshell_2",
         "dressing": "dressing",
         "flake-utils": "flake-utils_4",
-        "flatten-nvim": "flatten-nvim",
         "guihua": "guihua",
         "haskell-tools-nvim": "haskell-tools-nvim",
         "iron-nvim": "iron-nvim",
@@ -1025,8 +1008,8 @@
         "zenbones": "zenbones"
       },
       "locked": {
-        "lastModified": 1678804945,
-        "narHash": "sha256-qUmSU0b3Hb1ph9LDdLaIJnhrFGY3Jk0bMHhOi8aUQkA=",
+        "lastModified": 1681720032,
+        "narHash": "sha256-tFb/5hS8CAapFULIqljdVFLKNf9Mjyt0TBLUlLkhNAA=",
         "type": "git",
         "url": "file:///Users/mdavezac/personal/spacenix"
       },

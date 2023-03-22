@@ -1,13 +1,12 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   mkProject = import ./lib/project.nix "personal";
   emails = import ./lib/emails.nix;
-in
-{
+in {
   imports = builtins.map mkProject [
     "pylada"
     "julia"
@@ -170,7 +169,7 @@ in
   # }}}
   # spacenix: {{{
   projects.personal.spacenix = {
-    enable = true;
+    enable = false;
     extraEnvrc = null;
     file.".setup.fish".text = ''
       gh repo clone spacevim.nix

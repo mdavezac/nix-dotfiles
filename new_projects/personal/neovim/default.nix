@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
-let
-  emails.github = "2745737+mdavezac@users.noreply.github.com";
-in
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  emails.github = "2745737+mdavezac@users.noreply.github.com";
+in {
   config.workspaces.neovim = {
     enable = true;
     root = "personal";
@@ -10,7 +13,7 @@ in
       {
         url = "github:neovim/neovim";
         settings.user.email = emails.github;
-        exclude = [ "/.local" ];
+        exclude = ["/.local"];
         destination = ".";
       }
     ];
@@ -25,7 +28,7 @@ in
 
         PATH_add .local/bin/
 
-        use flake ./contrib
+        # use flake ./contrib
       ''
     ];
   };

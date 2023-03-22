@@ -1,3 +1,3 @@
 {
-  imports = [./zellij ./neovim ./calendar ./cv ./multiplexer];
+  imports = [./zellij ./neovim ./calendar ./cv ./multiplexer ./spacenix];
 }
