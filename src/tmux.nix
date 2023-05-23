@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-let
-  attach = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace";
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  attach = "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace";
+in {
   programs.tmux = {
     enable = true;
     keyMode = "vi";
@@ -13,14 +16,19 @@ in
     escapeTime = 0;
     terminal = "xterm-kitty";
     secureSocket = false;
-    plugins = [ pkgs.tmuxPlugins.cpu pkgs.tmuxPlugins.nord ];
+    plugins = [pkgs.tmuxPlugins.cpu pkgs.tmuxPlugins.nord];
     extraConfig = ''
-      is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?x?)(diff)?$"'
-      bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
-      bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
-      bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
-      bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
-      bind -n C-\\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+      is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(ssh|view|n?vim?x?)(diff)?$"'
+
+      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h' { if -F '#{pane_at_left}' "" 'select-pane -L' }
+      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j' { if -F '#{pane_at_bottom}' "" 'select-pane -D' }
+      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k' { if -F '#{pane_at_top}' "" 'select-pane -U' }
+      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l' { if -F '#{pane_at_right}' "" 'select-pane -R' }
+
+      bind-key -T copy-mode-vi 'C-h' if -F '#{pane_at_left}' "" 'select-pane -L'
+      bind-key -T copy-mode-vi 'C-j' if -F '#{pane_at_bottom}' "" 'select-pane -D'
+      bind-key -T copy-mode-vi 'C-k' if -F '#{pane_at_top}' "" 'select-pane -U'
+      bind-key -T copy-mode-vi 'C-l' if -F '#{pane_at_right}' "" 'select-pane -R'
 
       set-option -g default-command "${attach} -l fish"
       set-option -g default-shell ${pkgs.fish}/bin/fish

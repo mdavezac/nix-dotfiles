@@ -17,9 +17,6 @@
     ];
     envrc = [
       ''
-        export XDG_CONFIG_HOME=$PWD/.local/config
-        export XDG_DATA_HOME=$PWD/.local/data
-        export XDG_STATE_HOME=$PWD/.local/state
         use flake
       ''
     ];

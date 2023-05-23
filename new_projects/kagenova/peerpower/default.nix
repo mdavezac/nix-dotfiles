@@ -5,7 +5,7 @@
   ...
 }: let
   projconf = {
-    enable = true;
+    enable = false;
     python.enable = true;
     python.version = "3.10";
     python.packager = "poetry";
@@ -51,6 +51,7 @@ in {
             "/devenv"
             ".devenv"
             ".devenv.local.nix"
+            "/stuff"
           ];
         }
       ];

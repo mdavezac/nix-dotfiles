@@ -34,8 +34,8 @@
 
         use flake .
 
-        [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/website .local/flake
-        source_env .local/flake/.envrc
+        # [ -e  .local/flake ] || ln -s ~/personal/dotfiles/new_projects/kagenova/website .local/flake
+        # source_env .local/flake/.envrc
 
         export GEM_HOME=$PWD/.local/gem
       ''

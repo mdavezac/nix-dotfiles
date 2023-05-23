@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }: {
   config.workspaces.sparse-dense-tests = {
     enable = true;
@@ -10,15 +11,13 @@
       {
         url = "gitlab:kagenova/kagelearn/development/sparse-dense-tests";
         settings.user.email = config.emails.gitlab;
-        exclude = [ "/.local" ];
+        exclude = ["/.local"];
         destination = ".";
       }
     ];
     envrc = [
       ''
-        mkdir -p .local
-        [ -e  .local/nvim ] || ln -s ~/personal/dotfiles/new_projects/personal/sparse-dense-tests .local/nvim
-        source_env .local/nvim/.envrc
+        export IPYTHONDIR=$PWD/.local/ipython/
 
         use flake --impure
 
@@ -26,5 +25,9 @@
         layout poetry 3.10
       ''
     ];
+    file.".local/ipython/profile_default/startup/startup.ipy".text = ''
+      %load_ext autoreload
+      %autoreload 2
+    '';
   };
 }

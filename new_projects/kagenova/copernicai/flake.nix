@@ -79,11 +79,11 @@
       };
     in {
       devShells.default = pkgs.devshell.mkShell {
-        inherit spacenix;
-        packages = [pkgs.poetry pkgs.pandoc pkgs.python38];
+        packages = [pkgs.poetry pkgs.pandoc pkgs.python39];
+        language.c.compiler = pkgs.gcc;
         imports = [
-          spacevim-nix.modules.${system}.prepackaged
-          spacevim-nix.modules.devshell
+          # spacevim-nix.modules.${system}.prepackaged
+          # spacevim-nix.modules.devshell
           "${devshell}/extra/language/c.nix"
         ];
         env = [

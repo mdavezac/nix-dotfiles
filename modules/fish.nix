@@ -26,7 +26,7 @@
   fish_tmux_session = workspaces:
     lib.mapAttrs
     (name: cfg: let
-      session_name = builtins.replaceStrings ["-" " "] ["-" "-"] name;
+      session_name = builtins.replaceStrings ["-" " " "."] ["-" "-" "-"] name;
       root_name =
         if (builtins.isNull cfg.root)
         then ""
@@ -45,7 +45,7 @@
   fish_zellij_session = workspaces:
     lib.mapAttrs
     (name: cfg: let
-      session_name = builtins.replaceStrings ["-" " "] ["-" "-"] name;
+      session_name = builtins.replaceStrings ["-" " " "."] ["-" "-" "-"] name;
       root_name =
         if (builtins.isNull cfg.root)
         then ""

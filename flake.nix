@@ -76,7 +76,7 @@
                 };
                 to = {
                   owner = "NixOS";
-                  repo = "nixpkgs-21.11-darwin";
+                  repo = "nixpkgs-22.11-darwin";
                   rev = inputs.nixpkgs-stable.rev; # (3)
                   type = "github";
                 };
@@ -103,18 +103,13 @@
         system = system;
         config = {allowUnfree = true;};
         overlays = [
-          inputs.devshell.overlay
+          inputs.devshell.overlays.default
         ];
       };
     in
       pkgs.devshell.mkShell {
         name = "dotfiles";
-        imports = [spacenix.modules."${system}".prepackaged spacenix.modules.devshell];
-        packages = [pkgs.devshell.cli pkgs.pre-commit];
-        spacenix = {
-          languages.nix = true;
-          colorscheme = "neon";
-        };
+        packages = [pkgs.pre-commit];
 
         commands = [
           {

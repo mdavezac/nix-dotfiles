@@ -27,15 +27,15 @@
     ./src/tmux.nix
     ./src/starship.nix
     ./src/kitty.nix
-    ./src/wezterm.nix
-    ./src/zellij.nix
+    # ./src/wezterm.nix
+    # ./src/zellij.nix
     # ./src/vscode
     # ./src/kakoune
     # ./src/doom
     ./projects
     ./new_projects.nix
   ];
-  home.sessionVariables.EDITOR = "code";
+  home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.JULIA_PROJECT = "@.";
   home.sessionVariables.DIRENV_LOG_FORMAT = "";
   home.file.".pdbrc.py".source = ./files/pdbrc.py;

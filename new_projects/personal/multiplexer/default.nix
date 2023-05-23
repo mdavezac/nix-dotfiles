@@ -18,12 +18,6 @@
 
         PATH_add .local/bin/
 
-        flakedir=~/personal/dotfiles/new_projects/personal/multiplexer
-        [ -e  .local/flake ] || ln -s $flakedir .local/flake
-        watch_file $flakedir/flake.nix
-        watch_file $flakedir/flake.lock
-        use flake $flakedir
-
         use flake .
       ''
     ];

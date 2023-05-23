@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
-let
-  email = (import ../projects/lib/emails.nix).github;
-in
 {
-  home.packages = [ pkgs.tig pkgs.cacert pkgs.pinentry_mac ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  email = (import ../projects/lib/emails.nix).github;
+in {
+  home.packages = [pkgs.tig pkgs.cacert pkgs.pinentry_mac];
 
   programs.gh = {
     enable = true;
@@ -19,9 +22,9 @@ in
   };
   home.file.".config/fish/completions/gh.fish".source =
     pkgs.runCommand
-      "fish-completion"
-      { }
-      "${pkgs.gitAndTools.gh}/bin/gh completion -s fish > $out";
+    "fish-completion"
+    {}
+    "${pkgs.gitAndTools.gh}/bin/gh completion -s fish > $out";
 
   programs.git = {
     enable = true;
@@ -34,8 +37,7 @@ in
       branch.autosetupmerge = true;
       push.default = "upstream";
       advice.statusHints = false;
-      format.pretty =
-        "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
+      format.pretty = "format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset";
       http.sslcainfo = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       pull.rebase = false;
       init.defaultBranch = "main";
@@ -58,5 +60,6 @@ in
 
   programs.gpg.enable = true;
 
+  home.sessionVariables.TERM = "xterm-kitty";
   home.sessionVariables.COLORTERM = "truecolor";
 }

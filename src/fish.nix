@@ -9,10 +9,7 @@
     shellAliases = {
       cat = "${pkgs.bat}/bin/bat";
       tmux = "${pkgs.direnv}/bin/direnv exec / ${pkgs.tmux}/bin/tmux";
-      ctags = "${pkgs.universal-ctags}/bin/ctags";
       grep = "${pkgs.ripgrep}/bin/rg";
-      clang-format = "/usr/local/opt/llvm/bin/clang-format";
-      clang-tidy = "/usr/local/opt/llvm/bin/clang-tidy";
       ls = "${pkgs.exa}/bin/exa --icons";
     };
     interactiveShellInit = ''

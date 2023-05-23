@@ -29,19 +29,18 @@
         export IPYTHONDIR=$PWD/.local/ipython/
         export PULUMI_HOME=$PWD/.local/pulumi
         export GEN360_BUILD_DIR=$PWD/.local/build
-
+        export GEM_HOME=$PWD/.local/gem
 
         mkdir -p $PRJ_DATA_DIR
         mkdir -p $PRJ_ROOT
 
         use flake .
-
-        flakedir=~/personal/dotfiles/new_projects/kagenova/copernicai.com
-        [ -e  .local/flake ] || ln -s $flakedir .local/flake
-        source_env .local/flake
-
-        export GEM_HOME=$PWD/.local/gem
       ''
     ];
+    file.".local/nvim.lua".text = ''
+      return {
+        { "NoahTheDuke/vim-just" },
+      }
+    '';
   };
 }

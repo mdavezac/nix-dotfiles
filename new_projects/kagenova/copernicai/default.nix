@@ -11,12 +11,12 @@
       {
         url = "gitlab:kagenova/kagelearn/development/copernicai.git";
         settings.user.email = config.emails.gitlab;
-        exclude = ["/.local" "/.envrc" "/.devenv/" "/dist/"];
+        exclude = ["/.local" "/.envrc" "/.devenv/" "/dist/" "/images" "/depth_estimation/"];
         destination = ".";
       }
     ];
     python.enable = true;
-    python.version = "3.8";
+    python.version = "3.9";
     python.packager = "poetry";
     envrc = [
       ''
