@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-let
-  kitty-theme = pkgs.kitty-themes;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  kitty-theme = pkgs.kitty-themes;
+in {
   programs.kitty = {
     enable = true;
     settings = {

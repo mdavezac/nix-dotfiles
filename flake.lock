@@ -845,6 +845,22 @@
         "type": "github"
       }
     },
+    "nuscripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1685136716,
+        "narHash": "sha256-Edv28uYcB4fejIN35KG91gNBm3WRKoikMHZVbLfZgQY=",
+        "owner": "nushell",
+        "repo": "nu_scripts",
+        "rev": "80e9d07d80fc326280b555e730f2ee516deaef32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nushell",
+        "repo": "nu_scripts",
+        "type": "github"
+      }
+    },
     "nvim-animate": {
       "flake": false,
       "locked": {
@@ -1091,6 +1107,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nord-kitty": "nord-kitty",
+        "nuscripts": "nuscripts",
         "spacenix": "spacenix"
       }
     },

@@ -30,6 +30,9 @@
     };
 
     spacenix.url = "github:mdavezac/spacevim.nix";
+
+    nuscripts.url = "github:nushell/nu_scripts";
+    nuscripts.flake = false;
   };
   outputs = inputs @ {
     self,
@@ -50,6 +53,7 @@
           foreign-fish = inputs.foreign-fish;
           nord-kitty = inputs.nord-kitty;
           kitty-themes = inputs.kitty-themes;
+          nuscripts = inputs.nuscripts;
         })
       ];
     };
@@ -118,7 +122,7 @@
             help = "Build the current configuration";
           }
           {
-            name = "update";
+            name = "dotsync";
             command = "darwin-rebuild switch --flake .#macbook";
             help = "Switch to the current configuration";
           }

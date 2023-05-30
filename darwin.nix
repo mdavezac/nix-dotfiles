@@ -55,17 +55,10 @@
     onActivation.upgrade = true;
     extraConfig = ''
       tap "fabianishere/personal", "https://github.com/fabianishere/homebrew-personal"
-      tap "homebrew/cask", "https://github.com/Homebrew/homebrew-cask/"
     '';
-    brews = [
-      "pam_reattach"
-      "juliaup"
-      # for peerpower
-      "mongosh"
-      "poppler"
-      "podman-compose"
-    ];
+    brews = ["pam_reattach" "juliaup"];
     casks = [
+      "remarkable"
       "kitty"
       "visual-studio-code"
       "brave-browser"
@@ -73,16 +66,10 @@
       "docker"
       "disk-inventory-x"
       "virtualbox"
-      # "virtualbox-extension-pack"
       "nvidia-geforce-now"
       "keepingyouawake"
       "epic-games"
-      "twist"
-      # for peerpower
       "slack"
-      "openvpn-connect"
-      "podman-desktop"
-      "notion"
     ];
   };
 }

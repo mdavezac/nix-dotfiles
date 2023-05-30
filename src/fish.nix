@@ -32,4 +32,7 @@
     enable = true;
     enableFishIntegration = true;
   };
+  programs.starship = {
+    enableFishIntegration = true;
+  };
 }

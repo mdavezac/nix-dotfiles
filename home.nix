@@ -22,6 +22,7 @@
   imports = [
     ./src/ssh.nix
     ./src/fish.nix
+    ./src/nushell
     ./src/cmdl.nix
     ./src/git.nix
     ./src/tmux.nix
