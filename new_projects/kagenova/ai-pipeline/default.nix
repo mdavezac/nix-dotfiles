@@ -16,17 +16,11 @@
       }
     ];
     python.enable = true;
-    python.version = "3.8";
+    python.version = "3.7";
     python.packager = "poetry";
     envrc = [
       ''
         use flake
-
-        flakedir=~/personal/dotfiles/new_projects/kagenova/ai-pipeline
-        [ -e  .local/flake ] || ln -s $flakedir .local/flake
-        watch_file $flakedir/flake.nix
-        watch_file $flakedir/flake.lock
-        use flake $flakedir
 
         export IPYTHONDIR=$PWD/.local/ipython/
         export PULUMI_HOME=$(pwd)/.local/pulumi;
