@@ -3,9 +3,7 @@
   pkgs,
   lib,
   ...
-}: let
-  email = (import ../projects/lib/emails.nix).github;
-in {
+}: {
   home.packages = [pkgs.tig pkgs.cacert pkgs.pinentry_mac];
 
   programs.gh = {
@@ -29,7 +27,7 @@ in {
   programs.git = {
     enable = true;
     userName = "Mayeul d'Avezac";
-    userEmail = email;
+    userEmail = config.emails.github;
     extraConfig = {
       core.autoclrf = "input";
       color.ui = true;
@@ -44,7 +42,7 @@ in {
     };
     aliases.children = "!${pkgs.bash}/bin/bash -c 'c=\${1:-HEAD}; set -- $(git rev-list --all --not \"$c\"^@ --children | grep $(git rev-parse \"$c\") ); shift; echo $1' -";
     signing = {
-      key = email;
+      key = config.emails.github;
       signByDefault = true;
     };
     ignores = lib.splitString "\n" (builtins.readFile ../files/gitignore);

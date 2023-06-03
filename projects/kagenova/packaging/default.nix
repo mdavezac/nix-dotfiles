@@ -5,7 +5,7 @@
   ...
 }: {
   config.workspaces.astro-informatics = {
-    enable = true;
+    enable = false;
     root = "kagenova";
     repos = [
       {

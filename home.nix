@@ -33,7 +33,7 @@
     # ./src/vscode
     # ./src/kakoune
     # ./src/doom
-    ./new_projects.nix
+    ./projects.nix
   ];
   home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.JULIA_PROJECT = "@.";
