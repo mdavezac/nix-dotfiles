@@ -33,7 +33,6 @@
     # ./src/vscode
     # ./src/kakoune
     # ./src/doom
-    ./projects
     ./new_projects.nix
   ];
   home.sessionVariables.EDITOR = "nvim";

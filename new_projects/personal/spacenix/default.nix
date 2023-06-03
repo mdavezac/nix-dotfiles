@@ -17,6 +17,7 @@
     ];
     envrc = [
       ''
+        export LAZY_NIX_ROOT=$PWD/.local/lazynix/
         use flake
       ''
     ];
